@@ -1,17 +1,19 @@
-# adisty_tendik
+# Modul Tendik & Global Error Gateway - Adisty UAD
 
-A new Flutter project.
+Modul ini dikembangkan secara mandiri (*self-contained*) dengan pendekatan **Feature-First Architecture** untuk diintegrasikan ke dalam aplikasi utama Adisty UAD tanpa merusak atau mengubah kode pada modul Mahasiswa maupun Dosen.
 
-## Getting Started
+## 📁 Struktur Direktori Modul
 
-This project is a starting point for a Flutter application.
+Seluruh komponen fitur diisolasi di dalam folder `lib/features/`:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```text
+lib/features/
+├── global_error/          # Fitur Pencegat & Halaman Error Global
+│   ├── bloc/              # State management halaman error
+│   ├── data/              # Dio Interceptor (Error Gateway)
+│   └── presentation/      # UI Global Error Page
+└── tendik/                # Utama: Fitur Tenaga Kependidikan
+    └── home_presensi/     # Dashboard Presensi (2 Versi Layout)
+        ├── bloc/          # Otak pengatur state presensi & device context
+        ├── data/          # Service Hardware (GPS, IP, Device Info) & API Repo
+        └── presentation/  # UI Dashboard & Reusable Widgets
