@@ -884,7 +884,7 @@ class _TombolPulang extends StatelessWidget {
 
 // ============================================================
 // KOMPONEN: SECTION LAYANAN ADISTY
-// Wrapper untuk judul dan grid card layanan
+// Wrapper untuk judul dan daftar card layanan horizontal
 // ============================================================
 class _LayananAdistySection extends StatelessWidget {
   @override
@@ -894,8 +894,8 @@ class _LayananAdistySection extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 17,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 16,
         children: [
           // Garis pemisah abu-abu
           Container(
@@ -905,74 +905,56 @@ class _LayananAdistySection extends StatelessWidget {
           ),
 
           // Judul Section
-          Container(
-            width: 380,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 17,
-              children: [
-                const SizedBox(
-                  width: 380,
-                  child: Text(
-                    'Layanan Adisty',
-                    style: TextStyle(
-                      color: Color(0xFF293241),
-                      fontSize: 20,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 1.40,
-                      letterSpacing: -0.34,
-                    ),
-                  ),
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: const Text(
+              'Layanan Adisty',
+              style: TextStyle(
+                color: Color(0xFF293241),
+                fontSize: 20,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                height: 1.40,
+                letterSpacing: -0.34,
+              ),
             ),
           ),
 
-          // Grid Card Layanan
-          Container(
-            width: 379,
+          // Daftar Card Layanan (vertikal, full-width)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 25,
+              spacing: 16,
               children: [
-                // Baris pertama: Tunjangan Beras + Layanan Cuti
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 29,
-                  children: [
-                    _LayananCard(
-                      imagePath: 'assets/images/tunjangan_beras.png',
-                      title: 'Tunjangan Beras',
-                      description:
-                          'Tinjau informasi pengambilan tunjangan beras ',
-                      descWidth: 169,
-                    ),
-                    _LayananCard(
-                      imagePath: 'assets/images/layanan_cuti.png',
-                      title: 'Layanan Cuti',
-                      description: 'Pengajuan dan Informasi Layanan Cuti',
-                      descWidth: 150,
-                    ),
-                  ],
-                ),
-
-                // Baris kedua: Penilaian Kinerja
+                // Card Tunjangan Beras
                 _LayananCard(
-                  imagePath: 'assets/images/penilaian_kinerja.png',
+                  title: 'Tunjangan Beras',
+                  description: 'Tinjau informasi pengambilan tunjangan beras ',
+                  imagePath: 'assets/images/tunjangan_beras_2.png',
+                ),
+
+                // Card Layanan Cuti
+                _LayananCard(
+                  title: 'Layanan Cuti',
+                  description: 'Tinjau informasi cuti anda',
+                  imagePath: 'assets/images/layanan_cuti_2.png',
+                ),
+
+                // Card Penilaian Kerja
+                _LayananCard(
                   title: 'Penilaian Kerja',
-                  description: 'Tinjau Penilaian Kinerja anda',
-                  descWidth: 120,
+                  description: 'Tinjau penilaian kinerja anda',
+                  imagePath: 'assets/images/penilaian_kinerja_2.png',
                 ),
               ],
             ),
           ),
+
+          // Padding bawah
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -980,83 +962,95 @@ class _LayananAdistySection extends StatelessWidget {
 }
 
 // ============================================================
-// KOMPONEN: CARD LAYANAN (reusable)
-// Digunakan untuk tiap kartu layanan: Tunjangan, Cuti, dll
+// KOMPONEN: CARD LAYANAN HORIZONTAL (reusable)
+// Card 380x171 dengan Stack layout: teks kanan, gambar kiri,
+// dan tombol Selengkapnya biru solid di kanan bawah
 // ============================================================
 class _LayananCard extends StatelessWidget {
-  final String imagePath;
   final String title;
   final String description;
-  final double descWidth;
+  final String imagePath;
 
   const _LayananCard({
-    required this.imagePath,
     required this.title,
     required this.description,
-    required this.descWidth,
+    required this.imagePath,
   });
+
+  // Daftar shadow yang konsisten untuk semua card
+  static const List<BoxShadow> _cardShadows = [
+    BoxShadow(
+      color: Color(0x087281DF),
+      blurRadius: 4.11,
+      offset: Offset(0, 0.52),
+    ),
+    BoxShadow(
+      color: Color(0x0C7281DF),
+      blurRadius: 6.99,
+      offset: Offset(0, 1.78),
+    ),
+    BoxShadow(
+      color: Color(0x0F7281DF),
+      blurRadius: 10.20,
+      offset: Offset(0, 4.11),
+    ),
+    BoxShadow(
+      color: Color(0x127281DF),
+      blurRadius: 17.75,
+      offset: Offset(0, 8.10),
+    ),
+    BoxShadow(
+      color: Color(0x157281DF),
+      blurRadius: 42.88,
+      offset: Offset(0, 15.25),
+    ),
+    BoxShadow(color: Color(0x1E7281DF), blurRadius: 210, offset: Offset(0, 33)),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 175,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      width: 380,
+      height: 171,
+      clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 1, color: Color(0x3DEBEBEB)),
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shadows: _cardShadows,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 11,
+      child: Stack(
         children: [
-          // Gambar layanan
-          Container(
-            width: 96,
-            height: 71,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-
-          // Judul & deskripsi
-          Container(
-            width: double.infinity,
+          // Teks: judul & deskripsi (kanan atas)
+          Positioned(
+            left: 131,
+            top: 24,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 4,
               children: [
                 Text(
                   title,
                   style: const TextStyle(
                     color: Color(0xFF293241),
-                    fontSize: 14,
+                    fontSize: 18,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
-                    height: 1.43,
-                    letterSpacing: -0.08,
+                    letterSpacing: -0.18,
                   ),
                 ),
                 SizedBox(
-                  width: descWidth,
+                  width: 200,
                   child: Text(
                     description,
-                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Color(0xFF5F6570),
-                      fontSize: 12,
+                      fontSize: 14,
                       fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w500,
-                      height: 1.33,
+                      fontWeight: FontWeight.w400,
+                      height: 1.43,
+                      letterSpacing: -0.17,
                     ),
                   ),
                 ),
@@ -1064,39 +1058,46 @@ class _LayananCard extends StatelessWidget {
             ),
           ),
 
-          // Tombol selengkapnya
-          Container(
-            width: 144,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            decoration: ShapeDecoration(
-              color: const Color(0x1E2B86C3),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+          // Tombol Selengkapnya (kanan bawah)
+          Positioned(
+            left: 233,
+            top: 111,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: ShapeDecoration(
+                color: const Color(0xFF2B86C3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              child: const Text(
+                'Selengkapnya',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                  height: 1.43,
+                  letterSpacing: -0.08,
+                ),
               ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 16,
-              children: [
-                const Text(
-                  'Selengkapnya',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF2B86C3),
-                    fontSize: 12,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    height: 1.33,
-                  ),
+          ),
+
+          // Gambar utama (kiri)
+          Positioned(
+            left: 20,
+            top: 22,
+            child: Container(
+              width: 99,
+              height: 95,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.contain,
                 ),
-                const Icon(
-                  Icons.chevron_right,
-                  size: 16,
-                  color: Color(0xFF2B86C3),
-                ),
-              ],
+              ),
             ),
           ),
         ],
