@@ -473,4 +473,3 @@ class LokasiRow extends StatelessWidget {
     );
   }
 }
-
