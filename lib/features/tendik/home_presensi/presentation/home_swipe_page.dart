@@ -61,11 +61,11 @@ class _HomeSwipePageState extends State<HomeSwipePage> {
             case 0:
               return const page1.HomePage1();
             case 1:
-              return const page1_2.HomePage1();
+              return const page1_2.HomePage1_2();
             case 2:
-              return const page2.HomePage1();
+              return const page2.HomePage2();
             case 3:
-              return const page2_2.HomePage1();
+              return const page2_2.HomePage2_2();
             default:
               return const page1.HomePage1();
           }
@@ -113,90 +113,80 @@ class _Navbar extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // --- Tab Beranda (aktif) ---
-          Positioned(
-            left: 59,
-            top: 20,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/home-icon.svg',
-                  width: 40,
-                  height: 40,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/home-icon.svg',
+                width: 40,
+                height: 40,
+              ),
+              const Text(
+                'Beranda',
+                style: TextStyle(
+                  color: Color(0xFF016EB8),
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w400,
+                  height: 1.49,
                 ),
-                const Text(
-                  'Beranda',
-                  style: TextStyle(
-                    color: Color(0xFF016EB8),
-                    fontSize: 16,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    height: 1.49,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
 
           // --- Tab Presensi (tidak aktif) ---
-          Positioned(
-            left: 191,
-            top: 20,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/presensi-icon.svg',
-                  width: 40,
-                  height: 40,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/presensi-icon.svg',
+                width: 40,
+                height: 40,
+              ),
+              const Text(
+                'Presensi',
+                style: TextStyle(
+                  color: Color(0xFF5F6570),
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w400,
+                  height: 1.49,
                 ),
-                const Text(
-                  'Presensi',
-                  style: TextStyle(
-                    color: Color(0xFF5F6570),
-                    fontSize: 16,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    height: 1.49,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
 
           // --- Tab Profil (tidak aktif) ---
-          Positioned(
-            left: 328,
-            top: 20,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/profile-icon.svg',
-                  width: 40,
-                  height: 40,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/icons/profile-icon.svg',
+                width: 40,
+                height: 40,
+              ),
+              const Text(
+                'Profil',
+                style: TextStyle(
+                  color: Color(0xFF5F6570),
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w400,
+                  height: 1.49,
                 ),
-                const Text(
-                  'Profil',
-                  style: TextStyle(
-                    color: Color(0xFF5F6570),
-                    fontSize: 16,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    height: 1.49,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
