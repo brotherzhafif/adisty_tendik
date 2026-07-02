@@ -21,7 +21,7 @@ class StatistikPresensiV1 extends StatelessWidget {
           StatistikItem(
             iconColor: const Color(0xFFFB7F54),
             bgColor: const Color(0x1EFB7F54),
-            iconPath: 'assets/icons/people-icon.svg',
+            iconPath: 'assets/icons/(home_page)_people-icon.svg',
             label: 'Jumlah Presensi',
             value: '19',
             valueColor: const Color(0xFFFB7F54),
@@ -33,7 +33,7 @@ class StatistikPresensiV1 extends StatelessWidget {
           StatistikItem(
             iconColor: const Color(0xFF18C079),
             bgColor: const Color(0x1E4AAF57),
-            iconPath: 'assets/icons/shield-icon.svg',
+            iconPath: 'assets/icons/(home_page)_shield-icon.svg',
             label: 'Status Presensi',
             value: 'On Time',
             valueColor: const Color(0xFF18C079),
@@ -157,4 +157,3 @@ class StatistikItem extends StatelessWidget {
     );
   }
 }
-

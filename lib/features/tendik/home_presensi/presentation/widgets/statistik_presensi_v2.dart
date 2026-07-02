@@ -17,7 +17,7 @@ class StatistikPresensiV2 extends StatelessWidget {
           label: 'Presensi',
           value: '19',
           valueColor: const Color(0xFFFB7F54),
-          iconPath: 'assets/icons/people-icon.svg',
+          iconPath: 'assets/icons/(home_page)_people-icon.svg',
           iconColor: const Color(0xFFFB7F54),
         ),
 
@@ -28,7 +28,7 @@ class StatistikPresensiV2 extends StatelessWidget {
           label: 'Status',
           value: 'On Time',
           valueColor: const Color(0xFF18C079),
-          iconPath: 'assets/icons/shield-icon.svg',
+          iconPath: 'assets/icons/(home_page)_shield-icon.svg',
           iconColor: const Color(0xFF18C079),
         ),
       ],
@@ -125,4 +125,3 @@ class StatistikBadge extends StatelessWidget {
     );
   }
 }
-

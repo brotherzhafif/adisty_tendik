@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../notifikasi/presentation/notifikasi.dart';
 
 class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -98,52 +101,61 @@ class ProfileHeader extends StatelessWidget {
         ),
 
         // --- Ikon Notifikasi dengan Badge ---
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/notification-icon.svg',
-                  width: 28,
-                  height: 28,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 2,
-              right: 2,
-              child: Container(
-                width: 16,
-                height: 16,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotifikasiPage()),
+            );
+          },
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: 40,
+                height: 40,
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 222, 40, 40),
+                  color: Color.fromARGB(255, 255, 255, 255),
                   shape: BoxShape.circle,
                 ),
-                child: const Center(
-                  child: Text(
-                    '1',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontFamily: 'Open Sans',
-                      fontWeight: FontWeight.w700,
-                      height: 1,
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/icons/(home_page)_notification-icon.svg',
+                    width: 28,
+                    height: 28,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 2,
+                right: 2,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 222, 40, 40),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '3',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        height: 1.20,
+                        letterSpacing: -0.10,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
   }
 }
-

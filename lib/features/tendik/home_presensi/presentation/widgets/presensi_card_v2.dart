@@ -94,7 +94,7 @@ class PresensiCardV2 extends StatelessWidget {
                     label: 'Masuk',
                     labelColor: const Color(0xFF18C079),
                     jam: '06:45',
-                    iconPath: 'assets/icons/masuk-icon.svg',
+                    iconPath: 'assets/icons/(home_page)_masuk-icon.svg',
                   ),
 
                   // Separator lingkaran biru
@@ -116,7 +116,7 @@ class PresensiCardV2 extends StatelessWidget {
                     label: 'Pulang',
                     labelColor: const Color(0xFFFFAC2F),
                     jam: '14.00',
-                    iconPath: 'assets/icons/keluar-icon.svg',
+                    iconPath: 'assets/icons/(home_page)_keluar-icon.svg',
                   ),
                 ],
               ),

@@ -103,7 +103,8 @@ class PresensiCardV1 extends StatelessWidget {
                         statusBgColor: const Color(0x1E4AAF57),
                         exitIconColor: const Color(0xFF18C079),
                         exitBgColor: const Color(0x1E4AAF57),
-                        actionIconPath: 'assets/icons/masuk-icon.svg',
+                        actionIconPath:
+                            'assets/icons/(home_page)_masuk-icon.svg',
                       ),
 
                       // Baris Pulang
@@ -117,7 +118,8 @@ class PresensiCardV1 extends StatelessWidget {
                         statusBgColor: const Color(0x1EFFAC2F),
                         exitIconColor: const Color(0xFFFFAC2F),
                         exitBgColor: const Color(0x1EFFAC2F),
-                        actionIconPath: 'assets/icons/keluar-icon.svg',
+                        actionIconPath:
+                            'assets/icons/(home_page)_keluar-icon.svg',
                       ),
                     ],
                   ),

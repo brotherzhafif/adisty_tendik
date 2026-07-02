@@ -119,7 +119,7 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
 // ============================================================
 // KOMPONEN: NAVBAR BAWAH
 // Menampilkan 3 item navigasi: Beranda, Presensi, Profil
-// Icon diambil dari assets/icons/ menggunakan flutter_svg.
+// Icon diambil dari assets/icons/(home_page)_ menggunakan flutter_svg.
 // ============================================================
 class _Navbar extends StatelessWidget {
   const _Navbar();
@@ -152,7 +152,7 @@ class _Navbar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/icons/home-icon.svg',
+                'assets/icons/(home_page)_home-icon.svg',
                 width: 40,
                 height: 40,
               ),
@@ -176,7 +176,7 @@ class _Navbar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/icons/presensi-icon.svg',
+                'assets/icons/(home_page)_presensi-icon.svg',
                 width: 40,
                 height: 40,
               ),
@@ -200,7 +200,7 @@ class _Navbar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/icons/profile-icon.svg',
+                'assets/icons/(home_page)_profile-icon.svg',
                 width: 40,
                 height: 40,
               ),
