@@ -6,6 +6,7 @@ import 'home_page_1.dart' as page1;
 import 'home_page_1-2.dart' as page1_2;
 import 'home_page_2.dart' as page2;
 import 'home_page_2-2.dart' as page2_2;
+import '../../presensi_hari_ini/presentation/landing.dart';
 
 // ============================================================
 // HALAMAN UTAMA - HomePageSwitcher (kini menggunakan Switcher)
@@ -29,7 +30,6 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
     });
     Navigator.pop(context); // Tutup modal setelah memilih
   }
-
 
   void _changeState(PresensiState state) {
     setState(() {
@@ -108,36 +108,36 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
                 onTap: () => _changeVersion(3),
                 selected: _currentPage == 3,
               ),
-              const Divider(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
-                  'Pilih Status Presensi',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.access_time),
-                title: const Text('Belum Presensi'),
-                onTap: () => _changeState(PresensiState.belumPresensi),
-                selected: _currentPresensiState == PresensiState.belumPresensi,
-              ),
-              ListTile(
-                leading: const Icon(Icons.check_circle_outline),
-                title: const Text('Shift 1 Selesai / Lanjut'),
-                onTap: () => _changeState(PresensiState.shift1Selesai),
-                selected: _currentPresensiState == PresensiState.shift1Selesai,
-              ),
-              ListTile(
-                leading: const Icon(Icons.directions_walk),
-                title: const Text('Pulang'),
-                onTap: () => _changeState(PresensiState.pulang),
-                selected: _currentPresensiState == PresensiState.pulang,
-              ),
+              // const Divider(),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              //   child: Text(
+              //     'Pilih Status Presensi',
+              //     style: TextStyle(
+              //       fontSize: 18,
+              //       fontWeight: FontWeight.bold,
+              //       fontFamily: 'Poppins',
+              //     ),
+              //   ),
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.access_time),
+              //   title: const Text('Belum Presensi'),
+              //   onTap: () => _changeState(PresensiState.belumPresensi),
+              //   selected: _currentPresensiState == PresensiState.belumPresensi,
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.check_circle_outline),
+              //   title: const Text('Shift 1 Selesai / Lanjut'),
+              //   onTap: () => _changeState(PresensiState.shift1Selesai),
+              //   selected: _currentPresensiState == PresensiState.shift1Selesai,
+              // ),
+              // ListTile(
+              //   leading: const Icon(Icons.directions_walk),
+              //   title: const Text('Pulang'),
+              //   onTap: () => _changeState(PresensiState.pulang),
+              //   selected: _currentPresensiState == PresensiState.pulang,
+              // ),
             ],
           ),
         );
@@ -150,19 +150,39 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
     Widget activePage;
     switch (_currentPage) {
       case 0:
-        activePage = page1.HomePage1(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
+        activePage = page1.HomePage1(
+          state: _currentPresensiState,
+          onAdvanceState: _advanceState,
+          onResetState: _resetState,
+        );
         break;
       case 1:
-        activePage = page1_2.HomePage1_2(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
+        activePage = page1_2.HomePage1_2(
+          state: _currentPresensiState,
+          onAdvanceState: _advanceState,
+          onResetState: _resetState,
+        );
         break;
       case 2:
-        activePage = page2.HomePage2(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
+        activePage = page2.HomePage2(
+          state: _currentPresensiState,
+          onAdvanceState: _advanceState,
+          onResetState: _resetState,
+        );
         break;
       case 3:
-        activePage = page2_2.HomePage2_2(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
+        activePage = page2_2.HomePage2_2(
+          state: _currentPresensiState,
+          onAdvanceState: _advanceState,
+          onResetState: _resetState,
+        );
         break;
       default:
-        activePage = page1.HomePage1(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
+        activePage = page1.HomePage1(
+          state: _currentPresensiState,
+          onAdvanceState: _advanceState,
+          onResetState: _resetState,
+        );
     }
 
     return Scaffold(
@@ -233,27 +253,37 @@ class _Navbar extends StatelessWidget {
           ),
 
           // --- Tab Presensi (tidak aktif) ---
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/(home_page)_presensi-icon.svg',
-                width: 40,
-                height: 40,
-              ),
-              const Text(
-                'Presensi',
-                style: TextStyle(
-                  color: Color(0xFF5F6570),
-                  fontSize: 16,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
-                  height: 1.49,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LandingPresensiHariIni(),
                 ),
-              ),
-            ],
+              );
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/(home_page)_presensi-icon.svg',
+                  width: 40,
+                  height: 40,
+                ),
+                const Text(
+                  'Presensi',
+                  style: TextStyle(
+                    color: Color(0xFF5F6570),
+                    fontSize: 16,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                    height: 1.49,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           // --- Tab Profil (tidak aktif) ---
