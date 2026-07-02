@@ -1,9 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'presensi_state.dart';
 
 class PresensiCardV1 extends StatelessWidget {
+  final PresensiState state;
+
+  const PresensiCardV1({super.key, this.state = PresensiState.belumPresensi});
+
   @override
   Widget build(BuildContext context) {
+    // --- Variabel berdasarkan state ---
+    String masukLabel;
+    String masukJam;
+    String masukBadgeText;
+    Color masukBadgeBg;
+    Color masukBadgeTextColor;
+    Color masukIconColor;
+
+    String pulangLabel;
+    String pulangJam;
+    String pulangBadgeText;
+    Color pulangBadgeBg;
+    Color pulangBadgeTextColor;
+    Color pulangIconColor;
+
+    bool showTransport;
+
+    switch (state) {
+      case PresensiState.belumPresensi:
+        masukLabel = 'Masuk';
+        masukJam = '06:45';
+        masukBadgeText = 'Terkonfirmasi';
+        masukBadgeBg = const Color(0x1E4AAF57);
+        masukBadgeTextColor = const Color(0xFF18C079);
+        masukIconColor = const Color(0xFF18C079);
+
+        pulangLabel = 'Pulang';
+        pulangJam = '--:--';
+        pulangBadgeText = 'Belum presensi';
+        pulangBadgeBg = const Color(0xFFF0F1F2);
+        pulangBadgeTextColor = const Color(0xFF5F6570);
+        pulangIconColor = const Color(0xFF5F6570);
+
+        showTransport = false;
+        break;
+
+      case PresensiState.shift1Selesai:
+        masukLabel = 'Shift 1 (Selesai)';
+        masukJam = '06:45 - 14:00';
+        masukBadgeText = 'Terkonfirmasi';
+        masukBadgeBg = const Color(0x1E4AAF57);
+        masukBadgeTextColor = const Color(0xFF18C079);
+        masukIconColor = const Color(0xFF18C079);
+
+        pulangLabel = 'Shift 2 (Berikutnya)';
+        pulangJam = '14:00 - 20.00';
+        pulangBadgeText = 'Belum presensi';
+        pulangBadgeBg = const Color(0xFFF0F1F2);
+        pulangBadgeTextColor = const Color(0xFF5F6570);
+        pulangIconColor = const Color(0xFF5F6570);
+
+        showTransport = false;
+        break;
+
+      case PresensiState.pulang:
+        masukLabel = 'Masuk';
+        masukJam = '06:45';
+        masukBadgeText = 'Terkonfirmasi';
+        masukBadgeBg = const Color(0x1E4AAF57);
+        masukBadgeTextColor = const Color(0xFF18C079);
+        masukIconColor = const Color(0xFF18C079);
+
+        pulangLabel = 'Pulang';
+        pulangJam = '16:00';
+        pulangBadgeText = 'Terkonfirmasi';
+        pulangBadgeBg = const Color(0x1EFFAC2F);
+        pulangBadgeTextColor = const Color(0xFFFFAC2F);
+        pulangIconColor = const Color(0xFFFFAC2F);
+
+        showTransport = true;
+        break;
+    }
+
     return Container(
       width: 378,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
@@ -25,57 +103,41 @@ class PresensiCardV1 extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 10,
-                  children: [
-                    Opacity(
-                      opacity: 0.96,
-                      child: const Text(
-                        'Presensi Hari ini',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w700,
-                          height: 1.43,
-                          letterSpacing: -0.08,
-                        ),
-                      ),
+                child: const Opacity(
+                  opacity: 0.96,
+                  child: Text(
+                    'Presensi Hari ini',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w700,
+                      height: 1.43,
+                      letterSpacing: -0.08,
                     ),
-                  ],
+                  ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 10,
-                  children: [
-                    Opacity(
-                      opacity: 0.96,
-                      child: const Text(
-                        'Selasa, 30 Desember 2025',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w700,
-                          height: 1.33,
-                        ),
-                      ),
+                child: const Opacity(
+                  opacity: 0.96,
+                  child: Text(
+                    'Selasa, 30 Desember 2025',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w700,
+                      height: 1.33,
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],
           ),
 
-          // Body: baris masuk, pulang, transportasi, lokasi
+          // Body
           Container(
             width: 345,
             child: Column(
@@ -94,42 +156,40 @@ class PresensiCardV1 extends StatelessWidget {
                     children: [
                       // Baris Masuk
                       PresensiRow(
-                        iconColor: const Color(0xFF18C079),
-                        label: 'Masuk',
+                        iconColor: masukIconColor,
+                        label: masukLabel,
                         labelColor: const Color(0xFF18C079),
-                        jam: '06:45',
-                        statusText: 'Terkonfirmasi',
-                        statusColor: const Color(0xFF18C079),
-                        statusBgColor: const Color(0x1E4AAF57),
-                        exitIconColor: const Color(0xFF18C079),
-                        exitBgColor: const Color(0x1E4AAF57),
-                        actionIconPath:
-                            'assets/icons/(home_page)_masuk-icon.svg',
+                        jam: masukJam,
+                        statusText: masukBadgeText,
+                        statusColor: masukBadgeTextColor,
+                        statusBgColor: masukBadgeBg,
+                        exitIconColor: masukIconColor,
+                        exitBgColor: masukBadgeBg,
+                        actionIconPath: 'assets/icons/(home_page)_masuk-icon.svg',
                       ),
 
                       // Baris Pulang
                       PresensiRow(
-                        iconColor: const Color(0xFFFFAC2F),
-                        label: 'Pulang',
+                        iconColor: pulangIconColor,
+                        label: pulangLabel,
                         labelColor: const Color(0xFF293241),
-                        jam: '16:00',
-                        statusText: 'Terkonfirmasi',
-                        statusColor: const Color(0xFFFFAC2F),
-                        statusBgColor: const Color(0x1EFFAC2F),
-                        exitIconColor: const Color(0xFFFFAC2F),
-                        exitBgColor: const Color(0x1EFFAC2F),
-                        actionIconPath:
-                            'assets/icons/(home_page)_keluar-icon.svg',
+                        jam: pulangJam,
+                        statusText: pulangBadgeText,
+                        statusColor: pulangBadgeTextColor,
+                        statusBgColor: pulangBadgeBg,
+                        exitIconColor: pulangIconColor,
+                        exitBgColor: pulangBadgeBg,
+                        actionIconPath: 'assets/icons/(home_page)_keluar-icon.svg',
                       ),
                     ],
                   ),
                 ),
 
-                // Baris Transportasi Hari Ini
-                TransportasiRow(),
+                // Baris Transportasi Hari Ini (conditional)
+                if (showTransport) const TransportasiRow(),
 
                 // Baris Lokasi Kampus
-                LokasiRow(),
+                const LokasiRow(),
               ],
             ),
           ),
@@ -152,6 +212,7 @@ class PresensiRow extends StatelessWidget {
   final String actionIconPath;
 
   const PresensiRow({
+    super.key,
     required this.iconColor,
     required this.label,
     required this.labelColor,
@@ -220,30 +281,22 @@ class PresensiRow extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Label (Masuk / Pulang)
+                      // Label (Masuk / Pulang / Shift)
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.only(top: 4, right: 10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 12,
-                          children: [
-                            Opacity(
-                              opacity: 0.96,
-                              child: Text(
-                                label,
-                                style: TextStyle(
-                                  color: labelColor,
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.33,
-                                ),
-                              ),
+                        child: Opacity(
+                          opacity: 0.96,
+                          child: Text(
+                            label,
+                            style: TextStyle(
+                              color: labelColor,
+                              fontSize: 12,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w700,
+                              height: 1.33,
                             ),
-                          ],
+                          ),
                         ),
                       ),
 
@@ -251,30 +304,21 @@ class PresensiRow extends StatelessWidget {
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.only(right: 10, bottom: 4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            Text(
-                              jam,
-                              style: const TextStyle(
-                                color: Color(0xFF293241),
-                                fontSize: 16,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                height: 1.50,
-                                letterSpacing: -0.18,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          jam,
+                          style: const TextStyle(
+                            color: Color(0xFF293241),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.50,
+                            letterSpacing: -0.18,
+                          ),
                         ),
                       ),
 
                       // Badge status
                       Container(
-                        width: label == 'Masuk' ? 100 : 99,
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         decoration: ShapeDecoration(
                           color: statusBgColor,
@@ -282,26 +326,18 @@ class PresensiRow extends StatelessWidget {
                             borderRadius: BorderRadius.circular(17),
                           ),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 12,
-                          children: [
-                            Opacity(
-                              opacity: 0.96,
-                              child: Text(
-                                statusText,
-                                style: TextStyle(
-                                  color: statusColor,
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                  height: label == 'Masuk' ? 1.50 : 1.33,
-                                ),
-                              ),
+                        child: Opacity(
+                          opacity: 0.96,
+                          child: Text(
+                            statusText,
+                            style: TextStyle(
+                              color: statusColor,
+                              fontSize: 12,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w500,
+                              height: 1.50,
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ],
@@ -336,6 +372,8 @@ class PresensiRow extends StatelessWidget {
 }
 
 class TransportasiRow extends StatelessWidget {
+  const TransportasiRow({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -353,7 +391,6 @@ class TransportasiRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Kiri: label & subjudul
           Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -388,8 +425,6 @@ class TransportasiRow extends StatelessWidget {
               ),
             ],
           ),
-
-          // Kanan: nominal
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: Opacity(
@@ -414,6 +449,8 @@ class TransportasiRow extends StatelessWidget {
 }
 
 class LokasiRow extends StatelessWidget {
+  const LokasiRow({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -429,18 +466,15 @@ class LokasiRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 10,
         children: [
-          // Ikon lokasi
-          SizedBox(
+          const SizedBox(
             width: 16,
             height: 16,
-            child: const Icon(
+            child: Icon(
               Icons.location_on,
               size: 16,
               color: Color(0xFF0067AD),
             ),
           ),
-
-          // Nama lokasi
           Opacity(
             opacity: 0.96,
             child: Text.rich(

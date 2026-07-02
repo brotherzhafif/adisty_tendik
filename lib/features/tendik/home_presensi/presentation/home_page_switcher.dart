@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'widgets/presensi_state.dart';
 import 'home_page_1.dart' as page1;
 import 'home_page_1-2.dart' as page1_2;
 import 'home_page_2.dart' as page2;
@@ -20,12 +21,21 @@ class HomePageSwitcher extends StatefulWidget {
 
 class _HomePageSwitcherState extends State<HomePageSwitcher> {
   int _currentPage = 0;
+  PresensiState _currentPresensiState = PresensiState.belumPresensi;
 
   void _changeVersion(int index) {
     setState(() {
       _currentPage = index;
     });
     Navigator.pop(context); // Tutup modal setelah memilih
+  }
+
+
+  void _changeState(PresensiState state) {
+    setState(() {
+      _currentPresensiState = state;
+    });
+    Navigator.pop(context);
   }
 
   void _showVersionSelector() {
@@ -75,6 +85,36 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
                 onTap: () => _changeVersion(3),
                 selected: _currentPage == 3,
               ),
+              const Divider(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(
+                  'Pilih Status Presensi',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.access_time),
+                title: const Text('Belum Presensi'),
+                onTap: () => _changeState(PresensiState.belumPresensi),
+                selected: _currentPresensiState == PresensiState.belumPresensi,
+              ),
+              ListTile(
+                leading: const Icon(Icons.check_circle_outline),
+                title: const Text('Shift 1 Selesai / Lanjut'),
+                onTap: () => _changeState(PresensiState.shift1Selesai),
+                selected: _currentPresensiState == PresensiState.shift1Selesai,
+              ),
+              ListTile(
+                leading: const Icon(Icons.directions_walk),
+                title: const Text('Pulang'),
+                onTap: () => _changeState(PresensiState.pulang),
+                selected: _currentPresensiState == PresensiState.pulang,
+              ),
             ],
           ),
         );
@@ -87,19 +127,19 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
     Widget activePage;
     switch (_currentPage) {
       case 0:
-        activePage = const page1.HomePage1();
+        activePage = page1.HomePage1(state: _currentPresensiState);
         break;
       case 1:
-        activePage = const page1_2.HomePage1_2();
+        activePage = page1_2.HomePage1_2(state: _currentPresensiState);
         break;
       case 2:
-        activePage = const page2.HomePage2();
+        activePage = page2.HomePage2(state: _currentPresensiState);
         break;
       case 3:
-        activePage = const page2_2.HomePage2_2();
+        activePage = page2_2.HomePage2_2(state: _currentPresensiState);
         break;
       default:
-        activePage = const page1.HomePage1();
+        activePage = page1.HomePage1(state: _currentPresensiState);
     }
 
     return Scaffold(

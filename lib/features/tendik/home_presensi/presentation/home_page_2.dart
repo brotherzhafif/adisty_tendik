@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'widgets/presensi_state.dart';
+import 'widgets/tombol_pulang.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/layanan_adisty_section_v1.dart';
-import 'widgets/presensi_card_v1.dart';
 import 'widgets/presensi_card_v2.dart';
-import 'widgets/statistik_presensi_v1.dart';
 import 'widgets/statistik_presensi_v2.dart';
-import 'widgets/tombol_pulang.dart';
 
 // ============================================================
 // HALAMAN UTAMA - HomePage2
 // ============================================================
 class HomePage2 extends StatelessWidget {
-  const HomePage2({super.key});
+  final PresensiState state;
+
+  const HomePage2({super.key, this.state = PresensiState.belumPresensi});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class HomePage2 extends StatelessWidget {
               ),
 
               // --- Konten Informasi (Presensi + Layanan) ---
-              _InformationSection(),
+              _InformationSection(state: state),
             ],
           ),
         ),
@@ -46,6 +46,10 @@ class HomePage2 extends StatelessWidget {
 // Wrapper untuk semua section: presensi & layanan
 // ============================================================
 class _InformationSection extends StatelessWidget {
+  final PresensiState state;
+
+  const _InformationSection({required this.state});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -83,13 +87,13 @@ class _InformationSection extends StatelessWidget {
                         spacing: 11,
                         children: [
                           // Card Presensi (biru)
-                          PresensiCardV2(),
+                          PresensiCardV2(state: state),
 
                           // Row Statistik (jumlah presensi + status)
                           StatistikPresensiV2(),
 
-                          // Tombol Pulang + hint
-                          TombolPulang(),
+                          // Tombol Presensi + hint
+                          _TombolPresensiWrapper(state: state),
                         ],
                       ),
                     ),
@@ -103,6 +107,54 @@ class _InformationSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+// ============================================================
+// KOMPONEN: TOMBOL PRESENSI + FOOTER HINT (state-aware)
+// ============================================================
+class _TombolPresensiWrapper extends StatelessWidget {
+  final PresensiState state;
+
+  const _TombolPresensiWrapper({required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    String buttonText;
+    List<Color> buttonGradient;
+    Color footerBg;
+    String footerText;
+    Color footerTextColor;
+
+    switch (state) {
+      case PresensiState.belumPresensi:
+        buttonText = 'Masuk';
+        buttonGradient = const [Color(0xFF4AAF57), Color(0xFF49C95A)];
+        footerBg = const Color(0xFFF6F7F7);
+        footerText = 'Klik tombol diatas saat Anda ingin Masuk';
+        footerTextColor = const Color(0xFF5F6570);
+        break;
+      case PresensiState.shift1Selesai:
+        buttonText = 'Lanjut Shift';
+        buttonGradient = const [Color(0xFF0067AD), Color(0xFF4497D0)];
+        footerBg = const Color(0xFFE8F1F9);
+        footerText =
+            'Shift 1 telah selesai. Silahkan lanjutkan ke shift berikutnya.';
+        footerTextColor = const Color(0xFF2B86C3);
+        break;
+      case PresensiState.pulang:
+        buttonText = 'Pulang';
+        buttonGradient = const [Color(0xFFFFAC2F), Color(0xFFFFC268)];
+        footerBg = const Color(0xFFF6F7F7);
+        footerText = 'Klik tombol diatas saat Anda ingin pulang';
+        footerTextColor = const Color(0xFF5F6570);
+        break;
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [TombolPresensi(text: buttonText, gradient: buttonGradient)],
     );
   }
 }
