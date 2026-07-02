@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/profile_header.dart';
-import 'widgets/layanan_adisty_section.dart';
+import 'widgets/layanan_adisty_section_v1.dart';
 import 'widgets/presensi_card_v1.dart';
 import 'widgets/presensi_card_v2.dart';
 import 'widgets/statistik_presensi_v1.dart';
@@ -98,7 +98,7 @@ class _InformationSection extends StatelessWidget {
               ),
 
               // --- Section Layanan Adisty ---
-              LayananAdistySection(),
+              LayananAdistySectionV1(),
             ],
           ),
         ),
@@ -106,28 +106,3 @@ class _InformationSection extends StatelessWidget {
     );
   }
 }
-
-
-// ============================================================
-// KOMPONEN: KOTAK PRESENSI (Masuk / Pulang)
-// Digunakan ulang untuk kotak masuk dan kotak pulang
-// ============================================================
-
-// ============================================================
-// KOMPONEN: BARIS LOKASI & TRANSPORTASI
-// Menampilkan lokasi kampus dan info transportasi harian
-// yang digabung dalam satu area di dalam card biru
-// ============================================================
-
-
-// ============================================================
-// KOMPONEN: BADGE STATISTIK (reusable)
-// Digunakan untuk tiap badge statistik di baris statistik
-// ============================================================
-
-
-
-// ============================================================
-// KOMPONEN: CARD LAYANAN (reusable)
-// Digunakan untuk tiap kartu layanan: Tunjangan, Cuti, dll
-// ============================================================

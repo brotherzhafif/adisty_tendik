@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/profile_header.dart';
-import 'widgets/layanan_adisty_section.dart';
+import 'widgets/layanan_adisty_section_v2.dart';
 import 'widgets/presensi_card_v1.dart';
 import 'widgets/presensi_card_v2.dart';
 import 'widgets/statistik_presensi_v1.dart';
 import 'widgets/statistik_presensi_v2.dart';
 import 'widgets/tombol_pulang.dart';
-
 
 // ============================================================
 // HALAMAN UTAMA - HomePage1
@@ -41,7 +40,6 @@ class HomePage1_2 extends StatelessWidget {
     );
   }
 }
-
 
 // ============================================================
 // KOMPONEN: SECTION INFORMASI UTAMA
@@ -100,7 +98,7 @@ class _InformationSection extends StatelessWidget {
               ),
 
               // --- Section Layanan Adisty ---
-              LayananAdistySection(),
+              LayananAdistySectionV2(),
             ],
           ),
         ),
@@ -108,32 +106,3 @@ class _InformationSection extends StatelessWidget {
     );
   }
 }
-
-
-// ============================================================
-// KOMPONEN: BARIS PRESENSI (Masuk / Pulang)
-// Digunakan ulang untuk baris masuk dan baris pulang
-// ============================================================
-
-// ============================================================
-// KOMPONEN: BARIS TRANSPORTASI HARI INI
-// Menampilkan info tunjangan transportasi harian
-// ============================================================
-
-// ============================================================
-// KOMPONEN: BARIS LOKASI KAMPUS
-// Menampilkan nama gedung/lokasi presensi
-// ============================================================
-
-
-// ============================================================
-// KOMPONEN: ITEM STATISTIK (reusable)
-// Digunakan untuk tiap card statistik di baris statistik
-// ============================================================
-
-
-
-// ============================================================
-// KOMPONEN: CARD LAYANAN (reusable)
-// Digunakan untuk tiap kartu layanan: Tunjangan, Cuti, dll
-// ============================================================

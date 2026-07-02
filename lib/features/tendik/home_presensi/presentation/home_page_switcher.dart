@@ -7,76 +7,111 @@ import 'home_page_2.dart' as page2;
 import 'home_page_2-2.dart' as page2_2;
 
 // ============================================================
-// HALAMAN SWIPE - HomeSwipePage
-// Wrapper utama yang menyatukan semua homepage dalam
-// PageView swipeable (kiri/kanan, looping tak terbatas)
-// dengan Navbar bawah.
+// HALAMAN UTAMA - HomePageSwitcher (kini menggunakan Switcher)
+// Menampilkan satu homepage aktif dengan FloatingActionButton
+// untuk mengganti versi tampilan (v1, v1-2, v2, v2-2).
 // ============================================================
-class HomeSwipePage extends StatefulWidget {
-  const HomeSwipePage({super.key});
+class HomePageSwitcher extends StatefulWidget {
+  const HomePageSwitcher({super.key});
 
   @override
-  State<HomeSwipePage> createState() => _HomeSwipePageState();
+  State<HomePageSwitcher> createState() => _HomePageSwitcherState();
 }
 
-class _HomeSwipePageState extends State<HomeSwipePage> {
-  // Jumlah halaman asli
-  static const int _pageCount = 4;
+class _HomePageSwitcherState extends State<HomePageSwitcher> {
+  int _currentPage = 0;
 
-  // Offset besar agar bisa scroll dua arah dari tengah
-  static const int _loopOffset = 1000;
-
-  // Controller dimulai dari tengah agar swipe kiri/kanan sama-sama bisa
-  late final PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _loopOffset);
+  void _changeVersion(int index) {
+    setState(() {
+      _currentPage = index;
+    });
+    Navigator.pop(context); // Tutup modal setelah memilih
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  // Halaman aktif (0-indexed, sudah di-mod ke jumlah halaman asli)
-  int get _currentPage {
-    if (!_pageController.hasClients) return 0;
-    return (_pageController.page?.round() ?? _loopOffset) % _pageCount;
+  void _showVersionSelector() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Text(
+                  'Pilih Versi Tampilan',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.looks_one),
+                title: const Text('Home Page V1'),
+                onTap: () => _changeVersion(0),
+                selected: _currentPage == 0,
+              ),
+              ListTile(
+                leading: const Icon(Icons.looks_two),
+                title: const Text('Home Page V1-2'),
+                onTap: () => _changeVersion(1),
+                selected: _currentPage == 1,
+              ),
+              ListTile(
+                leading: const Icon(Icons.looks_3),
+                title: const Text('Home Page V2'),
+                onTap: () => _changeVersion(2),
+                selected: _currentPage == 2,
+              ),
+              ListTile(
+                leading: const Icon(Icons.looks_4),
+                title: const Text('Home Page V2-2'),
+                onTap: () => _changeVersion(3),
+                selected: _currentPage == 3,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget activePage;
+    switch (_currentPage) {
+      case 0:
+        activePage = const page1.HomePage1();
+        break;
+      case 1:
+        activePage = const page1_2.HomePage1_2();
+        break;
+      case 2:
+        activePage = const page2.HomePage2();
+        break;
+      case 3:
+        activePage = const page2_2.HomePage2_2();
+        break;
+      default:
+        activePage = const page1.HomePage1();
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7F7),
-      body: PageView.builder(
-        controller: _pageController,
-        physics: const PageScrollPhysics(),
-        onPageChanged: (_) => setState(() {}),
-        itemBuilder: (context, index) {
-          final page = index % _pageCount;
-          switch (page) {
-            case 0:
-              return const page1.HomePage1();
-            case 1:
-              return const page1_2.HomePage1_2();
-            case 2:
-              return const page2.HomePage2();
-            case 3:
-              return const page2_2.HomePage2_2();
-            default:
-              return const page1.HomePage1();
-          }
-        },
+      body: activePage,
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showVersionSelector,
+        backgroundColor: const Color(0xFF016EB8),
+        tooltip: 'Pilih Versi Tampilan',
+        child: const Icon(Icons.palette, color: Colors.white),
       ),
-      bottomNavigationBar: AnimatedBuilder(
-        animation: _pageController,
-        builder: (context, _) {
-          return _Navbar(currentPage: _currentPage);
-        },
-      ),
+      bottomNavigationBar: const _Navbar(),
     );
   }
 }
@@ -85,19 +120,12 @@ class _HomeSwipePageState extends State<HomeSwipePage> {
 // KOMPONEN: NAVBAR BAWAH
 // Menampilkan 3 item navigasi: Beranda, Presensi, Profil
 // Icon diambil dari assets/icons/ menggunakan flutter_svg.
-// currentPage digunakan untuk menentukan tab aktif (Beranda).
 // ============================================================
 class _Navbar extends StatelessWidget {
-  final int currentPage;
-
-  const _Navbar({required this.currentPage});
+  const _Navbar();
 
   @override
   Widget build(BuildContext context) {
-    // Tab Beranda aktif jika di halaman mana pun (semua adalah Beranda)
-    // Bisa dikembangkan nanti ketika ada halaman Presensi & Profil terpisah
-    const bool isBerandaActive = true;
-
     return Container(
       width: double.infinity,
       height: 100,
