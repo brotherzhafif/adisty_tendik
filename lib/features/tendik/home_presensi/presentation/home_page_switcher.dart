@@ -38,6 +38,29 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
     Navigator.pop(context);
   }
 
+  // Callback untuk flow tombol presensi
+  void _advanceState() {
+    setState(() {
+      switch (_currentPresensiState) {
+        case PresensiState.belumPresensi:
+          _currentPresensiState = PresensiState.shift1Selesai;
+          break;
+        case PresensiState.shift1Selesai:
+          _currentPresensiState = PresensiState.pulang;
+          break;
+        case PresensiState.pulang:
+          break;
+      }
+    });
+  }
+
+  // Setelah dialog konfirmasi pulang berhasil
+  void _resetState() {
+    setState(() {
+      _currentPresensiState = PresensiState.belumPresensi;
+    });
+  }
+
   void _showVersionSelector() {
     showModalBottomSheet(
       context: context,
@@ -127,19 +150,19 @@ class _HomePageSwitcherState extends State<HomePageSwitcher> {
     Widget activePage;
     switch (_currentPage) {
       case 0:
-        activePage = page1.HomePage1(state: _currentPresensiState);
+        activePage = page1.HomePage1(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
         break;
       case 1:
-        activePage = page1_2.HomePage1_2(state: _currentPresensiState);
+        activePage = page1_2.HomePage1_2(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
         break;
       case 2:
-        activePage = page2.HomePage2(state: _currentPresensiState);
+        activePage = page2.HomePage2(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
         break;
       case 3:
-        activePage = page2_2.HomePage2_2(state: _currentPresensiState);
+        activePage = page2_2.HomePage2_2(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
         break;
       default:
-        activePage = page1.HomePage1(state: _currentPresensiState);
+        activePage = page1.HomePage1(state: _currentPresensiState, onAdvanceState: _advanceState, onResetState: _resetState);
     }
 
     return Scaffold(

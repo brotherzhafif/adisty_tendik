@@ -138,7 +138,7 @@ class PresensiCardV1 extends StatelessWidget {
           ),
 
           // Body
-          Container(
+          SizedBox(
             width: 345,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -146,7 +146,7 @@ class PresensiCardV1 extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 11,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

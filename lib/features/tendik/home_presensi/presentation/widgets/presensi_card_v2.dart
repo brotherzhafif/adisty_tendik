@@ -265,7 +265,7 @@ class LokasiTransportasiRowV2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 342,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -273,7 +273,7 @@ class LokasiTransportasiRowV2 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 4,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 26,
             child: Container(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class StatistikPresensiV1 extends StatelessWidget {
+  const StatistikPresensiV1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +58,7 @@ class StatistikItem extends StatelessWidget {
   final String subLabel;
   final Color subLabelColor;
 
-  const StatistikItem({
+  const StatistikItem({super.key, 
     required this.iconColor,
     required this.bgColor,
     required this.iconPath,

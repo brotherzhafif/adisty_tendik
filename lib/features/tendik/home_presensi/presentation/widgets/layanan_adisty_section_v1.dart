@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LayananAdistySectionV1 extends StatelessWidget {
+  const LayananAdistySectionV1({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -20,7 +21,7 @@ class LayananAdistySectionV1 extends StatelessWidget {
           ),
 
           // Judul Section
-          Container(
+          SizedBox(
             width: 380,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -47,7 +48,7 @@ class LayananAdistySectionV1 extends StatelessWidget {
           ),
 
           // Grid Card Layanan
-          Container(
+          SizedBox(
             width: 379,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -100,7 +101,7 @@ class LayananCard extends StatelessWidget {
   final String description;
   final double descWidth;
 
-  const LayananCard({
+  const LayananCard({super.key, 
     required this.imagePath,
     required this.title,
     required this.description,
@@ -138,7 +139,7 @@ class LayananCard extends StatelessWidget {
           ),
 
           // Judul & deskripsi
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisSize: MainAxisSize.min,

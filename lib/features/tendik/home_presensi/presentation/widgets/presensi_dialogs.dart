@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DialogKonfirmasiPulang extends StatelessWidget {
-  const DialogKonfirmasiPulang({super.key});
+  final VoidCallback? onConfirmed;
+  const DialogKonfirmasiPulang({super.key, this.onConfirmed});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -46,7 +47,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 4,
                     children: [
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -207,7 +208,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 130,
                         height: 48,
                         child: Column(
@@ -263,10 +264,10 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                         Navigator.of(context).pop();
                         showDialog(
                           context: context,
-                          builder: (context) => const DialogPresensiBerhasil(),
+                          builder: (context) => DialogPresensiBerhasil(onConfirmed: onConfirmed),
                         );
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 130,
                         height: 48,
                         child: Column(
@@ -325,7 +326,8 @@ class DialogKonfirmasiPulang extends StatelessWidget {
 }
 
 class DialogPresensiBerhasil extends StatelessWidget {
-  const DialogPresensiBerhasil({super.key});
+  final VoidCallback? onConfirmed;
+  const DialogPresensiBerhasil({super.key, this.onConfirmed});
 
   @override
   Widget build(BuildContext context) {
@@ -350,7 +352,7 @@ class DialogPresensiBerhasil extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               spacing: 16,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -369,7 +371,7 @@ class DialogPresensiBerhasil extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -415,8 +417,9 @@ class DialogPresensiBerhasil extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).pop();
+                    onConfirmed?.call();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 235,
                     height: 48,
                     child: Column(
