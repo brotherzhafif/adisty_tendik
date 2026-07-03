@@ -9,7 +9,7 @@ class LayananAdistySectionV1 extends StatelessWidget {
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 17,
         children: [
@@ -19,72 +19,90 @@ class LayananAdistySectionV1 extends StatelessWidget {
             height: 8,
             decoration: const BoxDecoration(color: Color(0xFFEEF1F3)),
           ),
-
-          // Judul Section
-          SizedBox(
-            width: 380,
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 17,
               children: [
-                const SizedBox(
-                  width: 380,
-                  child: Text(
-                    'Layanan Adisty',
-                    style: TextStyle(
-                      color: Color(0xFF293241),
-                      fontSize: 20,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 1.40,
-                      letterSpacing: -0.34,
-                    ),
+                // Judul Section
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          'Layanan Adisty',
+                          style: TextStyle(
+                            color: Color(0xFF293241),
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.40,
+                            letterSpacing: -0.34,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
 
-          // Grid Card Layanan
-          SizedBox(
-            width: 379,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 25,
-              children: [
-                // Baris pertama: Tunjangan Beras + Layanan Cuti
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 29,
-                  children: [
-                    LayananCard(
-                      imagePath: 'assets/images/tunjangan_beras.png',
-                      title: 'Tunjangan Beras',
-                      description:
-                          'Tinjau informasi pengambilan tunjangan beras ',
-                      descWidth: 169,
-                    ),
-                    LayananCard(
-                      imagePath: 'assets/images/layanan_cuti.png',
-                      title: 'Layanan Cuti',
-                      description: 'Pengajuan dan Informasi Layanan Cuti',
-                      descWidth: 150,
-                    ),
-                  ],
-                ),
+                // Grid Card Layanan
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Baris pertama: Tunjangan Beras + Layanan Cuti
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: LayananCard(
+                              imagePath: 'assets/images/tunjangan_beras.png',
+                              title: 'Tunjangan Beras',
+                              description:
+                                  'Tinjau informasi pengambilan tunjangan beras ',
+                              descWidth: double.infinity,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: LayananCard(
+                              imagePath: 'assets/images/layanan_cuti.png',
+                              title: 'Layanan Cuti',
+                              description:
+                                  'Pengajuan dan Informasi Layanan Cuti',
+                              descWidth: double.infinity,
+                            ),
+                          ),
+                        ],
+                      ),
 
-                // Baris kedua: Penilaian Kinerja
-                LayananCard(
-                  imagePath: 'assets/images/penilaian_kinerja.png',
-                  title: 'Penilaian Kerja',
-                  description: 'Tinjau Penilaian Kinerja anda',
-                  descWidth: 120,
+                      // Baris kedua: Penilaian Kinerja
+                      Row(
+                        children: [
+                          Expanded(
+                            child: LayananCard(
+                              imagePath: 'assets/images/penilaian_kinerja.png',
+                              title: 'Penilaian Kerja',
+                              description: 'Tinjau Penilaian Kinerja anda',
+                              descWidth: double.infinity,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          const Spacer(),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -101,7 +119,8 @@ class LayananCard extends StatelessWidget {
   final String description;
   final double descWidth;
 
-  const LayananCard({super.key, 
+  const LayananCard({
+    super.key,
     required this.imagePath,
     required this.title,
     required this.description,
@@ -111,7 +130,7 @@ class LayananCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 175,
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       decoration: ShapeDecoration(
         color: Colors.white,
@@ -190,7 +209,6 @@ class LayananCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 16,
               children: [
                 const Text(
                   'Selengkapnya',

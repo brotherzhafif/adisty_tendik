@@ -8,16 +8,16 @@ class StatistikPresensiV1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 6,
         children: [
           // Jumlah Presensi bulan ini
           StatistikItem(
@@ -58,7 +58,8 @@ class StatistikItem extends StatelessWidget {
   final String subLabel;
   final Color subLabelColor;
 
-  const StatistikItem({super.key, 
+  const StatistikItem({
+    super.key,
     required this.iconColor,
     required this.bgColor,
     required this.iconPath,
@@ -72,15 +73,14 @@ class StatistikItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 179,
-      padding: const EdgeInsets.only(top: 8, left: 12, right: 6, bottom: 8),
+      padding: const EdgeInsets.all(8),
       decoration: ShapeDecoration(
         color: bgColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 8,
         children: [

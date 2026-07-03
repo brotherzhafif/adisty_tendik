@@ -199,9 +199,9 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 8,
+                  spacing: 2,
                   children: [
                     // Tombol Batal
                     GestureDetector(
@@ -209,7 +209,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: SizedBox(
-                        width: 130,
+                        width: 120,
                         height: 48,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -264,7 +264,8 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                         Navigator.of(context).pop();
                         showDialog(
                           context: context,
-                          builder: (context) => DialogPresensiBerhasil(onConfirmed: onConfirmed),
+                          builder: (context) =>
+                              DialogPresensiBerhasil(onConfirmed: onConfirmed),
                         );
                       },
                       child: SizedBox(

@@ -221,14 +221,16 @@ class RiwayatPengajuanItem extends StatelessWidget {
                               size: 16,
                             ),
                             const SizedBox(width: 8),
-                            Text(
-                              diajukan,
-                              style: const TextStyle(
-                                color: Color(0xFF5F6570),
-                                fontSize: 16,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w600,
-                                height: 1.50,
+                            Expanded(
+                              child: Text(
+                                diajukan,
+                                style: const TextStyle(
+                                  color: Color(0xFF5F6570),
+                                  fontSize: 16,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.50,
+                                ),
                               ),
                             ),
                           ],
@@ -281,14 +283,16 @@ class RiwayatPengajuanItem extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Text(
-                              oldValue,
-                              style: const TextStyle(
-                                color: Color(0xFFFFAC2F),
-                                fontSize: 16,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w600,
-                                height: 1.50,
+                            Expanded(
+                              child: Text(
+                                oldValue,
+                                style: const TextStyle(
+                                  color: Color(0xFFFFAC2F),
+                                  fontSize: 16,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.50,
+                                ),
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -298,14 +302,16 @@ class RiwayatPengajuanItem extends StatelessWidget {
                               color: Color(0xFF5F6570),
                             ),
                             const SizedBox(width: 8),
-                            Text(
-                              newValue,
-                              style: const TextStyle(
-                                color: Color(0xFFFFAC2F),
-                                fontSize: 16,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w600,
-                                height: 1.50,
+                            Expanded(
+                              child: Text(
+                                newValue,
+                                style: const TextStyle(
+                                  color: Color(0xFFFFAC2F),
+                                  fontSize: 16,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.50,
+                                ),
                               ),
                             ),
                           ],

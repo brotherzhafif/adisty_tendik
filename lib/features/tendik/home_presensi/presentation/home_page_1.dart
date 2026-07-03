@@ -14,7 +14,12 @@ class HomePage1 extends StatelessWidget {
   final VoidCallback? onAdvanceState;
   final VoidCallback? onResetState;
 
-  const HomePage1({super.key, this.state = PresensiState.belumPresensi, this.onAdvanceState, this.onResetState});
+  const HomePage1({
+    super.key,
+    this.state = PresensiState.belumPresensi,
+    this.onAdvanceState,
+    this.onResetState,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,11 @@ class HomePage1 extends StatelessWidget {
               ),
 
               // --- Konten Informasi (Presensi + Layanan) ---
-              _InformationSection(state: state, onAdvanceState: onAdvanceState, onResetState: onResetState),
+              _InformationSection(
+                state: state,
+                onAdvanceState: onAdvanceState,
+                onResetState: onResetState,
+              ),
             ],
           ),
         ),
@@ -52,7 +61,11 @@ class _InformationSection extends StatelessWidget {
   final VoidCallback? onAdvanceState;
   final VoidCallback? onResetState;
 
-  const _InformationSection({required this.state, this.onAdvanceState, this.onResetState});
+  const _InformationSection({
+    required this.state,
+    this.onAdvanceState,
+    this.onResetState,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +110,11 @@ class _InformationSection extends StatelessWidget {
                           StatistikPresensiV1(),
 
                           // Tombol Presensi + hint
-                          TombolPresensiWrapper(state: state, onAdvanceState: onAdvanceState, onResetState: onResetState),
+                          TombolPresensiWrapper(
+                            state: state,
+                            onAdvanceState: onAdvanceState,
+                            onResetState: onResetState,
+                          ),
                         ],
                       ),
                     ),
@@ -114,4 +131,3 @@ class _InformationSection extends StatelessWidget {
     );
   }
 }
-

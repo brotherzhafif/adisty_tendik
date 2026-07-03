@@ -6,34 +6,41 @@ class StatistikPresensiV2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      spacing: 10,
-      children: [
-        // Badge Presensi (jumlah)
-        StatistikBadge(
-          bgColor: const Color(0x1EFB7F54),
-          borderColor: const Color(0xFFFB7F54),
-          label: 'Presensi',
-          value: '19',
-          valueColor: const Color(0xFFFB7F54),
-          iconPath: 'assets/icons/(home_page)_people-icon.svg',
-          iconColor: const Color(0xFFFB7F54),
-        ),
-
-        // Badge Status (On Time)
-        StatistikBadge(
-          bgColor: const Color(0x1E18C079),
-          borderColor: const Color(0xFF18C079),
-          label: 'Status',
-          value: 'On Time',
-          valueColor: const Color(0xFF18C079),
-          iconPath: 'assets/icons/(home_page)_shield-icon.svg',
-          iconColor: const Color(0xFF18C079),
-        ),
-      ],
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Badge Presensi (jumlah)
+          Expanded(
+            child: StatistikBadge(
+              bgColor: const Color(0x1EFB7F54),
+              borderColor: const Color(0xFFFB7F54),
+              label: 'Presensi',
+              value: '19',
+              valueColor: const Color(0xFFFB7F54),
+              iconPath: 'assets/icons/(home_page)_people-icon.svg',
+              iconColor: const Color(0xFFFB7F54),
+            ),
+          ),
+          const SizedBox(width: 12),
+          // Badge Status (On Time)
+          Expanded(
+            child: StatistikBadge(
+              bgColor: const Color(0x1E18C079),
+              borderColor: const Color(0xFF18C079),
+              label: 'Status',
+              value: 'On Time',
+              valueColor: const Color(0xFF18C079),
+              iconPath: 'assets/icons/(home_page)_shield-icon.svg',
+              iconColor: const Color(0xFF18C079),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -47,7 +54,8 @@ class StatistikBadge extends StatelessWidget {
   final String iconPath;
   final Color iconColor;
 
-  const StatistikBadge({super.key, 
+  const StatistikBadge({
+    super.key,
     required this.bgColor,
     required this.borderColor,
     required this.label,
@@ -60,8 +68,8 @@ class StatistikBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 182,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: ShapeDecoration(
         color: bgColor,
         shape: RoundedRectangleBorder(
@@ -70,8 +78,8 @@ class StatistikBadge extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Ikon SVG

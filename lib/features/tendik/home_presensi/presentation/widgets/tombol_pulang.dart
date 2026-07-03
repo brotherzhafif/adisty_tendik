@@ -19,6 +19,7 @@ class TombolPresensi extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 48,
+        margin: const EdgeInsets.symmetric(horizontal: 12),
         padding: const EdgeInsets.all(6),
         decoration: ShapeDecoration(
           gradient: LinearGradient(

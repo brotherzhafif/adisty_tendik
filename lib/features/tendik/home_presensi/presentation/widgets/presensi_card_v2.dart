@@ -50,7 +50,8 @@ class PresensiCardV2 extends StatelessWidget {
     }
 
     return Container(
-      width: 378,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       decoration: ShapeDecoration(
         color: const Color(0xFF2B86C3),
@@ -59,17 +60,15 @@ class PresensiCardV2 extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header: label & tanggal
           Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 40,
             children: [
               Container(
-                width: 139,
                 padding: const EdgeInsets.only(right: 10, bottom: 6),
                 child: const Opacity(
                   opacity: 0.96,
@@ -113,17 +112,18 @@ class PresensiCardV2 extends StatelessWidget {
             spacing: 13,
             children: [
               Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 10,
                 children: [
                   // Kotak Masuk (kiri)
-                  PresensiBox(
-                    label: leftLabel,
-                    labelColor: leftLabelColor,
-                    jam: leftJam,
-                    iconPath: 'assets/icons/(home_page)_masuk-icon.svg',
+                  Expanded(
+                    child: PresensiBox(
+                      label: leftLabel,
+                      labelColor: leftLabelColor,
+                      jam: leftJam,
+                      iconPath: 'assets/icons/(home_page)_masuk-icon.svg',
+                    ),
                   ),
 
                   // Separator lingkaran biru
@@ -141,11 +141,13 @@ class PresensiCardV2 extends StatelessWidget {
                   ),
 
                   // Kotak Pulang (kanan)
-                  PresensiBox(
-                    label: rightLabel,
-                    labelColor: rightLabelColor,
-                    jam: rightJam,
-                    iconPath: 'assets/icons/(home_page)_keluar-icon.svg',
+                  Expanded(
+                    child: PresensiBox(
+                      label: rightLabel,
+                      labelColor: rightLabelColor,
+                      jam: rightJam,
+                      iconPath: 'assets/icons/(home_page)_keluar-icon.svg',
+                    ),
                   ),
                 ],
               ),
@@ -183,7 +185,7 @@ class PresensiBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 148,
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: ShapeDecoration(
         color: Colors.white,
@@ -197,7 +199,12 @@ class PresensiBox extends StatelessWidget {
           // Label (Masuk / Pulang / Shift)
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 4),
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: 4,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -227,7 +234,12 @@ class PresensiBox extends StatelessWidget {
           // Jam
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(top: 4, left: 10, right: 10, bottom: 10),
+            padding: const EdgeInsets.only(
+              top: 4,
+              left: 10,
+              right: 10,
+              bottom: 10,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -244,7 +256,7 @@ class PresensiBox extends StatelessWidget {
                   jam,
                   style: const TextStyle(
                     color: Color(0xFF293241),
-                    fontSize: 16,
+                    fontSize: 14,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                     height: 1.50,
@@ -334,7 +346,12 @@ class TransportasiRowV2 extends StatelessWidget {
             opacity: 0.80,
             child: Container(
               width: 194,
-              padding: const EdgeInsets.only(top: 4, left: 11, right: 46, bottom: 4),
+              padding: const EdgeInsets.only(
+                top: 4,
+                left: 11,
+                right: 46,
+                bottom: 4,
+              ),
               child: const Opacity(
                 opacity: 0.96,
                 child: Text(

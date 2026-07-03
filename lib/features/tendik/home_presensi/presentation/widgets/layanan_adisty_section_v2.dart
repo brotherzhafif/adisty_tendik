@@ -131,25 +131,34 @@ class LayananCardV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 380,
-      height: 171,
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         shadows: _cardShadows,
       ),
-      child: Stack(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Teks: judul & deskripsi (kanan atas)
-          Positioned(
-            left: 131,
-            top: 24,
+          // Gambar utama (kiri)
+          Container(
+            width: 99,
+            height: 95,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          // Teks: judul, deskripsi & tombol (kanan)
+          Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 4,
               children: [
                 Text(
                   title,
@@ -161,64 +170,47 @@ class LayananCardV2 extends StatelessWidget {
                     letterSpacing: -0.18,
                   ),
                 ),
-                SizedBox(
-                  width: 200,
-                  child: Text(
-                    description,
-                    style: const TextStyle(
-                      color: Color(0xFF5F6570),
-                      fontSize: 14,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w400,
-                      height: 1.43,
-                      letterSpacing: -0.17,
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    color: Color(0xFF5F6570),
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                    height: 1.43,
+                    letterSpacing: -0.17,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF2B86C3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Text(
+                      'Selengkapnya',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w400,
+                        height: 1.43,
+                        letterSpacing: -0.08,
+                      ),
                     ),
                   ),
                 ),
               ],
-            ),
-          ),
-
-          // Tombol Selengkapnya (kanan bawah)
-          Positioned(
-            left: 233,
-            top: 111,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: ShapeDecoration(
-                color: const Color(0xFF2B86C3),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              child: const Text(
-                'Selengkapnya',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
-                  height: 1.43,
-                  letterSpacing: -0.08,
-                ),
-              ),
-            ),
-          ),
-
-          // Gambar utama (kiri)
-          Positioned(
-            left: 20,
-            top: 22,
-            child: Container(
-              width: 99,
-              height: 95,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.contain,
-                ),
-              ),
             ),
           ),
         ],

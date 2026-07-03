@@ -83,7 +83,8 @@ class PresensiCardV1 extends StatelessWidget {
     }
 
     return Container(
-      width: 378,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       decoration: ShapeDecoration(
         color: const Color(0xFF2B86C3),
@@ -92,17 +93,16 @@ class PresensiCardV1 extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header: label & tanggal
           Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 40,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(6),
                 child: const Opacity(
                   opacity: 0.96,
                   child: Text(
@@ -119,7 +119,7 @@ class PresensiCardV1 extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(6),
                 child: const Opacity(
                   opacity: 0.96,
                   child: Text(
@@ -165,7 +165,8 @@ class PresensiCardV1 extends StatelessWidget {
                         statusBgColor: masukBadgeBg,
                         exitIconColor: masukIconColor,
                         exitBgColor: masukBadgeBg,
-                        actionIconPath: 'assets/icons/(home_page)_masuk-icon.svg',
+                        actionIconPath:
+                            'assets/icons/(home_page)_masuk-icon.svg',
                       ),
 
                       // Baris Pulang
@@ -179,7 +180,8 @@ class PresensiCardV1 extends StatelessWidget {
                         statusBgColor: pulangBadgeBg,
                         exitIconColor: pulangIconColor,
                         exitBgColor: pulangBadgeBg,
-                        actionIconPath: 'assets/icons/(home_page)_keluar-icon.svg',
+                        actionIconPath:
+                            'assets/icons/(home_page)_keluar-icon.svg',
                       ),
                     ],
                   ),
@@ -236,9 +238,8 @@ class PresensiRow extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 60,
         children: [
           // Kiri: ikon check + label + jam + status
           Container(
@@ -469,11 +470,7 @@ class LokasiRow extends StatelessWidget {
           const SizedBox(
             width: 16,
             height: 16,
-            child: Icon(
-              Icons.location_on,
-              size: 16,
-              color: Color(0xFF0067AD),
-            ),
+            child: Icon(Icons.location_on, size: 16, color: Color(0xFF0067AD)),
           ),
           Opacity(
             opacity: 0.96,
