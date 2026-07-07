@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class StatistikPresensiV2 extends StatelessWidget {
-  const StatistikPresensiV2({super.key});
+class StatistikPresensi extends StatelessWidget {
+  const StatistikPresensi({super.key});
 
   @override
   Widget build(BuildContext context) {

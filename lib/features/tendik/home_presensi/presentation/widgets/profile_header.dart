@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../notifikasi/presentation/notifikasi.dart';
+import '../../../notifikasi/presentation/index.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});

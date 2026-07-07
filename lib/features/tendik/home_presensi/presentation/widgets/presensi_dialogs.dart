@@ -33,7 +33,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        'assets/images/kucing_presensi_bertanya.png',
+                        'assets/images/(presensi)_kucing_presensi_bertanya.png',
                       ),
                       fit: BoxFit.contain,
                     ),
@@ -366,7 +366,7 @@ class DialogPresensiBerhasil extends StatelessWidget {
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
-                              'assets/images/kucing_presensi_berhasil.png',
+                              'assets/images/(presensi)_kucing_presensi_berhasil.png',
                             ),
                             fit: BoxFit.contain,
                           ),

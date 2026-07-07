@@ -14,10 +14,7 @@ class AjukanKoreksiCard extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 1,
-            color: Color(0x3DEBEBEB),
-          ),
+          side: const BorderSide(width: 1, color: Color(0x3DEBEBEB)),
           borderRadius: BorderRadius.circular(20),
         ),
         shadows: const [
@@ -33,7 +30,12 @@ class AjukanKoreksiCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 4, left: 9, right: 9, bottom: 15),
+            padding: const EdgeInsets.only(
+              top: 4,
+              left: 9,
+              right: 9,
+              bottom: 15,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
