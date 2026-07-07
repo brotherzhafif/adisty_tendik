@@ -74,7 +74,7 @@ class StatistikBadge extends StatelessWidget {
         color: bgColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(width: 1, color: borderColor),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
       child: Row(

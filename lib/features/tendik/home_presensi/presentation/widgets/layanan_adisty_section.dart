@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/features/tendik/rekap_presensi/presentation/index.dart';
+import 'package:adisty_tendik_module/features/tendik/tunjangan_beras/index.dart';
 
 // ============================================================
 // KOMPONEN: SECTION LAYANAN ADISTY
@@ -79,11 +80,19 @@ class LayananAdistySection extends StatelessWidget {
                   imagePath: 'assets/images/(layanan)_skp_pegawai.png',
                 ),
 
-                // Card Tunjangan Beras
-                const LayananCard(
+                // Card Tunjangan Beras → navigasi ke Tunjangan Beras
+                LayananCard(
                   title: 'Tunjangan Beras',
                   description: 'Tinjau informasi pengambilan tunjangan beras',
                   imagePath: 'assets/images/(layanan_tunjangan_beras.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TunjanganBeras(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
