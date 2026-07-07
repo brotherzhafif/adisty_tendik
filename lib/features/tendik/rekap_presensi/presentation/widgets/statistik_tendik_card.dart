@@ -13,15 +13,13 @@ class StatistikTendikCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: const Color(0xFF2B86C3),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x0F7281DF),
             blurRadius: 10,
             offset: Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -43,7 +41,11 @@ class StatistikTendikCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: const Icon(Icons.chevron_left, color: Colors.white, size: 24),
+                icon: const Icon(
+                  Icons.chevron_left,
+                  color: Colors.white,
+                  size: 24,
+                ),
                 onPressed: () {},
               ),
               const Text(
@@ -57,7 +59,11 @@ class StatistikTendikCard extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.chevron_right, color: Colors.white, size: 24),
+                icon: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.white,
+                  size: 24,
+                ),
                 onPressed: () {},
               ),
             ],
@@ -84,7 +90,32 @@ class StatistikTendikCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    'Total hari kerja',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontFamily: 'Nunito Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    '20 hari',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
                   Text(
                     'Persentase kehadiran',
@@ -109,30 +140,6 @@ class StatistikTendikCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  Text(
-                    'Total hari kerja',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontFamily: 'Nunito Sans',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '20 hari',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -141,9 +148,7 @@ class StatistikTendikCard extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 20,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             clipBehavior: Clip.antiAlias,
             child: Row(
               children: [
@@ -187,7 +192,10 @@ class StatistikTendikCard extends StatelessWidget {
         Container(
           width: 12,
           height: 12,
-          decoration: ShapeDecoration(color: color, shape: const CircleBorder()),
+          decoration: ShapeDecoration(
+            color: color,
+            shape: const CircleBorder(),
+          ),
         ),
         const SizedBox(width: 8),
         Text(

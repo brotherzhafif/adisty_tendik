@@ -145,7 +145,10 @@ class _RekapPresensiState extends State<RekapPresensi> {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -183,7 +186,10 @@ class _RekapPresensiState extends State<RekapPresensi> {
 
                       // Section Header "Monitoring"
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF2B86C3),
                           borderRadius: BorderRadius.circular(8),
@@ -200,16 +206,13 @@ class _RekapPresensiState extends State<RekapPresensi> {
                       ),
                       const SizedBox(height: 14),
 
-                      // Info Disclaimer Banner
-                      const InfoDisclaimerBanner(),
-                      const SizedBox(height: 14),
-
                       // List rekap log presensi
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: logs.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: 12),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final log = logs[index];
                           return RekapLogItem(
@@ -218,13 +221,17 @@ class _RekapPresensiState extends State<RekapPresensi> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RekapPresensiDetailPage(log: log),
+                                  builder: (context) =>
+                                      RekapPresensiDetailPage(log: log),
                                 ),
                               );
                             },
                           );
                         },
                       ),
+
+                      // Info Disclaimer Banner
+                      const InfoDisclaimerBanner(),
                       const SizedBox(height: 40),
                     ],
                   ),
