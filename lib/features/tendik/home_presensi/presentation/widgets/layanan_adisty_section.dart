@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/features/tendik/logbook/index.dart';
 import 'package:adisty_tendik_module/features/tendik/rekap_presensi/presentation/index.dart';
 import 'package:adisty_tendik_module/features/tendik/tunjangan_beras/index.dart';
+import 'package:adisty_tendik_module/features/tendik/skp/presentation/index.dart';
 
 // ============================================================
 // KOMPONEN: SECTION LAYANAN ADISTY
@@ -66,18 +68,34 @@ class LayananAdistySection extends StatelessWidget {
                   },
                 ),
 
-                // Card Logbook
-                const LayananCard(
+                // Card Logbook → navigasi ke Logbook
+                LayananCard(
                   title: 'Logbook',
                   description: 'Tinjau informasi Logbook anda',
                   imagePath: 'assets/images/(layanan)_logbook.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LogbookPage(),
+                      ),
+                    );
+                  },
                 ),
 
                 // Card SKP Pegawai
-                const LayananCard(
+                LayananCard(
                   title: 'SKP Pegawai',
                   description: 'Tinjau penilaian kinerja anda',
                   imagePath: 'assets/images/(layanan)_skp_pegawai.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SkpDashboardSkp(),
+                      ),
+                    );
+                  },
                 ),
 
                 // Card Tunjangan Beras → navigasi ke Tunjangan Beras

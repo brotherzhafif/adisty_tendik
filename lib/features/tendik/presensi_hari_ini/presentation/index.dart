@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'widgets/info_presensi_card.dart';
 import 'widgets/batas_koreksi_info.dart';
 import 'widgets/ajukan_koreksi_card.dart';
-import 'form_koreksi.dart';
-import 'riwayat_koreksi.dart';
+import 'form.dart';
+import 'list.dart';
 
 class LandingPresensiHariIni extends StatelessWidget {
   const LandingPresensiHariIni({super.key});

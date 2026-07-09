@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:adisty_tendik_module/features/tendik/presensi_hari_ini/presentation/form_koreksi.dart';
+import 'package:adisty_tendik_module/features/tendik/presensi_hari_ini/presentation/form.dart';
 import 'widgets/presensi_log_model.dart';
 import 'widgets/detail_info_row.dart';
 import 'widgets/info_disclaimer_banner.dart';

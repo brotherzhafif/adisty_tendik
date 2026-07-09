@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'riwayat_koreksi_detail.dart';
+import 'detail.dart';
 import 'widgets/riwayat_pengajuan_item.dart';
 
 class RiwayatKoreksiPage extends StatelessWidget {
