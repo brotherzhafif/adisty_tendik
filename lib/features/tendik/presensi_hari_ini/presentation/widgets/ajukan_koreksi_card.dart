@@ -79,8 +79,9 @@ class AjukanKoreksiCard extends StatelessWidget {
                   height: 78,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      // Menggunakan placeholder jika gambar aslinya belum ada
-                      image: NetworkImage("https://placehold.co/64x78"),
+                      image: AssetImage(
+                        'assets/images/(presensi_hari_ini)_form.png',
+                      ),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -88,64 +89,74 @@ class AjukanKoreksiCard extends StatelessWidget {
               ],
             ),
           ),
-          InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(12),
-            child: Container(
-              width: 344,
-              padding: const EdgeInsets.all(10),
-              decoration: ShapeDecoration(
-                color: const Color(0xFF0067AD),
-                shape: RoundedRectangleBorder(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 9),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: onTap,
                   borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: const Center(
-                child: Text(
-                  'Ajukan Koreksi Presensi',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                    height: 1.50,
-                    letterSpacing: -0.18,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          if (onRiwayatTap != null) ...[
-            const SizedBox(height: 12),
-            InkWell(
-              onTap: onRiwayatTap,
-              borderRadius: BorderRadius.circular(12),
-              child: Container(
-                width: 344,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 1, color: Color(0xFF0067AD)),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Lihat Riwayat Pengajuan',
-                    style: TextStyle(
-                      color: Color(0xFF0067AD),
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 1.50,
-                      letterSpacing: -0.18,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF0067AD),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Ajukan Koreksi Presensi',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          height: 1.50,
+                          letterSpacing: -0.18,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                if (onRiwayatTap != null) ...[
+                  const SizedBox(height: 12),
+                  InkWell(
+                    onTap: onRiwayatTap,
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 1,
+                            color: Color(0xFF0067AD),
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Lihat Riwayat Pengajuan',
+                          style: TextStyle(
+                            color: Color(0xFF0067AD),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.50,
+                            letterSpacing: -0.18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ],
             ),
-          ],
+          ),
         ],
       ),
     );
