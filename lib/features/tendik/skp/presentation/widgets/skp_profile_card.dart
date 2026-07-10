@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // WIDGET: Card Profil SKP
 // Menampilkan info pegawai dan navigasi tahun evaluasi.
 // ============================================================
-class SkpProfileCard extends StatelessWidget {
+class SkpProfileCard extends StatefulWidget {
   final String name;
   final String department;
   final String role;
@@ -12,8 +12,6 @@ class SkpProfileCard extends StatelessWidget {
   final List<String> years;
   final int activeYearIndex;
   final ValueChanged<int> onYearChanged;
-  final PageController pageController;
-  final ValueChanged<int> onPindahTahun;
 
   const SkpProfileCard({
     super.key,
@@ -24,36 +22,37 @@ class SkpProfileCard extends StatelessWidget {
     required this.years,
     required this.activeYearIndex,
     required this.onYearChanged,
-    required this.pageController,
-    required this.onPindahTahun,
   });
+
+  @override
+  State<SkpProfileCard> createState() => _SkpProfileCardState();
+}
+
+class _SkpProfileCardState extends State<SkpProfileCard> {
+  bool _slideLeft = true;
+
+  @override
+  void didUpdateWidget(covariant SkpProfileCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.activeYearIndex != oldWidget.activeYearIndex) {
+      _slideLeft = widget.activeYearIndex < oldWidget.activeYearIndex;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onHorizontalDragUpdate: (details) {
-        if (pageController.hasClients) {
-          // Teruskan pergeseran jari langsung ke PageController tahun
-          pageController.position.jumpTo(
-            (pageController.position.pixels - details.delta.dx).clamp(
-              0.0,
-              pageController.position.maxScrollExtent,
-            ),
-          );
-        }
-      },
       onHorizontalDragEnd: (details) {
-        if (pageController.hasClients) {
-          // Cari tahun terdekat berdasarkan arah dan kecepatan geseran
-          final double currentPage = pageController.page ?? 0;
-          int targetPage = currentPage.round();
-          if (details.primaryVelocity! < -100) {
-            targetPage = (currentPage + 0.15).ceil();
-          } else if (details.primaryVelocity! > 100) {
-            targetPage = (currentPage - 0.15).floor();
+        final dx = details.velocity.pixelsPerSecond.dx;
+        if (dx < -300) {
+          if (widget.activeYearIndex < widget.years.length - 1) {
+            widget.onYearChanged(widget.activeYearIndex + 1);
           }
-          onPindahTahun(targetPage.clamp(0, years.length - 1));
+        } else if (dx > 300) {
+          if (widget.activeYearIndex > 0) {
+            widget.onYearChanged(widget.activeYearIndex - 1);
+          }
         }
       },
       child: Container(
@@ -130,7 +129,7 @@ class SkpProfileCard extends StatelessWidget {
                             height: 64,
                             decoration: ShapeDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(avatarUrl),
+                                image: NetworkImage(widget.avatarUrl),
                                 fit: BoxFit.cover,
                               ),
                               shape: RoundedRectangleBorder(
@@ -151,7 +150,7 @@ class SkpProfileCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                           child: Text(
-                            name,
+                            widget.name,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -164,7 +163,7 @@ class SkpProfileCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                           child: Text(
-                            department,
+                            widget.department,
                             style: const TextStyle(
                               color: Color(0xFFAEB1B7),
                               fontSize: 10,
@@ -177,7 +176,7 @@ class SkpProfileCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
                           child: Text(
-                            role,
+                            widget.role,
                             style: const TextStyle(
                               color: Color(0xFFAEB1B7),
                               fontSize: 10,
@@ -209,34 +208,45 @@ class SkpProfileCard extends StatelessWidget {
                     color: Color(0xFF293241),
                     size: 24,
                   ),
-                  onPressed: activeYearIndex > 0
-                      ? () => onPindahTahun(activeYearIndex - 1)
+                  onPressed: widget.activeYearIndex > 0
+                      ? () => widget.onYearChanged(widget.activeYearIndex - 1)
                       : null,
                 ),
                 const SizedBox(width: 12),
-                // Swipeable PageView untuk tahun
                 Expanded(
                   child: SizedBox(
                     height: 40,
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemCount: years.length,
-                      onPageChanged: onYearChanged,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Text(
-                            years[index],
-                            style: const TextStyle(
-                              color: Color(0xFF293241),
-                              fontSize: 16,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              height: 1.50,
-                              letterSpacing: -0.18,
-                            ),
+                    child: Center(
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 280),
+                        transitionBuilder: (child, animation) {
+                          final offset = _slideLeft
+                              ? const Offset(-0.4, 0)
+                              : const Offset(0.4, 0);
+                          return SlideTransition(
+                            position: Tween<Offset>(begin: offset, end: Offset.zero)
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOutCubic,
+                                  ),
+                                ),
+                            child: FadeTransition(opacity: animation, child: child),
+                          );
+                        },
+                        child: Text(
+                          widget.years[widget.activeYearIndex],
+                          key: ValueKey(widget.years[widget.activeYearIndex]),
+                          style: const TextStyle(
+                            color: Color(0xFF293241),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.50,
+                            letterSpacing: -0.18,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -250,39 +260,15 @@ class SkpProfileCard extends StatelessWidget {
                     color: Color(0xFF293241),
                     size: 24,
                   ),
-                  onPressed: activeYearIndex < years.length - 1
-                      ? () => onPindahTahun(activeYearIndex + 1)
+                  onPressed: widget.activeYearIndex < widget.years.length - 1
+                      ? () => widget.onYearChanged(widget.activeYearIndex + 1)
                       : null,
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-
-            // --- Dot Indicator ---
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: List.generate(years.length, (index) {
-                final isActive = index == activeYearIndex;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.5),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: isActive ? 8 : 7,
-                    height: isActive ? 8 : 7,
-                    decoration: BoxDecoration(
-                      color: isActive
-                          ? const Color(0xFF2B86C3)
-                          : const Color(0xFFF6F7F7),
-                      borderRadius: BorderRadius.circular(49),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

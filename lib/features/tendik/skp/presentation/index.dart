@@ -17,29 +17,8 @@ class SkpDashboardSkp extends StatefulWidget {
 
 class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
   int _activeYearIndex = 1; // Default ke 2026 (index 1)
-  late final PageController _pageController;
 
   static const List<String> _years = ['2025', '2026', '2027'];
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _activeYearIndex);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _pindahTahun(int index) {
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeInOut,
-    );
-  }
 
   // Data penilaian per tahun
   static final Map<String, _SkpYearData> _skpDataMap = {
@@ -173,8 +152,6 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
                             _activeYearIndex = index;
                           });
                         },
-                        pageController: _pageController,
-                        onPindahTahun: _pindahTahun,
                       ),
                       const SizedBox(height: 14),
 

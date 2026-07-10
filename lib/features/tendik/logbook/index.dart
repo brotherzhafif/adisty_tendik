@@ -47,7 +47,6 @@ class LogbookPage extends StatefulWidget {
 }
 
 class _LogbookPageState extends State<LogbookPage> {
-  late final PageController _pageController;
   int _bulanIndex = 1;
 
   // --- Data dummy per bulan ---
@@ -185,26 +184,6 @@ class _LogbookPageState extends State<LogbookPage> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _bulanIndex);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _pindahBulan(int index) {
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
@@ -221,9 +200,7 @@ class _LogbookPageState extends State<LogbookPage> {
             child: _LogbookBody(
               dataBulan: _dataBulan,
               bulanIndex: _bulanIndex,
-              pageController: _pageController,
               onBulanChanged: (index) => setState(() => _bulanIndex = index),
-              onPindahBulan: _pindahBulan,
             ),
           ),
         ],
@@ -238,16 +215,12 @@ class _LogbookPageState extends State<LogbookPage> {
 class _LogbookBody extends StatelessWidget {
   final List<LogbookBulanData> dataBulan;
   final int bulanIndex;
-  final PageController pageController;
   final ValueChanged<int> onBulanChanged;
-  final ValueChanged<int> onPindahBulan;
 
   const _LogbookBody({
     required this.dataBulan,
     required this.bulanIndex,
-    required this.pageController,
     required this.onBulanChanged,
-    required this.onPindahBulan,
   });
 
   @override
@@ -277,9 +250,7 @@ class _LogbookBody extends StatelessWidget {
               _LogbookHeaderCard(
                 dataBulan: dataBulan,
                 bulanIndex: bulanIndex,
-                pageController: pageController,
                 onBulanChanged: onBulanChanged,
-                onPindahBulan: onPindahBulan,
               ),
 
               const SizedBox(height: 24),
@@ -316,49 +287,48 @@ class _LogbookBody extends StatelessWidget {
 // Container luar berwarna putih dan profil tetap statis.
 // Hanya navigator bulan di tengah yang dapat digeser (swipe).
 // ============================================================
-class _LogbookHeaderCard extends StatelessWidget {
+class _LogbookHeaderCard extends StatefulWidget {
   final List<LogbookBulanData> dataBulan;
   final int bulanIndex;
-  final PageController pageController;
   final ValueChanged<int> onBulanChanged;
-  final ValueChanged<int> onPindahBulan;
 
   const _LogbookHeaderCard({
     required this.dataBulan,
     required this.bulanIndex,
-    required this.pageController,
     required this.onBulanChanged,
-    required this.onPindahBulan,
   });
 
   @override
+  State<_LogbookHeaderCard> createState() => _LogbookHeaderCardState();
+}
+
+class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
+  bool _slideLeft = true;
+
+  @override
+  void didUpdateWidget(covariant _LogbookHeaderCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.bulanIndex != oldWidget.bulanIndex) {
+      _slideLeft = widget.bulanIndex < oldWidget.bulanIndex;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final bulanAktif = dataBulan[bulanIndex];
+    final bulanAktif = widget.dataBulan[widget.bulanIndex];
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onHorizontalDragUpdate: (details) {
-        if (pageController.hasClients) {
-          // Teruskan pergeseran jari langsung ke PageController
-          pageController.position.jumpTo(
-            (pageController.position.pixels - details.delta.dx).clamp(
-              0.0,
-              pageController.position.maxScrollExtent,
-            ),
-          );
-        }
-      },
       onHorizontalDragEnd: (details) {
-        if (pageController.hasClients) {
-          // Cari halaman terdekat berdasarkan arah geseran (velocity) dan posisi scroll saat ini
-          final double currentPage = pageController.page ?? 0;
-          int targetPage = currentPage.round();
-          if (details.primaryVelocity! < -100) {
-            targetPage = (currentPage + 0.15).ceil();
-          } else if (details.primaryVelocity! > 100) {
-            targetPage = (currentPage - 0.15).floor();
+        final dx = details.velocity.pixelsPerSecond.dx;
+        if (dx < -300) {
+          if (widget.bulanIndex < widget.dataBulan.length - 1) {
+            widget.onBulanChanged(widget.bulanIndex + 1);
           }
-          onPindahBulan(targetPage.clamp(0, dataBulan.length - 1));
+        } else if (dx > 300) {
+          if (widget.bulanIndex > 0) {
+            widget.onBulanChanged(widget.bulanIndex - 1);
+          }
         }
       },
       child: Container(
@@ -407,37 +377,49 @@ class _LogbookHeaderCard extends StatelessWidget {
                 // Panah Kiri (Statis)
                 IconButton(
                   icon: const Icon(Icons.chevron_left_rounded, size: 24),
-                  color: bulanIndex > 0
+                  color: widget.bulanIndex > 0
                       ? const Color(0xFF293241)
                       : const Color(0xFFCCCED1),
-                  onPressed: bulanIndex > 0
-                      ? () => onPindahBulan(bulanIndex - 1)
+                  onPressed: widget.bulanIndex > 0
+                      ? () => widget.onBulanChanged(widget.bulanIndex - 1)
                       : null,
                 ),
 
-                // Teks Bulan & Tahun (Swipeable PageView)
+                // Teks Bulan & Tahun (AnimatedSwitcher)
                 Expanded(
                   child: SizedBox(
                     height: 40,
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemCount: dataBulan.length,
-                      onPageChanged: onBulanChanged,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Text(
-                            dataBulan[index].labelBulan,
-                            style: const TextStyle(
-                              color: Color(0xFF293241),
-                              fontSize: 16,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              height: 1.50,
-                              letterSpacing: -0.18,
-                            ),
+                    child: Center(
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 280),
+                        transitionBuilder: (child, animation) {
+                          final offset = _slideLeft
+                              ? const Offset(-0.4, 0)
+                              : const Offset(0.4, 0);
+                          return SlideTransition(
+                            position: Tween<Offset>(begin: offset, end: Offset.zero)
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOutCubic,
+                                  ),
+                                ),
+                            child: FadeTransition(opacity: animation, child: child),
+                          );
+                        },
+                        child: Text(
+                          widget.dataBulan[widget.bulanIndex].labelBulan,
+                          key: ValueKey(widget.dataBulan[widget.bulanIndex].labelBulan),
+                          style: const TextStyle(
+                            color: Color(0xFF293241),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.50,
+                            letterSpacing: -0.18,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -445,38 +427,14 @@ class _LogbookHeaderCard extends StatelessWidget {
                 // Panah Kanan (Statis)
                 IconButton(
                   icon: const Icon(Icons.chevron_right_rounded, size: 24),
-                  color: bulanIndex < dataBulan.length - 1
+                  color: widget.bulanIndex < widget.dataBulan.length - 1
                       ? const Color(0xFF293241)
                       : const Color(0xFFCCCED1),
-                  onPressed: bulanIndex < dataBulan.length - 1
-                      ? () => onPindahBulan(bulanIndex + 1)
+                  onPressed: widget.bulanIndex < widget.dataBulan.length - 1
+                      ? () => widget.onBulanChanged(widget.bulanIndex + 1)
                       : null,
                 ),
               ],
-            ),
-
-            const SizedBox(height: 8),
-
-            // --- Dot Indicator (Statis) ---
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(dataBulan.length, (index) {
-                final isActive = index == bulanIndex;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: isActive ? 8 : 7,
-                    height: isActive ? 8 : 7,
-                    decoration: BoxDecoration(
-                      color: isActive
-                          ? const Color(0xFF2B86C3)
-                          : const Color(0xFFF6F7F7),
-                      borderRadius: BorderRadius.circular(49),
-                    ),
-                  ),
-                );
-              }),
             ),
 
             // --- Stats (Statis/Dinamis berdasarkan bulan aktif) ---
