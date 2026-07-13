@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 class StatistikPresensi extends StatelessWidget {
   const StatistikPresensi({super.key});
@@ -105,27 +106,18 @@ class StatistikBadge extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
                   label,
-                  style: const TextStyle(
-                    color: Color(0xFF293241),
-                    fontSize: 12,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w500,
-                    height: 1.33,
-                  ),
+                  style: AppTextStyle.bodySm.copyWith(color: const Color(0xFF293241)),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
                   value,
-                  style: TextStyle(
+                  style: (value.length <= 2 ? AppTextStyle.headingXl : AppTextStyle.headingLg).copyWith(
                     color: valueColor,
-                    fontSize: value.length <= 2 ? 20 : 16,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                    height: value.length <= 2 ? 1.40 : 1.50,
-                    letterSpacing: value.length <= 2 ? -0.34 : -0.18,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

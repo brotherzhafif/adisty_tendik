@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 class DialogKonfirmasiPulang extends StatelessWidget {
   final VoidCallback? onConfirmed;
@@ -54,19 +55,14 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           spacing: 9,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 297,
                               child: Text(
                                 'Konfirmasi Pulang',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: AppTextStyle.headingLg.copyWith(
                                   color: Colors.black,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.50,
-                                  letterSpacing: -0.18,
                                 ),
                               ),
                             ),
@@ -75,12 +71,9 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                               child: Text(
                                 'Apakah anda yakin ingin melakukkan presensi pulang?',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: AppTextStyle.bodySm.copyWith(
                                   color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
                                   fontWeight: FontWeight.w400,
-                                  height: 1.33,
                                 ),
                               ),
                             ),
@@ -104,7 +97,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 10,
-                    children: const [
+                    children: [
                       Opacity(
                         opacity: 0.96,
                         child: Text.rich(
@@ -163,7 +156,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 10,
-                    children: const [
+                    children: [
                       SizedBox(width: 16, height: 16),
                       Opacity(
                         opacity: 0.96,
@@ -235,7 +228,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 spacing: 10,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     width: 100,
                                     child: Text(
@@ -292,7 +285,7 @@ class DialogKonfirmasiPulang extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 spacing: 10,
-                                children: const [
+                                children: [
                                   SizedBox(
                                     width: 100,
                                     child: Text(
@@ -379,19 +372,14 @@ class DialogPresensiBerhasil extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           spacing: 9,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 280,
                               child: Text(
                                 'Presensi Pulang Berhasil!', // Saya sesuaikan ke Pulang karena konteksnya Pulang
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: AppTextStyle.headingLg.copyWith(
                                   color: Colors.black,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.50,
-                                  letterSpacing: -0.18,
                                 ),
                               ),
                             ),
@@ -400,12 +388,9 @@ class DialogPresensiBerhasil extends StatelessWidget {
                               child: Text(
                                 'Terima kasih atas kerja keras hari ini. Hati-hati di jalan pulang!', // Sesuaikan deskripsi
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: AppTextStyle.bodySm.copyWith(
                                   color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
                                   fontWeight: FontWeight.w400,
-                                  height: 1.33,
                                 ),
                               ),
                             ),
@@ -448,7 +433,7 @@ class DialogPresensiBerhasil extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             spacing: 10,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 212,
                                 child: Text(

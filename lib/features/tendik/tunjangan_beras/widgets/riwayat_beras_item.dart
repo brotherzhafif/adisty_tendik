@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: RIWAYAT BERAS ITEM
@@ -24,17 +25,20 @@ class RiwayatBerasItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color bgColor =
-        isDisabled ? const Color(0xFFE5E6E8) : Colors.white;
-    final Color tanggalColor =
-        isDisabled ? const Color(0xFF8B9098) : const Color(0xFF293241);
+    final Color bgColor = isDisabled ? const Color(0xFFE5E6E8) : Colors.white;
+    final Color tanggalColor = isDisabled
+        ? const Color(0xFF8B9098)
+        : const Color(0xFF293241);
     final Color lokasiColor = const Color(0xFF7A8089);
-    final Color berasLabelColor =
-        isDisabled ? const Color(0xFF8B9098) : const Color(0xFF293241);
-    final Color berasValueColor =
-        isDisabled ? const Color(0xFFAEB1B7) : const Color(0xFF2B86C3);
-    final Color borderColor =
-        isDisabled ? const Color(0xFFB8BBC1) : const Color(0xFFEEF1F3);
+    final Color berasLabelColor = isDisabled
+        ? const Color(0xFF8B9098)
+        : const Color(0xFF293241);
+    final Color berasValueColor = isDisabled
+        ? const Color(0xFFAEB1B7)
+        : const Color(0xFF2B86C3);
+    final Color borderColor = isDisabled
+        ? const Color(0xFFB8BBC1)
+        : const Color(0xFFEEF1F3);
 
     return InkWell(
       onTap: isDisabled ? null : onTap,
@@ -133,24 +137,17 @@ class RiwayatBerasItem extends StatelessWidget {
                   children: [
                     Text(
                       'Beras',
-                      style: TextStyle(
+                      style: AppTextStyle.bodySm.copyWith(
                         color: berasLabelColor,
-                        fontSize: 12,
-                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w400,
-                        height: 1.33,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       beratKg,
-                      style: TextStyle(
+                      style: AppTextStyle.headingLg.copyWith(
                         color: berasValueColor,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        height: 1.50,
-                        letterSpacing: -0.18,
                       ),
                     ),
                   ],

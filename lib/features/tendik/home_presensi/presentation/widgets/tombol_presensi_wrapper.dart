@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/services/validation_service.dart';
 import 'package:adisty_tendik_module/core/error/presentation/index.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'presensi_state.dart';
 import 'tombol_pulang.dart';
 import 'presensi_dialogs.dart';
@@ -96,7 +97,7 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
       children: [
         // Overlay loading saat validasi berlangsung
         if (_isValidating)
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(bottom: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -112,9 +113,7 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
                 SizedBox(width: 8),
                 Text(
                   'Memvalidasi kondisi...',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: 'Nunito',
+                  style: AppTextStyle.bodySm.copyWith(
                     color: Color(0xFF5F6570),
                   ),
                 ),

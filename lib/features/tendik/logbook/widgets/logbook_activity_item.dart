@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // MODEL: Data item aktivitas logbook
@@ -170,12 +171,9 @@ class _ActivityContent extends StatelessWidget {
       children: [
         Text(
           judul,
-          style: const TextStyle(
+          style: AppTextStyle.bodySm.copyWith(
             color: Colors.black,
-            fontSize: 12,
-            fontFamily: 'Nunito',
             fontWeight: FontWeight.w600,
-            height: 1.4,
           ),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

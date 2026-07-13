@@ -7,6 +7,7 @@ import 'widgets/layanan_adisty_section.dart';
 import 'widgets/presensi_card.dart';
 import 'widgets/statistik_presensi.dart';
 import '../../presensi_hari_ini/presentation/index.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // HALAMAN UTAMA - HomePage
@@ -197,15 +198,13 @@ class _Navbar extends StatelessWidget {
                 width: 40,
                 height: 40,
               ),
-              const Text(
+              Text(
                 'Beranda',
-                style: TextStyle(
-                  color: Color(0xFF016EB8),
-                  fontSize: 16,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
-                  height: 1.49,
+                style: AppTextStyle.bodySm.copyWith(
+                  color: const Color(0xFF016EB8),
+                  fontWeight: FontWeight.w600,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -230,15 +229,13 @@ class _Navbar extends StatelessWidget {
                   width: 40,
                   height: 40,
                 ),
-                const Text(
+                Text(
                   'Presensi',
-                  style: TextStyle(
-                    color: Color(0xFF5F6570),
-                    fontSize: 16,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    height: 1.49,
+                  style: AppTextStyle.bodySm.copyWith(
+                    color: const Color(0xFF5F6570),
+                    fontWeight: FontWeight.w500,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -255,15 +252,13 @@ class _Navbar extends StatelessWidget {
                 width: 40,
                 height: 40,
               ),
-              const Text(
+              Text(
                 'Profil',
-                style: TextStyle(
-                  color: Color(0xFF5F6570),
-                  fontSize: 16,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
-                  height: 1.49,
+                style: AppTextStyle.bodySm.copyWith(
+                  color: const Color(0xFF5F6570),
+                  fontWeight: FontWeight.w500,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

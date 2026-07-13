@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // KOMPONEN: CARD STATISTIK TENDIK (dengan swipe & tombol ganti bulan)
@@ -162,7 +163,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // ---- Judul ----
-              const Text(
+              Text(
                 'Statistik Tendik',
                 style: TextStyle(
                   color: Color(0xFFF6F7F7),
@@ -235,7 +236,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
               // ---- Hint swipe ----
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(Icons.info_outline, color: Color(0xFFF6F7F7), size: 14),
                   SizedBox(width: 6),
                   Text(
@@ -275,7 +276,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Total hari kerja',
                   style: TextStyle(
                     color: Colors.white,
@@ -299,15 +300,9 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Persentase kehadiran',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: -0.17,
-                  ),
+                  style: AppTextStyle.inputValue.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -389,10 +384,8 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
         const SizedBox(width: 8),
         Text(
           text,
-          style: const TextStyle(
+          style: AppTextStyle.bodySm.copyWith(
             color: Colors.white,
-            fontSize: 12,
-            fontFamily: 'Nunito Sans',
             fontWeight: FontWeight.w400,
           ),
         ),

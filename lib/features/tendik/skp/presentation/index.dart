@@ -27,17 +27,35 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
       tugasUmumScore: 85.00,
       penunjangScore: 88.00,
       aikIndicators: [
-        SkpIndicatorData(name: 'Refreshing Al-Islam dan Kemuhammadiyahan', score: 85.00),
+        SkpIndicatorData(
+          name: 'Refreshing Al-Islam dan Kemuhammadiyahan',
+          score: 85.00,
+        ),
         SkpIndicatorData(name: 'Pengajian Tingkat Universitas', score: 80.00),
-        SkpIndicatorData(name: 'Pengajian dan Tadarus di Unit Kerja', score: 90.00),
+        SkpIndicatorData(
+          name: 'Pengajian dan Tadarus di Unit Kerja',
+          score: 90.00,
+        ),
         SkpIndicatorData(name: 'Hafalan Surat Juz 30', score: 80.00),
         SkpIndicatorData(name: 'Keterlibatan Persyarikatan', score: 87.00),
-        SkpIndicatorData(name: 'Partisipasi di Amal Usaha Muhammadiyah', score: 85.00),
+        SkpIndicatorData(
+          name: 'Partisipasi di Amal Usaha Muhammadiyah',
+          score: 85.00,
+        ),
       ],
       tugasUmumIndicators: [
-        SkpIndicatorData(name: 'Tugas Tambahan Pejabat Struktural', score: 85.00),
-        SkpIndicatorData(name: 'Penilaian individu sesuai deskripsi pekerjaan', score: 85.00),
-        SkpIndicatorData(name: 'Penilaian pejabat penilai kinerja', score: 85.00),
+        SkpIndicatorData(
+          name: 'Tugas Tambahan Pejabat Struktural',
+          score: 85.00,
+        ),
+        SkpIndicatorData(
+          name: 'Penilaian individu sesuai deskripsi pekerjaan',
+          score: 85.00,
+        ),
+        SkpIndicatorData(
+          name: 'Penilaian pejabat penilai kinerja',
+          score: 85.00,
+        ),
         SkpIndicatorData(name: 'Kehadiran dalam sebulan', score: 85.00),
       ],
       penunjangIndicators: [
@@ -53,17 +71,35 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
       tugasUmumScore: 90.00,
       penunjangScore: 90.00,
       aikIndicators: [
-        SkpIndicatorData(name: 'Refreshing Al-Islam dan Kemuhammadiyahan', score: 90.00),
+        SkpIndicatorData(
+          name: 'Refreshing Al-Islam dan Kemuhammadiyahan',
+          score: 90.00,
+        ),
         SkpIndicatorData(name: 'Pengajian Tingkat Universitas', score: 80.00),
-        SkpIndicatorData(name: 'Pengajian dan Tadarus di Unit Kerja', score: 95.00),
+        SkpIndicatorData(
+          name: 'Pengajian dan Tadarus di Unit Kerja',
+          score: 95.00,
+        ),
         SkpIndicatorData(name: 'Hafalan Surat Juz 30', score: 85.00),
         SkpIndicatorData(name: 'Keterlibatan Persyarikatan', score: 90.00),
-        SkpIndicatorData(name: 'Partisipasi di Amal Usaha Muhammadiyah', score: 90.00),
+        SkpIndicatorData(
+          name: 'Partisipasi di Amal Usaha Muhammadiyah',
+          score: 90.00,
+        ),
       ],
       tugasUmumIndicators: [
-        SkpIndicatorData(name: 'Tugas Tambahan Pejabat Struktural', score: 90.00),
-        SkpIndicatorData(name: 'Penilaian individu sesuai deskripsi pekerjaan', score: 90.00),
-        SkpIndicatorData(name: 'Penilaian pejabat penilai kinerja', score: 90.00),
+        SkpIndicatorData(
+          name: 'Tugas Tambahan Pejabat Struktural',
+          score: 90.00,
+        ),
+        SkpIndicatorData(
+          name: 'Penilaian individu sesuai deskripsi pekerjaan',
+          score: 90.00,
+        ),
+        SkpIndicatorData(
+          name: 'Penilaian pejabat penilai kinerja',
+          score: 90.00,
+        ),
         SkpIndicatorData(name: 'Kehadiran dalam sebulan', score: 90.00),
       ],
       penunjangIndicators: [
@@ -79,17 +115,35 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
       tugasUmumScore: 95.00,
       penunjangScore: 92.00,
       aikIndicators: [
-        SkpIndicatorData(name: 'Refreshing Al-Islam dan Kemuhammadiyahan', score: 95.00),
+        SkpIndicatorData(
+          name: 'Refreshing Al-Islam dan Kemuhammadiyahan',
+          score: 95.00,
+        ),
         SkpIndicatorData(name: 'Pengajian Tingkat Universitas', score: 90.00),
-        SkpIndicatorData(name: 'Pengajian dan Tadarus di Unit Kerja', score: 98.00),
+        SkpIndicatorData(
+          name: 'Pengajian dan Tadarus di Unit Kerja',
+          score: 98.00,
+        ),
         SkpIndicatorData(name: 'Hafalan Surat Juz 30', score: 90.00),
         SkpIndicatorData(name: 'Keterlibatan Persyarikatan', score: 92.00),
-        SkpIndicatorData(name: 'Partisipasi di Amal Usaha Muhammadiyah', score: 90.00),
+        SkpIndicatorData(
+          name: 'Partisipasi di Amal Usaha Muhammadiyah',
+          score: 90.00,
+        ),
       ],
       tugasUmumIndicators: [
-        SkpIndicatorData(name: 'Tugas Tambahan Pejabat Struktural', score: 95.00),
-        SkpIndicatorData(name: 'Penilaian individu sesuai deskripsi pekerjaan', score: 95.00),
-        SkpIndicatorData(name: 'Penilaian pejabat penilai kinerja', score: 95.00),
+        SkpIndicatorData(
+          name: 'Tugas Tambahan Pejabat Struktural',
+          score: 95.00,
+        ),
+        SkpIndicatorData(
+          name: 'Penilaian individu sesuai deskripsi pekerjaan',
+          score: 95.00,
+        ),
+        SkpIndicatorData(
+          name: 'Penilaian pejabat penilai kinerja',
+          score: 95.00,
+        ),
         SkpIndicatorData(name: 'Kehadiran dalam sebulan', score: 95.00),
       ],
       penunjangIndicators: [
@@ -173,10 +227,12 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
                       SkpCategoryCard(
                         title: 'Tugas Umum',
                         weight: ' (40%)',
-                        subTitle: 'Melaksanakan Tugas Utama Tenaga Kependidikan',
+                        subTitle:
+                            'Melaksanakan Tugas Utama Tenaga Kependidikan',
                         indicators: yearData.tugasUmumIndicators,
                         totalScore: yearData.tugasUmumScore,
-                        summaryTitle: 'SKOR Pengalaman AIK', // Typos/design labels preserved exactly
+                        summaryTitle:
+                            'SKOR Pengalaman AIK', // Typos/design labels preserved exactly
                         themeColor: const Color(0xFF4AAF57),
                         bannerBgColor: const Color(0x194AAF57),
                         summaryBorderColor: const Color(0xF54AAF57),
@@ -187,10 +243,12 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
                       SkpCategoryCard(
                         title: 'Penunjang',
                         weight: ' (25%)',
-                        subTitle: 'Melaksanakan Aktivitas Penunjang Tenaga Kependidikan',
+                        subTitle:
+                            'Melaksanakan Aktivitas Penunjang Tenaga Kependidikan',
                         indicators: yearData.penunjangIndicators,
                         totalScore: yearData.penunjangScore,
-                        summaryTitle: 'SKOR Pengalaman AIK', // Typos/design labels preserved exactly
+                        summaryTitle:
+                            'SKOR Pengalaman AIK', // Typos/design labels preserved exactly
                         themeColor: const Color(0xFFFFAC2F),
                         bannerBgColor: const Color(0x19FFAC2F),
                         summaryBorderColor: const Color(0x19FFAC2F),

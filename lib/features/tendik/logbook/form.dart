@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
@@ -100,13 +101,16 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
             children: [
               // Header
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         'Batal',
                         style: TextStyle(
                           color: Color(0xFFE65768),
@@ -115,7 +119,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                         ),
                       ),
                     ),
-                    const Text(
+                    Text(
                       'Pilih Tanggal',
                       style: TextStyle(
                         fontSize: 15,
@@ -125,7 +129,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, tempDate),
-                      child: const Text(
+                      child: Text(
                         'Pilih',
                         style: TextStyle(
                           color: Color(0xFF0067AD),
@@ -196,13 +200,16 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         'Batal',
                         style: TextStyle(
                           color: Color(0xFFE65768),
@@ -211,7 +218,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                         ),
                       ),
                     ),
-                    const Text(
+                    Text(
                       'Pilih Kuantitas',
                       style: TextStyle(
                         fontSize: 15,
@@ -224,7 +231,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                         setState(() => _kuantitas = tempKuantitas);
                         Navigator.pop(context);
                       },
-                      child: const Text(
+                      child: Text(
                         'Pilih',
                         style: TextStyle(
                           color: Color(0xFF0067AD),
@@ -368,7 +375,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Title Form
-                              const Text(
+                              Text(
                                 'Tambah Logbook Tenaga Kependidikan',
                                 style: TextStyle(
                                   color: Color(0xFF2B86C3),
@@ -442,7 +449,8 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
                                         child: Text(
@@ -487,18 +495,21 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                                           border: Border.all(
                                             color: const Color(0xFFE7E8E9),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               '$_kuantitas',
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontFamily: 'Nunito',
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                              style: AppTextStyle.bodyMd
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'Nunito',
+                                                  ),
                                             ),
                                             const Icon(
                                               Icons.unfold_more_rounded,
@@ -528,10 +539,13 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                                           border: Border.all(
                                             color: const Color(0xFFE7E8E9),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               _selectedSatuan,
@@ -690,7 +704,7 @@ class _FormActions extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Batal',
               style: TextStyle(
                 color: Color(0xFF2B86C3),
@@ -717,7 +731,7 @@ class _FormActions extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Simpan',
               style: TextStyle(
                 fontSize: 14,
@@ -806,7 +820,10 @@ class _JabatanPickerModalState extends State<_JabatanPickerModal> {
 
               // --- Header ---
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
                 child: Row(
                   children: [
                     const Expanded(
@@ -822,7 +839,10 @@ class _JabatanPickerModalState extends State<_JabatanPickerModal> {
                     ),
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.close_rounded, color: Color(0xFF5F6570)),
+                      icon: const Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFF5F6570),
+                      ),
                       visualDensity: VisualDensity.compact,
                     ),
                   ],
@@ -831,7 +851,10 @@ class _JabatanPickerModalState extends State<_JabatanPickerModal> {
 
               // --- Search Bar ---
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
                 child: TextField(
                   controller: _searchController,
                   autofocus: false,
@@ -854,8 +877,11 @@ class _JabatanPickerModalState extends State<_JabatanPickerModal> {
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.clear_rounded,
-                                color: Color(0xFFAEB1B7), size: 18),
+                            icon: const Icon(
+                              Icons.clear_rounded,
+                              color: Color(0xFFAEB1B7),
+                              size: 18,
+                            ),
                             onPressed: () => _searchController.clear(),
                           )
                         : null,
@@ -892,7 +918,7 @@ class _JabatanPickerModalState extends State<_JabatanPickerModal> {
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         itemCount: _filtered.length,
-                        separatorBuilder: (_, __) => const Divider(
+                        separatorBuilder: (_, _) => const Divider(
                           height: 1,
                           indent: 20,
                           endIndent: 20,
@@ -1002,7 +1028,10 @@ class _LogbookSimplePickerModal extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded, color: Color(0xFF5F6570)),
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    color: Color(0xFF5F6570),
+                  ),
                   visualDensity: VisualDensity.compact,
                 ),
               ],
@@ -1016,7 +1045,7 @@ class _LogbookSimplePickerModal extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(
+            separatorBuilder: (_, _) => const Divider(
               height: 1,
               indent: 20,
               endIndent: 20,
@@ -1040,8 +1069,9 @@ class _LogbookSimplePickerModal extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Nunito',
-                            fontWeight:
-                                isSelected ? FontWeight.w700 : FontWeight.w500,
+                            fontWeight: isSelected
+                                ? FontWeight.w700
+                                : FontWeight.w500,
                             color: isSelected
                                 ? const Color(0xFF0067AD)
                                 : const Color(0xFF293241),

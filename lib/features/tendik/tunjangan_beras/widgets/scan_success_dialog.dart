@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: SCAN SUCCESS DIALOG
@@ -45,7 +46,7 @@ class ScanSuccessDialog extends StatelessWidget {
                         borderRadius: BorderRadius.circular(60),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Icons.check_rounded,
                         size: 56,
@@ -60,7 +61,7 @@ class ScanSuccessDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 8,
                     children: [
-                      const Text(
+                      Text(
                         'Anda Bisa Ambil Beras',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -74,7 +75,7 @@ class ScanSuccessDialog extends StatelessWidget {
                       ),
                       SizedBox(
                         width: 217,
-                        child: const Text(
+                        child: Text(
                           'QR Code telah ter scan untuk pengambilan beras',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -107,15 +108,11 @@ class ScanSuccessDialog extends StatelessWidget {
                         borderRadius: BorderRadius.circular(24),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'Ok',
-                        style: TextStyle(
+                        style: AppTextStyle.headingLg.copyWith(
                           color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
                         ),
                       ),
                     ),

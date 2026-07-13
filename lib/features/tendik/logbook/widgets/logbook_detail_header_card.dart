@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: Kartu Header Detail Logbook
@@ -6,8 +7,8 @@ import 'package:flutter/material.dart';
 // ============================================================
 class LogbookDetailHeaderCard extends StatelessWidget {
   final String tanggalLengkap; // e.g. 'Jumat, 03 Juli 2026'
-  final String waktuDibuat;     // e.g. 'Dibuat pada 03 Juli 2026, 10:25 WIB'
-  final String status;          // e.g. 'Tersimpan'
+  final String waktuDibuat; // e.g. 'Dibuat pada 03 Juli 2026, 10:25 WIB'
+  final String status; // e.g. 'Tersimpan'
 
   const LogbookDetailHeaderCard({
     super.key,
@@ -23,9 +24,7 @@ class LogbookDetailHeaderCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x087281DF),
@@ -61,7 +60,7 @@ class LogbookDetailHeaderCard extends StatelessWidget {
               size: 24,
             ),
           ),
-          
+
           const SizedBox(width: 12),
 
           // --- Kolom Info Teks ---
@@ -72,12 +71,10 @@ class LogbookDetailHeaderCard extends StatelessWidget {
               children: [
                 Text(
                   tanggalLengkap,
-                  style: const TextStyle(
+                  style: AppTextStyle.bodyMd.copyWith(
                     color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: 'Nunito',
                     fontWeight: FontWeight.w700,
-                    height: 1.3,
+                    fontFamily: 'Nunito',
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -103,10 +100,7 @@ class LogbookDetailHeaderCard extends StatelessWidget {
             decoration: ShapeDecoration(
               color: const Color(0x194AAF57),
               shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  width: 1,
-                  color: Color(0xF54AAF57),
-                ),
+                side: const BorderSide(width: 1, color: Color(0xF54AAF57)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),

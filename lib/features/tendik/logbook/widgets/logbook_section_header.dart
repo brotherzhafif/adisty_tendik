@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: Header Section Aktivitas Logbook
@@ -26,13 +27,10 @@ class LogbookSectionHeader extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
             'Aktivitas (${jumlahAktivitas.toString().padLeft(2, '0')})',
-            style: const TextStyle(
+            style: AppTextStyle.bodyMd.copyWith(
               color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Nunito',
               fontWeight: FontWeight.w700,
-              height: 1.43,
-              letterSpacing: -0.17,
+              fontFamily: 'Nunito',
             ),
           ),
         ),
@@ -49,17 +47,15 @@ class LogbookSectionHeader extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.add_rounded, color: Colors.white, size: 20),
-                SizedBox(width: 4),
+                const Icon(Icons.add_rounded, color: Colors.white, size: 20),
+                const SizedBox(width: 4),
                 Text(
                   'Tambah',
-                  style: TextStyle(
+                  style: AppTextStyle.bodySm.copyWith(
                     color: Colors.white,
-                    fontSize: 12,
-                    fontFamily: 'Nunito',
                     fontWeight: FontWeight.w600,
                   ),
                 ),

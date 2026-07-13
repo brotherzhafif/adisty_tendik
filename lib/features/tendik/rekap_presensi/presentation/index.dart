@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'detail.dart';
 import 'widgets/presensi_log_model.dart';
 import 'widgets/statistik_tendik_card.dart';
@@ -116,15 +117,7 @@ class _RekapPresensiState extends State<RekapPresensi> {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Rekap Presensi',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: Text('Rekap Presensi', style: AppTextStyle.headingXl),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -194,12 +187,10 @@ class _RekapPresensiState extends State<RekapPresensi> {
                           color: const Color(0xFF2B86C3),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Monitoring',
-                          style: TextStyle(
+                          style: AppTextStyle.bodyLg.copyWith(
                             color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: 'Nunito',
                             fontWeight: FontWeight.w400,
                           ),
                         ),

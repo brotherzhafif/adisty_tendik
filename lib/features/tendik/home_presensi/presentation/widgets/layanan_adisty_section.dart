@@ -3,6 +3,7 @@ import 'package:adisty_tendik_module/features/tendik/logbook/index.dart';
 import 'package:adisty_tendik_module/features/tendik/rekap_presensi/presentation/index.dart';
 import 'package:adisty_tendik_module/features/tendik/tunjangan_beras/index.dart';
 import 'package:adisty_tendik_module/features/tendik/skp/presentation/index.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // KOMPONEN: SECTION LAYANAN ADISTY
@@ -28,21 +29,15 @@ class LayananAdistySection extends StatelessWidget {
             decoration: const BoxDecoration(color: Color(0xFFEEF1F3)),
           ),
 
-          // Judul Section
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'Layanan Adisty',
-              style: TextStyle(
-                color: Color(0xFF293241),
-                fontSize: 20,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                height: 1.40,
-                letterSpacing: -0.34,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Layanan Adisty',
+                style: AppTextStyle.headingXl.copyWith(
+                  color: const Color(0xFF293241),
+                ),
               ),
             ),
-          ),
 
           // Daftar Card Layanan (vertikal, full-width)
           Padding(
@@ -211,25 +206,20 @@ class LayananCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      color: Color(0xFF293241),
+                    style: AppTextStyle.buttonLg.copyWith(
+                      color: const Color(0xFF293241),
                       fontSize: 18,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -0.18,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: const TextStyle(
-                      color: Color(0xFF5F6570),
-                      fontSize: 14,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w400,
-                      height: 1.43,
-                      letterSpacing: -0.17,
+                    style: AppTextStyle.inputHint.copyWith(
+                      color: const Color(0xFF5F6570),
                     ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                   const SizedBox(height: 16),
                   Align(
@@ -247,17 +237,10 @@ class LayananCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Selengkapnya',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            height: 1.43,
-                            letterSpacing: -0.08,
-                          ),
+                          style: AppTextStyle.bodyMd.copyWith(color: Colors.white),
                         ),
                       ),
                     ),

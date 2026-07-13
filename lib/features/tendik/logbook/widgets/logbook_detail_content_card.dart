@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: Kartu Detail Konten Logbook
@@ -21,9 +22,7 @@ class LogbookDetailContentCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x087281DF),
@@ -46,18 +45,15 @@ class LogbookDetailContentCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Label "Aktivitas"
-          const Text(
+          Text(
             'Aktivitas',
-            style: TextStyle(
+            style: AppTextStyle.bodyMd.copyWith(
               color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Nunito',
               fontWeight: FontWeight.w700,
-              height: 1.43,
-              letterSpacing: -0.17,
+              fontFamily: 'Nunito',
             ),
           ),
-          
+
           const SizedBox(height: 10),
 
           // Judul Aktivitas
@@ -87,12 +83,9 @@ class LogbookDetailContentCard extends StatelessWidget {
           // Deskripsi / Detail Pekerjaan
           Text(
             deskripsiAktivitas,
-            style: const TextStyle(
+            style: AppTextStyle.bodySm.copyWith(
               color: Colors.black,
-              fontSize: 12,
-              fontFamily: 'Nunito',
               fontWeight: FontWeight.w400,
-              height: 1.5,
             ),
           ),
         ],

@@ -75,9 +75,7 @@ class _ProfileAvatar extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [Color(0xFFF6CE65), Color(0xFFDE7C28)],
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(64),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(64),
@@ -87,7 +85,8 @@ class _ProfileAvatar extends StatelessWidget {
                 width: 64,
                 height: 64,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => _AvatarPlaceholder(),
+                errorBuilder: (context, error, stackTrace) =>
+                    _AvatarPlaceholder(),
               )
             : _AvatarPlaceholder(),
       ),

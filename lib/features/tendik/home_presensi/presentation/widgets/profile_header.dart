@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../notifikasi/presentation/index.dart';
+import 'package:adisty_tendik_module/features/tendik/notifikasi/presentation/index.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -68,30 +69,20 @@ class ProfileHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 8,
                   children: [
-                    Text(
-                      'Hi Agung',
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        color: Color(0xFF293241),
-                        fontSize: 24,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        height: 1.33,
-                        letterSpacing: -0.46,
+                    Flexible(
+                      child: Text(
+                        'Hi Agung',
+                        textAlign: TextAlign.left,
+                        style: AppTextStyle.headingXxl,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ),
-                const Text(
+                Text(
                   'Selamat datang di Adisty',
-                  style: TextStyle(
-                    color: Color(0xFF5F6570),
-                    fontSize: 14,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w500,
-                    height: 1.43,
-                    letterSpacing: -0.17,
-                  ),
+                  style: AppTextStyle.bodyMd,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -134,17 +125,13 @@ class ProfileHeader extends StatelessWidget {
                     color: Color.fromARGB(255, 222, 40, 40),
                     shape: BoxShape.circle,
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       '3',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: AppTextStyle.bodyXs.copyWith(
                         color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        height: 1.20,
-                        letterSpacing: -0.10,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

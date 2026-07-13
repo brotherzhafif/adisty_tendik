@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: AppBar SKP
@@ -8,11 +9,7 @@ class SkpAppBar extends StatelessWidget {
   final String title;
   final VoidCallback? onBack;
 
-  const SkpAppBar({
-    super.key,
-    this.title = 'SKP Pegawai',
-    this.onBack,
-  });
+  const SkpAppBar({super.key, this.title = 'SKP Pegawai', this.onBack});
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +43,7 @@ class SkpAppBar extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                    height: 1.40,
-                    letterSpacing: -0.34,
-                  ),
+                  style: AppTextStyle.headingXl,
                 ),
               ),
 

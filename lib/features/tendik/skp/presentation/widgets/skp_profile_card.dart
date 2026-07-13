@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: Card Profil SKP
@@ -81,7 +82,7 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
               blurRadius: 10.20,
               offset: Offset(0, 4.11),
               spreadRadius: 0,
-            )
+            ),
           ],
         ),
         child: Column(
@@ -95,10 +96,7 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: const BorderSide(
-                    width: 1,
-                    color: Color(0xFFFAFAFA),
-                  ),
+                  side: const BorderSide(width: 1, color: Color(0xFFFAFAFA)),
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
@@ -148,20 +146,24 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 1,
+                          ),
                           child: Text(
                             widget.name,
-                            style: const TextStyle(
+                            style: AppTextStyle.bodyMd.copyWith(
                               color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: 'Nunito',
                               fontWeight: FontWeight.w700,
-                              height: 1.33,
+                              fontFamily: 'Nunito',
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 1,
+                          ),
                           child: Text(
                             widget.department,
                             style: const TextStyle(
@@ -174,7 +176,10 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 1,
+                          ),
                           child: Text(
                             widget.role,
                             style: const TextStyle(
@@ -224,14 +229,20 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                               ? const Offset(-0.4, 0)
                               : const Offset(0.4, 0);
                           return SlideTransition(
-                            position: Tween<Offset>(begin: offset, end: Offset.zero)
-                                .animate(
+                            position:
+                                Tween<Offset>(
+                                  begin: offset,
+                                  end: Offset.zero,
+                                ).animate(
                                   CurvedAnimation(
                                     parent: animation,
                                     curve: Curves.easeOutCubic,
                                   ),
                                 ),
-                            child: FadeTransition(opacity: animation, child: child),
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            ),
                           );
                         },
                         child: Text(

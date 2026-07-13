@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 class TombolPresensi extends StatelessWidget {
   final String text;
@@ -35,14 +36,7 @@ class TombolPresensi extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w600,
-              height: 1.44,
-              letterSpacing: -0.25,
-            ),
+            style: AppTextStyle.buttonLg,
           ),
         ),
       ),

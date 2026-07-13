@@ -8,11 +8,7 @@ class RekapLogItem extends StatelessWidget {
   final PresensiLog log;
   final VoidCallback onTap;
 
-  const RekapLogItem({
-    super.key,
-    required this.log,
-    required this.onTap,
-  });
+  const RekapLogItem({super.key, required this.log, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +40,7 @@ class RekapLogItem extends StatelessWidget {
               color: Color(0x0F7281DF),
               blurRadius: 10,
               offset: Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Column(
@@ -57,7 +53,10 @@ class RekapLogItem extends StatelessWidget {
                   height: 64,
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      side: const BorderSide(width: 1, color: Color(0xFFEEF2F3)),
+                      side: const BorderSide(
+                        width: 1,
+                        color: Color(0xFFEEF2F3),
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -108,7 +107,10 @@ class RekapLogItem extends StatelessWidget {
                             ...log.badges.map(
                               (badge) => Container(
                                 margin: const EdgeInsets.only(left: 4),
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
                                 decoration: ShapeDecoration(
                                   color: const Color(0x1E016EB8),
                                   shape: RoundedRectangleBorder(
@@ -131,7 +133,11 @@ class RekapLogItem extends StatelessWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, color: Color(0xFF5F6570), size: 14),
+                          const Icon(
+                            Icons.location_on,
+                            color: Color(0xFF5F6570),
+                            size: 14,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             log.location,
@@ -187,7 +193,11 @@ class RekapLogItem extends StatelessWidget {
                     const SizedBox(width: 6),
                     const Text(
                       'Masuk : ',
-                      style: TextStyle(color: Color(0xFF5F6570), fontSize: 12, fontFamily: 'Nunito'),
+                      style: TextStyle(
+                        color: Color(0xFF5F6570),
+                        fontSize: 12,
+                        fontFamily: 'Nunito',
+                      ),
                     ),
                     Text(
                       log.masuk,
@@ -202,11 +212,19 @@ class RekapLogItem extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.logout, color: Color(0xFF5F6570), size: 16),
+                    const Icon(
+                      Icons.logout,
+                      color: Color(0xFF5F6570),
+                      size: 16,
+                    ),
                     const SizedBox(width: 6),
                     const Text(
                       'Pulang : ',
-                      style: TextStyle(color: Color(0xFF5F6570), fontSize: 12, fontFamily: 'Nunito'),
+                      style: TextStyle(
+                        color: Color(0xFF5F6570),
+                        fontSize: 12,
+                        fontFamily: 'Nunito',
+                      ),
                     ),
                     Text(
                       log.pulang,

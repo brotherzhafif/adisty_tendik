@@ -13,16 +13,15 @@ import 'widgets/logbook_activity_item.dart';
 class LogbookDetailPage extends StatelessWidget {
   final LogbookActivityData activity;
 
-  const LogbookDetailPage({
-    super.key,
-    required this.activity,
-  });
+  const LogbookDetailPage({super.key, required this.activity});
 
   @override
   Widget build(BuildContext context) {
     // Formatting a pretty date name
-    final String tanggalLengkap = '${_getDayFullName(activity.hariNama)}, ${activity.tanggal} ${_capitalize(activity.bulan)} 2026';
-    final String waktuDibuat = 'Dibuat pada ${activity.tanggal} ${_capitalize(activity.bulan)} 2026, 10:25 WIB';
+    final String tanggalLengkap =
+        '${_getDayFullName(activity.hariNama)}, ${activity.tanggal} ${_capitalize(activity.bulan)} 2026';
+    final String waktuDibuat =
+        'Dibuat pada ${activity.tanggal} ${_capitalize(activity.bulan)} 2026, 10:25 WIB';
 
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
@@ -53,7 +52,10 @@ class LogbookDetailPage extends StatelessWidget {
                   topRight: Radius.circular(34),
                 ),
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 24,
+                  ),
                   child: Column(
                     children: [
                       // --- Kartu Info Header ---
@@ -141,10 +143,7 @@ class _ActionButtonRow extends StatelessWidget {
   final VoidCallback onHapus;
   final VoidCallback onEdit;
 
-  const _ActionButtonRow({
-    required this.onHapus,
-    required this.onEdit,
-  });
+  const _ActionButtonRow({required this.onHapus, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {

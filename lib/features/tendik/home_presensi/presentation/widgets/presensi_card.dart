@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'presensi_state.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // KOMPONEN: PRESENSI CARD
@@ -30,25 +31,15 @@ class PresensiCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Presensi Hari ini',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w700,
-                  height: 1.43,
-                  letterSpacing: -0.08,
-                ),
+                style: AppTextStyle.bodyMd,
               ),
-              const Text(
+              Text(
                 'Selasa, 30 Desember 2025',
-                style: TextStyle(
+                style: AppTextStyle.bodySm.copyWith(
                   color: Colors.white,
-                  fontSize: 12,
-                  fontFamily: 'Nunito',
                   fontWeight: FontWeight.w700,
-                  height: 1.33,
                 ),
               ),
             ],
@@ -159,17 +150,17 @@ class PresensiCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          children: const [
-            Icon(Icons.location_on, color: Colors.white, size: 16),
-            SizedBox(width: 4),
-            Text(
-              'Kampus 4 - Gedung Kedokteran',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w400,
-                height: 1.33,
+          children: [
+            const Icon(Icons.location_on, color: Colors.white, size: 16),
+            const SizedBox(width: 4),
+            Flexible(
+              child: Text(
+                'Kampus 4 - Gedung Kedokteran',
+                style: AppTextStyle.bodySm.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -191,26 +182,21 @@ class PresensiCard extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4),
-                  child: const Text(
+                  child: Text(
                     'Transportasi Hari Ini',
-                    style: TextStyle(
-                      color: Color(0xFF303B4C),
-                      fontSize: 12,
-                      fontFamily: 'Nunito',
+                    style: AppTextStyle.bodySm.copyWith(
+                      color: const Color(0xFF303B4C),
                       fontWeight: FontWeight.w600,
-                      height: 1.33,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Text(
+                Text(
                   'Rp20.000',
-                  style: TextStyle(
-                    color: Color(0xFFFB7F54),
-                    fontSize: 16,
+                  style: AppTextStyle.bodyLg.copyWith(
+                    color: const Color(0xFFFB7F54),
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
-                    height: 1.50,
-                    letterSpacing: -0.18,
                   ),
                 ),
               ],
@@ -262,13 +248,7 @@ class _PresensiBox extends StatelessWidget {
                   child: Text(
                     label,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: labelColor,
-                      fontSize: 12,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w500,
-                      height: 1.33,
-                    ),
+                    style: AppTextStyle.bodySm.copyWith(color: labelColor),
                   ),
                 ),
               ],
@@ -292,13 +272,9 @@ class _PresensiBox extends StatelessWidget {
                   child: Text(
                     jam,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xFF293241),
-                      fontSize: 14,
-                      fontFamily: 'Poppins',
+                    style: AppTextStyle.bodyMd.copyWith(
+                      color: const Color(0xFF293241),
                       fontWeight: FontWeight.w600,
-                      height: 1.50,
-                      letterSpacing: -0.18,
                     ),
                   ),
                 ),

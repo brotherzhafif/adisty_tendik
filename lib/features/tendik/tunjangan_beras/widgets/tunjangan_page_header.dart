@@ -9,11 +9,7 @@ class TunjanganPageHeader extends StatelessWidget {
   final String title;
   final VoidCallback? onBack;
 
-  const TunjanganPageHeader({
-    super.key,
-    required this.title,
-    this.onBack,
-  });
+  const TunjanganPageHeader({super.key, required this.title, this.onBack});
 
   @override
   Widget build(BuildContext context) {

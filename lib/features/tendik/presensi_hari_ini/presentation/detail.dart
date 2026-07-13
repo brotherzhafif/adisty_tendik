@@ -301,12 +301,10 @@ class KoreksiDetail {
 class _ElevatedCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
-  final double borderRadius;
 
   const _ElevatedCard({
     required this.child,
     this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-    this.borderRadius = 20,
   });
 
   @override
@@ -317,7 +315,7 @@ class _ElevatedCard extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: BorderRadius.circular(12),
         ),
         shadows: _AppColors.cardShadow,
       ),
@@ -332,9 +330,8 @@ class _ElevatedCard extends StatelessWidget {
 
 class _KoreksiAppBar extends StatelessWidget {
   final String title;
-  final VoidCallback? onBack;
 
-  const _KoreksiAppBar({required this.title, this.onBack});
+  const _KoreksiAppBar({required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -343,7 +340,7 @@ class _KoreksiAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+          onPressed: () => Navigator.of(context).maybePop(),
           icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
         Expanded(
@@ -404,7 +401,7 @@ class _StatusPresensiCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Presensi', style: _AppTextStyles.fieldLabel),
+                  Text('Presensi', style: _AppTextStyles.fieldLabel),
                   Text(tanggal, style: _AppTextStyles.fieldValue),
                   Text(hari, style: _AppTextStyles.fieldLabel),
                 ],
@@ -452,7 +449,7 @@ class _TimelinePengajuanCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Timeline Pengajuan', style: _AppTextStyles.cardTitle),
+          Text('Timeline Pengajuan', style: _AppTextStyles.cardTitle),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -540,7 +537,7 @@ class _PerubahanDataCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Perubahan Data', style: _AppTextStyles.cardTitle),
+          Text('Perubahan Data', style: _AppTextStyles.cardTitle),
           const SizedBox(height: 16),
           for (int i = 0; i < items.length; i++) ...[
             _DataChangeRow(item: items[i]),
@@ -672,9 +669,8 @@ class _AlasanPengajuanCard extends StatelessWidget {
 
 class _LampiranCard extends StatelessWidget {
   final List<AttachmentItem> attachments;
-  final ValueChanged<AttachmentItem>? onTapAttachment;
 
-  const _LampiranCard({required this.attachments, this.onTapAttachment});
+  const _LampiranCard({required this.attachments});
 
   @override
   Widget build(BuildContext context) {
@@ -683,7 +679,7 @@ class _LampiranCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: const [
+            children: [
               Icon(Icons.attach_file, size: 24, color: _AppColors.textPrimary),
               SizedBox(width: 10),
               Text('Lampiran', style: _AppTextStyles.cardTitle),
@@ -693,9 +689,7 @@ class _LampiranCard extends StatelessWidget {
           for (int i = 0; i < attachments.length; i++) ...[
             _AttachmentTile(
               item: attachments[i],
-              onTap: onTapAttachment == null
-                  ? null
-                  : () => onTapAttachment!(attachments[i]),
+              onTap: null,
             ),
             if (i != attachments.length - 1) const SizedBox(height: 12),
           ],
@@ -774,7 +768,7 @@ class _RiwayatProsesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Riwayat Proses', style: _AppTextStyles.cardTitle),
+          Text('Riwayat Proses', style: _AppTextStyles.cardTitle),
           const SizedBox(height: 16),
           for (int i = 0; i < entries.length; i++) ...[
             _HistoryTile(entry: entries[i]),
@@ -809,16 +803,15 @@ class _HistoryTile extends StatelessWidget {
 // =============================================================================
 
 class _KembaliButton extends StatelessWidget {
-  final VoidCallback? onPressed;
 
-  const _KembaliButton({this.onPressed});
+  const _KembaliButton();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton(
-        onPressed: onPressed ?? () => Navigator.of(context).maybePop(),
+        onPressed: () => Navigator.of(context).maybePop(),
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 12),
           side: const BorderSide(width: 1, color: _AppColors.outlineBlue),
@@ -826,7 +819,7 @@ class _KembaliButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: const Text('Kembali', style: _AppTextStyles.backButtonLabel),
+        child: Text('Kembali', style: _AppTextStyles.backButtonLabel),
       ),
     );
   }

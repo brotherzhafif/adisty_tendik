@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // MODEL: Data Indikator SKP
@@ -92,23 +93,15 @@ class SkpCategoryCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: AppTextStyle.bodyMd.copyWith(
                           color: Colors.black,
-                          fontSize: 14,
-                          fontFamily: 'Nunito',
                           fontWeight: FontWeight.w700,
-                          height: 1.33,
+                          fontFamily: 'Nunito',
                         ),
                       ),
                       Text(
                         weight,
-                        style: TextStyle(
-                          color: themeColor,
-                          fontSize: 12,
-                          fontFamily: 'Plus Jakarta Sans',
-                          fontWeight: FontWeight.w500,
-                          height: 1.20,
-                        ),
+                        style: AppTextStyle.bodySm.copyWith(color: themeColor),
                       ),
                     ],
                   ),
@@ -146,7 +139,7 @@ class SkpCategoryCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 2, right: 10, bottom: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       'Indikator',
                       style: TextStyle(
@@ -214,12 +207,10 @@ class SkpCategoryCard extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: Text(
                               indicator.score.toStringAsFixed(2),
-                              style: TextStyle(
+                              style: AppTextStyle.bodyMd.copyWith(
                                 color: themeColor,
-                                fontSize: 14,
-                                fontFamily: 'Nunito',
                                 fontWeight: FontWeight.w700,
-                                height: 1.33,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                           ),

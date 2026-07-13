@@ -397,19 +397,27 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                               ? const Offset(-0.4, 0)
                               : const Offset(0.4, 0);
                           return SlideTransition(
-                            position: Tween<Offset>(begin: offset, end: Offset.zero)
-                                .animate(
+                            position:
+                                Tween<Offset>(
+                                  begin: offset,
+                                  end: Offset.zero,
+                                ).animate(
                                   CurvedAnimation(
                                     parent: animation,
                                     curve: Curves.easeOutCubic,
                                   ),
                                 ),
-                            child: FadeTransition(opacity: animation, child: child),
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            ),
                           );
                         },
                         child: Text(
                           widget.dataBulan[widget.bulanIndex].labelBulan,
-                          key: ValueKey(widget.dataBulan[widget.bulanIndex].labelBulan),
+                          key: ValueKey(
+                            widget.dataBulan[widget.bulanIndex].labelBulan,
+                          ),
                           style: const TextStyle(
                             color: Color(0xFF293241),
                             fontSize: 16,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 enum StatusPengajuan { menunggu, disetujui, ditolak }
 
@@ -112,12 +113,10 @@ class RiwayatPengajuanItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     statusText,
-                    style: TextStyle(
+                    style: AppTextStyle.bodyMd.copyWith(
                       color: statusColor,
-                      fontSize: 14,
-                      fontFamily: 'Nunito',
                       fontWeight: FontWeight.w700,
-                      height: 1.43,
+                      fontFamily: 'Nunito',
                     ),
                   ),
                 ),
@@ -346,7 +345,7 @@ class RiwayatPengajuanItem extends StatelessWidget {
                   top: BorderSide(width: 0.50, color: Color(0xFFE0E0E0)),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Lihat Detail',
                 style: TextStyle(
                   color: Color(0xFF016EB8),

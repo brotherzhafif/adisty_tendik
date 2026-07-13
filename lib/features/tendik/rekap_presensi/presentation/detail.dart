@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:adisty_tendik_module/features/tendik/presensi_hari_ini/presentation/form.dart';
 import 'widgets/presensi_log_model.dart';
 import 'widgets/detail_info_row.dart';
@@ -41,15 +42,7 @@ class RekapPresensiDetailPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Detail Presensi',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: Text('Detail Presensi', style: AppTextStyle.headingXl),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -70,14 +63,20 @@ class RekapPresensiDetailPage extends StatelessWidget {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // ── Header: Tanggal + Status + Badges ──
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 19,
+                          vertical: 16,
+                        ),
                         decoration: ShapeDecoration(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -95,7 +94,11 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(40),
                                 ),
                               ),
-                              child: const Icon(Icons.calendar_month, color: Color(0xFF0067AD), size: 28),
+                              child: const Icon(
+                                Icons.calendar_month,
+                                color: Color(0xFF0067AD),
+                                size: 28,
+                              ),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
@@ -115,19 +118,22 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                   Row(
                                     children: [
                                       Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
                                         decoration: ShapeDecoration(
                                           color: statusBgColor,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(4),
+                                            borderRadius: BorderRadius.circular(
+                                              4,
+                                            ),
                                           ),
                                         ),
                                         child: Text(
                                           log.status,
-                                          style: TextStyle(
+                                          style: AppTextStyle.bodySm.copyWith(
                                             color: statusColor,
-                                            fontSize: 12,
-                                            fontFamily: 'Nunito Sans',
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
@@ -135,12 +141,18 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                       if (log.badges.isNotEmpty)
                                         ...log.badges.map(
                                           (badge) => Container(
-                                            margin: const EdgeInsets.only(left: 8),
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                            margin: const EdgeInsets.only(
+                                              left: 8,
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 2,
+                                            ),
                                             decoration: ShapeDecoration(
                                               color: const Color(0xFFE8F1F9),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(4),
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
                                               ),
                                             ),
                                             child: Text(
@@ -181,7 +193,9 @@ class RekapPresensiDetailPage extends StatelessWidget {
                             iconBgColor: const Color(0x1E2B86C3),
                             iconColor: const Color(0xFF2B86C3),
                             label: 'Shift Hari Ini',
-                            value: log.badges.contains('Double Shift') ? 'Double Shift' : 'Shift 1',
+                            value: log.badges.contains('Double Shift')
+                                ? 'Double Shift'
+                                : 'Shift 1',
                           ),
                         ],
                       ),
@@ -194,8 +208,12 @@ class RekapPresensiDetailPage extends StatelessWidget {
                           ShiftBlock(
                             shiftName: 'Shift 1',
                             masuk: log.masuk,
-                            pulang: log.badges.contains('Double Shift') ? '14:00' : log.pulang,
-                            durasi: log.badges.contains('Double Shift') ? '7 Jam 15 Menit' : log.durasi,
+                            pulang: log.badges.contains('Double Shift')
+                                ? '14:00'
+                                : log.pulang,
+                            durasi: log.badges.contains('Double Shift')
+                                ? '7 Jam 15 Menit'
+                                : log.durasi,
                           ),
                           if (log.badges.contains('Double Shift')) ...[
                             const Divider(height: 32, color: Color(0xFFEEF2F3)),
@@ -213,7 +231,10 @@ class RekapPresensiDetailPage extends StatelessWidget {
                       // ── Card: Total Durasi Kerja ──
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
                         decoration: ShapeDecoration(
                           color: const Color(0xFFE8F1F9),
                           shape: RoundedRectangleBorder(
@@ -223,13 +244,12 @@ class RekapPresensiDetailPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Total Durasi Kerja',
-                              style: TextStyle(
+                              style: AppTextStyle.bodyMd.copyWith(
                                 color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'Nunito',
                                 fontWeight: FontWeight.w700,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                             const SizedBox(height: 6),
@@ -243,7 +263,7 @@ class RekapPresensiDetailPage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            const Text(
+                            Text(
                               'Sudah termasuk istirahat',
                               style: TextStyle(
                                 color: Color(0xFF7A8089),
@@ -305,13 +325,10 @@ class RekapPresensiDetailPage extends StatelessWidget {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
+                        child: Text(
                           'Ajukan Koreksi Presensi',
-                          style: TextStyle(
+                          style: AppTextStyle.headingLg.copyWith(
                             color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -334,15 +351,13 @@ class RekapPresensiDetailPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x0F7281DF),
             blurRadius: 10,
             offset: Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -350,10 +365,8 @@ class RekapPresensiDetailPage extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: AppTextStyle.bodyLg.copyWith(
               color: Colors.black,
-              fontSize: 16,
-              fontFamily: 'Nunito',
               fontWeight: FontWeight.w700,
             ),
           ),

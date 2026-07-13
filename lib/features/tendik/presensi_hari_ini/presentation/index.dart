@@ -45,7 +45,6 @@ class LandingPresensiHariIni extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const InfoPresensiCard(),
               const SizedBox(height: 24),
               const BatasKoreksiInfo(maxHari: 3),

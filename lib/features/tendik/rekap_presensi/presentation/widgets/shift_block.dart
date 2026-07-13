@@ -27,7 +27,9 @@ class ShiftBlock extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: ShapeDecoration(
             color: const Color(0xFFE8F1F9),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
           ),
           child: Text(
             shiftName,
@@ -54,7 +56,11 @@ class ShiftBlock extends StatelessWidget {
                       color: Color(0x1E4AAF57),
                       shape: CircleBorder(),
                     ),
-                    child: const Icon(Icons.login, color: Color(0xFF4AAF57), size: 20),
+                    child: const Icon(
+                      Icons.login,
+                      color: Color(0xFF4AAF57),
+                      size: 20,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Column(
@@ -62,7 +68,10 @@ class ShiftBlock extends StatelessWidget {
                     children: [
                       const Text(
                         'Jam Masuk',
-                        style: TextStyle(color: Color(0xFF5F6570), fontSize: 12),
+                        style: TextStyle(
+                          color: Color(0xFF5F6570),
+                          fontSize: 12,
+                        ),
                       ),
                       const SizedBox(height: 2),
                       Text(
@@ -89,7 +98,11 @@ class ShiftBlock extends StatelessWidget {
                       color: Color(0x1EFFA426),
                       shape: CircleBorder(),
                     ),
-                    child: const Icon(Icons.logout, color: Color(0xFFFFA426), size: 20),
+                    child: const Icon(
+                      Icons.logout,
+                      color: Color(0xFFFFA426),
+                      size: 20,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Column(
@@ -97,7 +110,10 @@ class ShiftBlock extends StatelessWidget {
                     children: [
                       const Text(
                         'Jam Pulang',
-                        style: TextStyle(color: Color(0xFF5F6570), fontSize: 12),
+                        style: TextStyle(
+                          color: Color(0xFF5F6570),
+                          fontSize: 12,
+                        ),
                       ),
                       const SizedBox(height: 2),
                       Text(
@@ -121,7 +137,11 @@ class ShiftBlock extends StatelessWidget {
         // Durasi Shift
         Row(
           children: [
-            const Icon(Icons.timer_outlined, color: Color(0xFF5F6570), size: 20),
+            const Icon(
+              Icons.timer_outlined,
+              color: Color(0xFF5F6570),
+              size: 20,
+            ),
             const SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

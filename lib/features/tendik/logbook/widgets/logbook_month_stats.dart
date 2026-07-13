@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
 // WIDGET: Baris Statistik Bulan Logbook
@@ -76,12 +77,9 @@ class LogbookMonthStats extends StatelessWidget {
             child: Text(
               kategori.toUpperCase(),
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: AppTextStyle.bodyXs.copyWith(
                 color: kategoriColor,
-                fontSize: 10,
-                fontFamily: 'Nunito',
                 fontWeight: FontWeight.w600,
-                height: 1.60,
               ),
             ),
           ),

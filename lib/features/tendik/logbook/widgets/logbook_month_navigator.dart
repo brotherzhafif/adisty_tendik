@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 // Dot indicator di bawah menunjukkan posisi bulan aktif.
 // ============================================================
 class LogbookMonthNavigator extends StatelessWidget {
-  final String labelBulan;        // e.g. 'Juli 2026'
-  final int totalDots;            // Jumlah dot indicator
-  final int activeDotIndex;       // Index dot aktif (0-based)
+  final String labelBulan; // e.g. 'Juli 2026'
+  final int totalDots; // Jumlah dot indicator
+  final int activeDotIndex; // Index dot aktif (0-based)
   final VoidCallback? onPrevious; // Navigasi bulan sebelumnya
-  final VoidCallback? onNext;     // Navigasi bulan berikutnya
+  final VoidCallback? onNext; // Navigasi bulan berikutnya
 
   const LogbookMonthNavigator({
     super.key,
@@ -50,10 +50,7 @@ class LogbookMonthNavigator extends StatelessWidget {
             ),
 
             // Panah Kanan
-            _NavArrowButton(
-              icon: Icons.chevron_right_rounded,
-              onTap: onNext,
-            ),
+            _NavArrowButton(icon: Icons.chevron_right_rounded, onTap: onNext),
           ],
         ),
 

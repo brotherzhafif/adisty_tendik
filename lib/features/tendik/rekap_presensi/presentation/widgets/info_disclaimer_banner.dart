@@ -18,9 +18,7 @@ class InfoDisclaimerBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: ShapeDecoration(
         color: const Color(0xFFE8F1F9),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

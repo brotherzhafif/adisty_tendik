@@ -10,9 +10,7 @@ class InfoPresensiCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x087281DF),
@@ -37,25 +35,41 @@ class InfoPresensiCard extends StatelessWidget {
         children: [
           _buildInfoRow(
             iconBgColor: const Color(0x1E4AAF57),
-            icon: const Icon(Icons.calendar_today, color: Color(0xFF4AAF57), size: 20),
+            icon: const Icon(
+              Icons.calendar_today,
+              color: Color(0xFF4AAF57),
+              size: 20,
+            ),
             label: 'Tanggal',
             value: 'Rabu, 9 September 2023',
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1E2B86C3),
-            icon: const Icon(Icons.check_circle_outline, color: Color(0xFF2B86C3), size: 20),
+            icon: const Icon(
+              Icons.check_circle_outline,
+              color: Color(0xFF2B86C3),
+              size: 20,
+            ),
             label: 'Status Presensi',
             value: 'On time',
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1EE65768),
-            icon: const Icon(Icons.location_on_outlined, color: Color(0xFFE65768), size: 20),
+            icon: const Icon(
+              Icons.location_on_outlined,
+              color: Color(0xFFE65768),
+              size: 20,
+            ),
             label: 'Lokasi',
             value: 'Kampus 4',
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1E2B86C3),
-            icon: const Icon(Icons.directions_car_outlined, color: Color(0xFF2B86C3), size: 20),
+            icon: const Icon(
+              Icons.directions_car_outlined,
+              color: Color(0xFF2B86C3),
+              size: 20,
+            ),
             label: 'Transport',
             value: 'Rp 20.000',
           ),

@@ -12,18 +12,12 @@ class BatasKoreksiInfo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: ShapeDecoration(
         color: const Color(0xFFE8F1F9),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.info_outline,
-            color: Color(0xFF016EB8),
-            size: 24,
-          ),
+          const Icon(Icons.info_outline, color: Color(0xFF016EB8), size: 24),
           const SizedBox(width: 10),
           Expanded(
             child: Text.rich(

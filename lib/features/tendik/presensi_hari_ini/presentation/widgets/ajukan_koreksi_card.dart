@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 class AjukanKoreksiCard extends StatelessWidget {
   final VoidCallback onTap;
@@ -43,17 +44,14 @@ class AjukanKoreksiCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.all(6),
                         child: Text(
                           'Terdapat kesalahan data presensi?',
-                          style: TextStyle(
+                          style: AppTextStyle.bodyMd.copyWith(
                             color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: 'Nunito',
                             fontWeight: FontWeight.w700,
-                            height: 1.43,
-                            letterSpacing: -0.17,
+                            fontFamily: 'Nunito',
                           ),
                         ),
                       ),
@@ -61,13 +59,8 @@ class AjukanKoreksiCard extends StatelessWidget {
                         padding: const EdgeInsets.all(6),
                         child: Text(
                           'Jika ada kesalahan pada jam masuk/keluar atau data lainnya, ajukan koreksi sekarang.',
-                          style: TextStyle(
+                          style: AppTextStyle.inputHint.copyWith(
                             color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w400,
-                            height: 1.43,
-                            letterSpacing: -0.17,
                           ),
                         ),
                       ),
@@ -105,16 +98,11 @@ class AjukanKoreksiCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'Ajukan Koreksi Presensi',
-                        style: TextStyle(
+                        style: AppTextStyle.headingLg.copyWith(
                           color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          height: 1.50,
-                          letterSpacing: -0.18,
                         ),
                       ),
                     ),
@@ -138,7 +126,7 @@ class AjukanKoreksiCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           'Lihat Riwayat Pengajuan',
                           style: TextStyle(

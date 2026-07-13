@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 
@@ -58,7 +59,13 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
   // Slide Time Picker (Cupertino modal popup)
   Future<void> _selectTimeCupertino(BuildContext context, bool isMasuk) async {
     final TimeOfDay initialTime = isMasuk ? _jamMasuk : _jamPulang;
-    final DateTime initialDateTime = DateTime(2026, 1, 1, initialTime.hour, initialTime.minute);
+    final DateTime initialDateTime = DateTime(
+      2026,
+      1,
+      1,
+      initialTime.hour,
+      initialTime.minute,
+    );
 
     final DateTime? selectedDateTime = await showModalBottomSheet<DateTime>(
       context: context,
@@ -74,13 +81,16 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
             children: [
               // Header picker
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         'Batal',
                         style: TextStyle(
                           color: Color(0xFFE65768),
@@ -90,7 +100,9 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                       ),
                     ),
                     Text(
-                      isMasuk ? 'Pilih Jam Masuk Baru' : 'Pilih Jam Pulang Baru',
+                      isMasuk
+                          ? 'Pilih Jam Masuk Baru'
+                          : 'Pilih Jam Pulang Baru',
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -99,7 +111,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, tempDateTime),
-                      child: const Text(
+                      child: Text(
                         'Pilih',
                         style: TextStyle(
                           color: Color(0xFF0067AD),
@@ -131,7 +143,10 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
 
     if (selectedDateTime != null) {
       setState(() {
-        final time = TimeOfDay(hour: selectedDateTime.hour, minute: selectedDateTime.minute);
+        final time = TimeOfDay(
+          hour: selectedDateTime.hour,
+          minute: selectedDateTime.minute,
+        );
         if (isMasuk) {
           _jamMasuk = time;
         } else {
@@ -169,15 +184,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Koreksi Presensi',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: Text('Koreksi Presensi', style: AppTextStyle.headingXl),
         centerTitle: true,
       ),
       body: Container(
@@ -199,7 +206,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
               children: [
                 // --- Data Presensi Saat Ini ---
                 _buildDataPresensiSaatIni(),
-                
+
                 const SizedBox(height: 16),
 
                 // --- Form Koreksi Putih ---
@@ -209,7 +216,10 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      side: const BorderSide(width: 1, color: Color(0x3DEBEBEB)),
+                      side: const BorderSide(
+                        width: 1,
+                        color: Color(0x3DEBEBEB),
+                      ),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     shadows: const [
@@ -223,7 +233,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Form Koreksi',
                         style: TextStyle(
                           color: Color(0xFF293241),
@@ -232,17 +242,23 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 16),
 
                       // --- Input Jam Masuk Baru ---
-                      _InputFieldLabel(label: 'Jam Masuk Baru', isRequired: true),
+                      _InputFieldLabel(
+                        label: 'Jam Masuk Baru',
+                        isRequired: true,
+                      ),
                       const SizedBox(height: 6),
                       InkWell(
                         onTap: () => _selectTimeCupertino(context, true),
                         child: Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 12,
+                          ),
                           decoration: BoxDecoration(
                             border: Border.all(color: const Color(0xFF99A1AF)),
                             borderRadius: BorderRadius.circular(8),
@@ -259,7 +275,11 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const Icon(Icons.access_time_rounded, color: Color(0xFF7A8089), size: 20),
+                              const Icon(
+                                Icons.access_time_rounded,
+                                color: Color(0xFF7A8089),
+                                size: 20,
+                              ),
                             ],
                           ),
                         ),
@@ -268,13 +288,19 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                       const SizedBox(height: 16),
 
                       // --- Input Jam Pulang Baru ---
-                      _InputFieldLabel(label: 'Jam Pulang Baru', isRequired: true),
+                      _InputFieldLabel(
+                        label: 'Jam Pulang Baru',
+                        isRequired: true,
+                      ),
                       const SizedBox(height: 6),
                       InkWell(
                         onTap: () => _selectTimeCupertino(context, false),
                         child: Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 12,
+                          ),
                           decoration: BoxDecoration(
                             border: Border.all(color: const Color(0xFF99A1AF)),
                             borderRadius: BorderRadius.circular(8),
@@ -291,7 +317,11 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const Icon(Icons.access_time_rounded, color: Color(0xFF7A8089), size: 20),
+                              const Icon(
+                                Icons.access_time_rounded,
+                                color: Color(0xFF7A8089),
+                                size: 20,
+                              ),
                             ],
                           ),
                         ),
@@ -300,14 +330,20 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                       const SizedBox(height: 16),
 
                       // --- Modal Alasan Koreksi ---
-                      _InputFieldLabel(label: 'Alasan Koreksi', isRequired: true),
+                      _InputFieldLabel(
+                        label: 'Alasan Koreksi',
+                        isRequired: true,
+                      ),
                       const SizedBox(height: 6),
                       InkWell(
                         onTap: () => _pilihAlasan(context),
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 12,
+                          ),
                           decoration: BoxDecoration(
                             border: Border.all(color: const Color(0xFF99A1AF)),
                             borderRadius: BorderRadius.circular(8),
@@ -358,7 +394,10 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                           decoration: ShapeDecoration(
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
-                              side: const BorderSide(width: 1.5, color: Color(0xFF0067AD)),
+                              side: const BorderSide(
+                                width: 1.5,
+                                color: Color(0xFF0067AD),
+                              ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
@@ -384,7 +423,8 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                             context,
                             type: AppDialogType.success,
                             title: 'Pengajuan Terkirim',
-                            message: 'Pengajuan Koreksi Presensi Anda berhasil dikirim.',
+                            message:
+                                'Pengajuan Koreksi Presensi Anda berhasil dikirim.',
                             onClose: () => Navigator.pop(context),
                           );
                         },
@@ -412,7 +452,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 24),
               ],
             ),
@@ -437,7 +477,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Data presensi saat ini',
             style: TextStyle(
               color: Color(0xFF293241),
@@ -549,7 +589,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text.rich(
+        Text.rich(
           TextSpan(
             children: [
               TextSpan(
@@ -573,7 +613,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
           ),
         ),
         const SizedBox(height: 4),
-        const Text(
+        Text(
           'Maksimal 3 file · JPG, PNG, PDF · Maks. 5MB per file',
           style: TextStyle(
             color: Color(0xFF7A8089),
@@ -582,7 +622,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
           ),
         ),
         const SizedBox(height: 8),
-        
+
         // Dnd / click upload box
         InkWell(
           onTap: _uploadMockFile,
@@ -595,7 +635,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
-              children: const [
+              children: [
                 Icon(
                   Icons.cloud_upload_outlined,
                   size: 32,
@@ -629,22 +669,33 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                 color: const Color(0xFFF6F7F9),
                 margin: const EdgeInsets.only(bottom: 6),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.insert_drive_file_outlined, color: Color(0xFF0067AD), size: 20),
+                          const Icon(
+                            Icons.insert_drive_file_outlined,
+                            color: Color(0xFF0067AD),
+                            size: 20,
+                          ),
                           const SizedBox(width: 8),
                           Text(
                             _uploadedFiles[index],
-                            style: const TextStyle(fontSize: 12, fontFamily: 'Nunito'),
+                            style: AppTextStyle.bodySm,
                           ),
                         ],
                       ),
                       IconButton(
-                        icon: const Icon(Icons.delete_outline_rounded, color: Color(0xFFE65768), size: 20),
+                        icon: const Icon(
+                          Icons.delete_outline_rounded,
+                          color: Color(0xFFE65768),
+                          size: 20,
+                        ),
                         onPressed: () {
                           setState(() {
                             _uploadedFiles.removeAt(index);
@@ -686,7 +737,7 @@ class _InputFieldLabel extends StatelessWidget {
           ),
         ),
         if (isRequired)
-          const Text(
+          Text(
             ' *',
             style: TextStyle(
               color: Color(0xFFFB2C36),
@@ -756,7 +807,10 @@ class _SimplePickerModal extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded, color: Color(0xFF5F6570)),
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    color: Color(0xFF5F6570),
+                  ),
                   visualDensity: VisualDensity.compact,
                 ),
               ],
@@ -771,7 +825,7 @@ class _SimplePickerModal extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(
+            separatorBuilder: (_, _) => const Divider(
               height: 1,
               indent: 20,
               endIndent: 20,
