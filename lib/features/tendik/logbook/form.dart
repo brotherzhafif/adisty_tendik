@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
 
@@ -82,14 +83,79 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
   // List Dummy Satuan Kuantitas
   final List<String> _listSatuan = ['Item', 'Dokumen', 'Sistem', 'Laporan'];
 
-  // Helper Date Picker
+  // Helper Date Picker (iOS-style Cupertino modal)
   Future<void> _pilihTanggal(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    DateTime tempDate = _selectedDate;
+
+    final DateTime? picked = await showModalBottomSheet<DateTime>(
       context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: [
+              // Header
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        'Batal',
+                        style: TextStyle(
+                          color: Color(0xFFE65768),
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                    const Text(
+                      'Pilih Tanggal',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, tempDate),
+                      child: const Text(
+                        'Pilih',
+                        style: TextStyle(
+                          color: Color(0xFF0067AD),
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: _selectedDate,
+                  minimumDate: DateTime(2020),
+                  maximumDate: DateTime(2030, 12, 31),
+                  onDateTimeChanged: (DateTime newDate) {
+                    tempDate = newDate;
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
+
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
