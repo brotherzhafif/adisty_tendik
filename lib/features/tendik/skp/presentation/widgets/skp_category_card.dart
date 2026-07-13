@@ -94,7 +94,7 @@ class SkpCategoryCard extends StatelessWidget {
                         title,
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: 14,
                           fontFamily: 'Nunito',
                           fontWeight: FontWeight.w700,
                           height: 1.33,
@@ -104,7 +104,7 @@ class SkpCategoryCard extends StatelessWidget {
                         weight,
                         style: TextStyle(
                           color: themeColor,
-                          fontSize: 10,
+                          fontSize: 12,
                           fontFamily: 'Plus Jakarta Sans',
                           fontWeight: FontWeight.w500,
                           height: 1.20,
@@ -125,7 +125,7 @@ class SkpCategoryCard extends StatelessWidget {
                     subTitle,
                     style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 12,
+                      fontSize: 13,
                       fontFamily: 'Nunito',
                       fontWeight: FontWeight.w400,
                       height: 1.33,
@@ -151,9 +151,9 @@ class SkpCategoryCard extends StatelessWidget {
                       'Indikator',
                       style: TextStyle(
                         color: Color(0xFF0A0A0A),
-                        fontSize: 10,
+                        fontSize: 12,
                         fontFamily: 'Plus Jakarta Sans',
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         height: 1.20,
                       ),
                     ),
@@ -161,9 +161,9 @@ class SkpCategoryCard extends StatelessWidget {
                       'Skor (0-100)',
                       style: TextStyle(
                         color: Color(0xFF0A0A0A),
-                        fontSize: 10,
+                        fontSize: 12,
                         fontFamily: 'Plus Jakarta Sans',
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         height: 1.20,
                       ),
                     ),
@@ -184,7 +184,7 @@ class SkpCategoryCard extends StatelessWidget {
                 child: Column(
                   children: indicators.map((indicator) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
                         children: [
                           Expanded(
@@ -197,10 +197,10 @@ class SkpCategoryCard extends StatelessWidget {
                                 indicator.name,
                                 style: const TextStyle(
                                   color: Color(0xFF4A5565),
-                                  fontSize: 10,
+                                  fontSize: 13,
                                   fontFamily: 'Plus Jakarta Sans',
                                   fontWeight: FontWeight.w500,
-                                  height: 1.20,
+                                  height: 1.30,
                                 ),
                               ),
                             ),
@@ -216,9 +216,9 @@ class SkpCategoryCard extends StatelessWidget {
                               indicator.score.toStringAsFixed(2),
                               style: TextStyle(
                                 color: themeColor,
-                                fontSize: 12,
+                                fontSize: 14,
                                 fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                                 height: 1.33,
                               ),
                             ),
@@ -253,7 +253,7 @@ class SkpCategoryCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 12,
+                    fontSize: 13,
                     fontFamily: 'Nunito',
                     fontWeight: FontWeight.w700,
                     height: 1.33,
