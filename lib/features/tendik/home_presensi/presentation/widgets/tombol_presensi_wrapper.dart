@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/services/validation_service.dart';
-import 'package:adisty_tendik_module/features/global_error/presentation/index.dart';
+import 'package:adisty_tendik_module/core/error/presentation/index.dart';
 import 'presensi_state.dart';
 import 'tombol_pulang.dart';
 import 'presensi_dialogs.dart';

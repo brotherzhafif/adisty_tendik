@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
 import 'widgets/logbook_detail_header_card.dart';
 import 'widgets/logbook_detail_content_card.dart';
@@ -76,14 +77,20 @@ class LogbookDetailPage extends StatelessWidget {
                       _ActionButtonRow(
                         onHapus: () {
                           // TODO: Implement delete logic
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Fungsi Hapus belum diimplementasi')),
+                          showAppDialog(
+                            context,
+                            type: AppDialogType.info,
+                            title: 'Belum Tersedia',
+                            message: 'Fungsi Hapus belum diimplementasi.',
                           );
                         },
                         onEdit: () {
                           // TODO: Implement edit logic
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Fungsi Edit belum diimplementasi')),
+                          showAppDialog(
+                            context,
+                            type: AppDialogType.info,
+                            title: 'Belum Tersedia',
+                            message: 'Fungsi Edit belum diimplementasi.',
                           );
                         },
                       ),

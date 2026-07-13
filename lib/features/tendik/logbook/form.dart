@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
 
 // ============================================================
@@ -380,12 +381,13 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                           onSimpan: () {
                             if (_formKey.currentState!.validate()) {
                               // Simulasikan penyimpanan data sukses
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Logbook berhasil disimpan'),
-                                ),
+                              showAppDialog(
+                                context,
+                                type: AppDialogType.success,
+                                title: 'Logbook Tersimpan',
+                                message: 'Data logbook Anda berhasil disimpan.',
+                                onClose: () => Navigator.of(context).pop(),
                               );
-                              Navigator.of(context).pop();
                             }
                           },
                         ),

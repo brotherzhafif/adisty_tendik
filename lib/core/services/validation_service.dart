@@ -3,7 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:adisty_tendik_module/features/global_error/presentation/index.dart';
+import 'package:adisty_tendik_module/core/error/presentation/index.dart';
 
 // ============================================================
 // SERVICE: VALIDASI KONEKSI & PERANGKAT

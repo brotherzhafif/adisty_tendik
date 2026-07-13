@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 
 // ============================================================
 // HALAMAN: Form Koreksi Presensi
@@ -126,8 +127,11 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
   // Simulasi upload file
   void _uploadMockFile() {
     if (_uploadedFiles.length >= 3) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Maksimal 3 file bukti')),
+      showAppDialog(
+        context,
+        type: AppDialogType.info,
+        title: 'Batas File Tercapai',
+        message: 'Maksimal 3 file bukti yang dapat diunggah.',
       );
       return;
     }
@@ -359,10 +363,13 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Pengajuan Koreksi Presensi dikirim')),
+                          showAppDialog(
+                            context,
+                            type: AppDialogType.success,
+                            title: 'Pengajuan Terkirim',
+                            message: 'Pengajuan Koreksi Presensi Anda berhasil dikirim.',
+                            onClose: () => Navigator.pop(context),
                           );
-                          Navigator.pop(context);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
