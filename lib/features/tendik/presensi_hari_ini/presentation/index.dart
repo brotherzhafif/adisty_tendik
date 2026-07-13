@@ -45,16 +45,7 @@ class LandingPresensiHariIni extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Jumat, 13 Oktober 2023',
-                style: TextStyle(
-                  color: Color(0xFF5F6570),
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 16),
+
               const InfoPresensiCard(),
               const SizedBox(height: 24),
               const BatasKoreksiInfo(maxHari: 3),

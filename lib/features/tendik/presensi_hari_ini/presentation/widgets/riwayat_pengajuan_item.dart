@@ -157,21 +157,23 @@ class RiwayatPengajuanItem extends StatelessWidget {
                           type,
                           style: const TextStyle(
                             color: Color(0xFF5F6570),
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                             height: 1.43,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           date,
                           style: const TextStyle(
                             color: Color(0xFF293241),
-                            fontSize: 16,
+                            fontSize: 13,
                             fontFamily: 'Nunito',
                             fontWeight: FontWeight.w600,
                             height: 1.50,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -201,7 +203,7 @@ class RiwayatPengajuanItem extends StatelessWidget {
                           'Diajukan',
                           style: TextStyle(
                             color: Color(0xFF5F6570),
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                             height: 1.43,
@@ -218,19 +220,20 @@ class RiwayatPengajuanItem extends StatelessWidget {
                             const Icon(
                               Icons.calendar_month,
                               color: Color(0xFF5F6570),
-                              size: 16,
+                              size: 14,
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 6),
                             Expanded(
                               child: Text(
                                 diajukan,
                                 style: const TextStyle(
                                   color: Color(0xFF5F6570),
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontFamily: 'Nunito',
                                   fontWeight: FontWeight.w600,
                                   height: 1.50,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -247,71 +250,79 @@ class RiwayatPengajuanItem extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
-                          vertical: 4,
+                          vertical: 1,
                         ),
                         child: Text(
                           'Perubahan',
                           style: const TextStyle(
                             color: Color(0xFF5F6570),
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
-                            height: 1.43,
+                            height: 1.3,
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
-                          vertical: 4,
+                          vertical: 1,
                         ),
                         child: Text(
                           perubahanLabel,
                           style: const TextStyle(
                             color: Color(0xFF5F6570),
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
-                            height: 1.43,
+                            height: 1.3,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
-                          vertical: 4,
+                          vertical: 2,
                         ),
                         child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Expanded(
+                            Flexible(
+                              fit: FlexFit.loose,
                               child: Text(
                                 oldValue,
                                 style: const TextStyle(
                                   color: Color(0xFFFFAC2F),
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontFamily: 'Nunito',
                                   fontWeight: FontWeight.w600,
-                                  height: 1.50,
+                                  height: 1.2,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            const Icon(
-                              Icons.arrow_forward,
-                              size: 16,
-                              color: Color(0xFF5F6570),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              child: Icon(
+                                Icons.arrow_forward,
+                                size: 10,
+                                color: Color(0xFF5F6570),
+                              ),
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
+                            Flexible(
+                              fit: FlexFit.loose,
                               child: Text(
                                 newValue,
                                 style: const TextStyle(
                                   color: Color(0xFFFFAC2F),
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontFamily: 'Nunito',
                                   fontWeight: FontWeight.w600,
-                                  height: 1.50,
+                                  height: 1.2,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],

@@ -42,16 +42,6 @@ class RiwayatKoreksiPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '3 Pengajuan',
-                style: TextStyle(
-                  color: Color(0xFF5F6570),
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 16),
               RiwayatPengajuanItem(
                 status: StatusPengajuan.menunggu,
                 date: 'Rabu, 9 September 2023',

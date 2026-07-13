@@ -38,6 +38,23 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
     return '$hour:$minute';
   }
 
+  // Modal picker alasan koreksi
+  Future<void> _pilihAlasan(BuildContext context) async {
+    final String? result = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _SimplePickerModal(
+        title: 'Pilih Alasan Koreksi',
+        items: _listAlasan,
+        selectedItem: _alasanKoreksi,
+      ),
+    );
+    if (result != null) {
+      setState(() => _alasanKoreksi = result);
+    }
+  }
+
   // Slide Time Picker (Cupertino modal popup)
   Future<void> _selectTimeCupertino(BuildContext context, bool isMasuk) async {
     final TimeOfDay initialTime = isMasuk ? _jamMasuk : _jamPulang;
@@ -282,40 +299,40 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
 
                       const SizedBox(height: 16),
 
-                      // --- Dropdown Alasan Koreksi ---
+                      // --- Modal Alasan Koreksi ---
                       _InputFieldLabel(label: 'Alasan Koreksi', isRequired: true),
                       const SizedBox(height: 6),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xFF99A1AF)),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: _alasanKoreksi,
-                            isExpanded: true,
-                            items: _listAlasan.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
+                      InkWell(
+                        onTap: () => _pilihAlasan(context),
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xFF99A1AF)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
                                 child: Text(
-                                  value,
+                                  _alasanKoreksi,
                                   style: const TextStyle(
                                     color: Color(0xFF293241),
                                     fontSize: 13,
                                     fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w500,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  _alasanKoreksi = newValue;
-                                });
-                              }
-                            },
+                              ),
+                              const Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: Color(0xFF7A8089),
+                                size: 22,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -678,6 +695,132 @@ class _InputFieldLabel extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+// ============================================================
+// WIDGET REUSABLE: Modal picker sederhana (tanpa search bar)
+// Dipakai untuk daftar pilihan yang pendek (< 10 item).
+// Untuk daftar panjang (jabatan 50+), pakai _JabatanPickerModal.
+// ============================================================
+class _SimplePickerModal extends StatelessWidget {
+  final String title;
+  final List<String> items;
+  final String selectedItem;
+
+  const _SimplePickerModal({
+    required this.title,
+    required this.items,
+    required this.selectedItem,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Handle bar
+          Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 8),
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFDDE0E5),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+
+          // Header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Color(0xFF293241),
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close_rounded, color: Color(0xFF5F6570)),
+                  visualDensity: VisualDensity.compact,
+                ),
+              ],
+            ),
+          ),
+
+          const Divider(height: 1, color: Color(0xFFEEEFF1)),
+
+          // List pilihan
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const Divider(
+              height: 1,
+              indent: 20,
+              endIndent: 20,
+              color: Color(0xFFF1F2F4),
+            ),
+            itemBuilder: (context, index) {
+              final item = items[index];
+              final isSelected = item == selectedItem;
+              return InkWell(
+                onTap: () => Navigator.of(context).pop(item),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Nunito',
+                            fontWeight: isSelected
+                                ? FontWeight.w700
+                                : FontWeight.w500,
+                            color: isSelected
+                                ? const Color(0xFF0067AD)
+                                : const Color(0xFF293241),
+                          ),
+                        ),
+                      ),
+                      if (isSelected)
+                        const Icon(
+                          Icons.check_rounded,
+                          color: Color(0xFF0067AD),
+                          size: 20,
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+
+          // Safe area bottom padding
+          SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
+        ],
+      ),
     );
   }
 }

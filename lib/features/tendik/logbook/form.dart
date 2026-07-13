@@ -181,6 +181,111 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
     }
   }
 
+  // Helper Kuantitas Picker (CupertinoPicker drum iOS)
+  Future<void> _pilihKuantitas(BuildContext context) async {
+    int tempKuantitas = _kuantitas;
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        'Batal',
+                        style: TextStyle(
+                          color: Color(0xFFE65768),
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ),
+                    const Text(
+                      'Pilih Kuantitas',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() => _kuantitas = tempKuantitas);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Pilih',
+                        style: TextStyle(
+                          color: Color(0xFF0067AD),
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1),
+              Expanded(
+                child: CupertinoPicker(
+                  itemExtent: 40,
+                  scrollController: FixedExtentScrollController(
+                    initialItem: _kuantitas - 1,
+                  ),
+                  onSelectedItemChanged: (int index) {
+                    tempKuantitas = index + 1;
+                  },
+                  children: List.generate(
+                    99,
+                    (index) => Center(
+                      child: Text(
+                        '${index + 1}',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Helper Satuan Picker (Modal Sederhana)
+  Future<void> _pilihSatuan(BuildContext context) async {
+    final String? result = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _LogbookSimplePickerModal(
+        title: 'Pilih Satuan',
+        items: _listSatuan,
+        selectedItem: _selectedSatuan,
+      ),
+    );
+    if (result != null) {
+      setState(() => _selectedSatuan = result);
+    }
+  }
+
   @override
   void dispose() {
     _uraianController.dispose();
@@ -367,94 +472,81 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
                               const SizedBox(height: 6),
                               Row(
                                 children: [
-                                  // Angka Kuantitas
+                                  // Angka Kuantitas — tap buka drum picker
                                   Expanded(
                                     flex: 3,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: const Color(0xFFE7E8E9),
+                                    child: InkWell(
+                                      onTap: () => _pilihKuantitas(context),
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 12,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.remove_rounded,
-                                              size: 18,
-                                            ),
-                                            onPressed: () {
-                                              if (_kuantitas > 1) {
-                                                setState(() => _kuantitas--);
-                                              }
-                                            },
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: const Color(0xFFE7E8E9),
                                           ),
-                                          Text(
-                                            '$_kuantitas',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: 'Nunito',
-                                              fontWeight: FontWeight.w600,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '$_kuantitas',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'Nunito',
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.add_rounded,
-                                              size: 18,
+                                            const Icon(
+                                              Icons.unfold_more_rounded,
+                                              color: Color(0xFFAEB1B7),
+                                              size: 20,
                                             ),
-                                            onPressed: () {
-                                              setState(() => _kuantitas++);
-                                            },
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
 
                                   const SizedBox(width: 12),
 
-                                  // Jenis Satuan Dropdown
+                                  // Satuan — tap buka modal picker
                                   Expanded(
                                     flex: 3,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: const Color(0xFFE7E8E9),
+                                    child: InkWell(
+                                      onTap: () => _pilihSatuan(context),
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 12,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<String>(
-                                          value: _selectedSatuan,
-                                          isExpanded: true,
-                                          items: _listSatuan.map((
-                                            String value,
-                                          ) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: const TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Nunito',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: const Color(0xFFE7E8E9),
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              _selectedSatuan,
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                fontFamily: 'Nunito',
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (newValue) {
-                                            if (newValue != null) {
-                                              setState(() {
-                                                _selectedSatuan = newValue;
-                                              });
-                                            }
-                                          },
+                                            ),
+                                            const Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color: Color(0xFFAEB1B7),
+                                              size: 22,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -850,6 +942,128 @@ class _JabatanPickerModalState extends State<_JabatanPickerModal> {
           ),
         );
       },
+    );
+  }
+}
+
+// ============================================================
+// WIDGET PRIVAT: Modal picker sederhana untuk logbook
+// (Satuan, dan pilihan pendek lainnya)
+// ============================================================
+class _LogbookSimplePickerModal extends StatelessWidget {
+  final String title;
+  final List<String> items;
+  final String selectedItem;
+
+  const _LogbookSimplePickerModal({
+    required this.title,
+    required this.items,
+    required this.selectedItem,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Handle bar
+          Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 8),
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFDDE0E5),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+
+          // Header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Color(0xFF293241),
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close_rounded, color: Color(0xFF5F6570)),
+                  visualDensity: VisualDensity.compact,
+                ),
+              ],
+            ),
+          ),
+
+          const Divider(height: 1, color: Color(0xFFEEEFF1)),
+
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const Divider(
+              height: 1,
+              indent: 20,
+              endIndent: 20,
+              color: Color(0xFFF1F2F4),
+            ),
+            itemBuilder: (context, index) {
+              final item = items[index];
+              final isSelected = item == selectedItem;
+              return InkWell(
+                onTap: () => Navigator.of(context).pop(item),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Nunito',
+                            fontWeight:
+                                isSelected ? FontWeight.w700 : FontWeight.w500,
+                            color: isSelected
+                                ? const Color(0xFF0067AD)
+                                : const Color(0xFF293241),
+                          ),
+                        ),
+                      ),
+                      if (isSelected)
+                        const Icon(
+                          Icons.check_rounded,
+                          color: Color(0xFF0067AD),
+                          size: 20,
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+
+          SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
+        ],
+      ),
     );
   }
 }
