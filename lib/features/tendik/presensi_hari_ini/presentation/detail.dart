@@ -852,7 +852,7 @@ class RiwayatKoreksiDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _AppColors.primary,
+      backgroundColor: _AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
