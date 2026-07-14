@@ -13,7 +13,11 @@ class NotifikasiPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF293241), size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xFF293241),
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
@@ -31,7 +35,8 @@ class NotifikasiPage extends StatelessWidget {
         children: const [
           NotificationItem(
             title: 'Agenda',
-            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,',
             time: '16:40',
             iconPath: 'assets/icons/(notification_page)_agenda.svg',
             iconColor: Color(0x1EEE6C4D),
@@ -39,7 +44,8 @@ class NotifikasiPage extends StatelessWidget {
           ),
           NotificationItem(
             title: 'Agenda',
-            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,',
             time: '16:40',
             iconPath: 'assets/icons/(notification_page)_agenda.svg',
             iconColor: Color(0x1EEE6C4D),
@@ -47,7 +53,8 @@ class NotifikasiPage extends StatelessWidget {
           ),
           NotificationItem(
             title: 'Riwayat kepegawaian',
-            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,',
+            description:
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,',
             time: '16:40',
             iconPath: 'assets/icons/(notification_page)_riwayat.svg',
             iconColor: Color(0x1EE65768),
@@ -95,10 +102,7 @@ class NotificationItem extends StatelessWidget {
             width: 40,
             height: 40,
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: iconColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: iconColor, shape: BoxShape.circle),
             child: SvgPicture.asset(iconPath),
           ),
           const SizedBox(width: 12),

@@ -404,26 +404,26 @@ class _StatusPresensiCard extends StatelessWidget {
                   Text('Presensi', style: _AppTextStyles.fieldLabel),
                   Text(tanggal, style: _AppTextStyles.fieldValue),
                   Text(hari, style: _AppTextStyles.fieldLabel),
-                ],
-              ),
-            ),
-            Container(
-              constraints: const BoxConstraints(minWidth: 129),
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              decoration: ShapeDecoration(
-                color: _AppColors.statusYellowBg,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(
-                    width: 1,
-                    color: _AppColors.statusYellow,
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: ShapeDecoration(
+                      color: _AppColors.statusYellowBg,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          width: 1,
+                          color: _AppColors.statusYellow,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      statusLabel,
+                      textAlign: TextAlign.center,
+                      style: _AppTextStyles.badgeText,
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                statusLabel,
-                textAlign: TextAlign.center,
-                style: _AppTextStyles.badgeText,
+                ],
               ),
             ),
           ],
@@ -845,7 +845,7 @@ class RiwayatKoreksiDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _AppColors.background,
+      backgroundColor: _AppColors.primary,
       body: SafeArea(
         child: Column(
           children: [

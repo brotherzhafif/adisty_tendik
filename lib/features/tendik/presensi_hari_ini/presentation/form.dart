@@ -487,51 +487,62 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
             ),
           ),
           const SizedBox(height: 12),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    _buildMiniInfoRow(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: _buildMiniInfoRow(
                       icon: Icons.calendar_today,
                       iconColor: const Color(0xFF4AAF57),
                       iconBg: const Color(0x1E4AAF57),
                       label: 'Tanggal',
                       value: 'Rabu, 9 Sep 2023',
                     ),
-                    const Divider(height: 16, color: Color(0xFFD4E1EE)),
-                    _buildMiniInfoRow(
-                      icon: Icons.login,
-                      iconColor: const Color(0xFF4AAF57),
-                      iconBg: const Color(0x1E4AAF57),
-                      label: 'Jam Masuk',
-                      value: '07.00',
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  children: [
-                    _buildMiniInfoRow(
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildMiniInfoRow(
                       icon: Icons.location_on,
                       iconColor: const Color(0xFFE65768),
                       iconBg: const Color(0x1EE65768),
                       label: 'Lokasi',
                       value: 'Kampus 4',
                     ),
-                    const Divider(height: 16, color: Color(0xFFD4E1EE)),
-                    _buildMiniInfoRow(
+                  ),
+                ],
+              ),
+              const Row(
+                children: [
+                  Expanded(child: Divider(height: 16, color: Color(0xFFD4E1EE))),
+                  SizedBox(width: 16),
+                  Expanded(child: Divider(height: 16, color: Color(0xFFD4E1EE))),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: _buildMiniInfoRow(
+                      icon: Icons.login,
+                      iconColor: const Color(0xFF4AAF57),
+                      iconBg: const Color(0x1E4AAF57),
+                      label: 'Jam Masuk',
+                      value: '07.00',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildMiniInfoRow(
                       icon: Icons.logout,
                       iconColor: const Color(0xFFFFA426),
                       iconBg: const Color(0x1EFFA426),
                       label: 'Jam Pulang',
                       value: '-',
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
