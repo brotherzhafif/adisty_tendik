@@ -1,110 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import '../bloc/rekap_presensi_bloc.dart';
+import '../bloc/rekap_presensi_event.dart';
+import '../bloc/rekap_presensi_state.dart';
+import '../data/providers/rekap_presensi_provider.dart';
+import '../data/repositories/rekap_presensi_repository.dart';
+import '../domain/usecases/get_rekap_presensi_usecase.dart';
 import 'detail.dart';
-import 'widgets/presensi_log_model.dart';
 import 'widgets/statistik_tendik_card.dart';
 import 'widgets/summary_mini_card.dart';
 import 'widgets/info_disclaimer_banner.dart';
 import 'widgets/rekap_log_item.dart';
 
 // ============================================================
-// HALAMAN UTAMA: REKAP PRESENSI LANDING
+// HALAMAN UTAMA: REKAP PRESENSI LANDING (CLEAN ARCHITECTURE WRAPPER)
 // ============================================================
-class RekapPresensi extends StatefulWidget {
+class RekapPresensi extends StatelessWidget {
   const RekapPresensi({super.key});
 
   @override
-  State<RekapPresensi> createState() => _RekapPresensiState();
+  Widget build(BuildContext context) {
+    // Inisialisasi Provider -> Repository -> UseCase -> BLoC
+    final provider = const RekapPresensiProvider();
+    final repository = RekapPresensiRepository(provider: provider);
+    final useCase = GetRekapPresensiUseCase(repository: repository);
+
+    return BlocProvider(
+      create: (context) => RekapPresensiBloc(
+        getRekapPresensiUseCase: useCase,
+      )..add(const FetchRekapPresensiEvent()),
+      child: const RekapPresensiView(),
+    );
+  }
 }
 
-class _RekapPresensiState extends State<RekapPresensi> {
-  // Mock data untuk 7 hari log presensi
-  final List<PresensiLog> logs = const [
-    PresensiLog(
-      date: 'Sabtu, 28 Oktober 2026',
-      dayName: 'Sabtu',
-      dayNum: '28',
-      status: 'On time',
-      badges: ['Koreksi'],
-      location: 'Kampus 4',
-      transport: '20.000',
-      masuk: '06:45',
-      pulang: '17:00',
-      durasi: '7 Jam 15 Menit',
-    ),
-    PresensiLog(
-      date: 'Jumat, 27 Oktober 2026',
-      dayName: 'Jumat',
-      dayNum: '27',
-      status: 'On time',
-      badges: ['Double Shift'],
-      location: 'Kampus 4',
-      transport: '40.000',
-      masuk: '06:45',
-      pulang: '21:00',
-      durasi: '15 Jam 15 Menit',
-    ),
-    PresensiLog(
-      date: 'Kamis, 26 Oktober 2026',
-      dayName: 'Kamis',
-      dayNum: '26',
-      status: 'Terlambat',
-      badges: [],
-      location: 'Kampus 4',
-      transport: '20.000',
-      masuk: '07:30',
-      pulang: '17:00',
-      durasi: '6 Jam 30 Menit',
-    ),
-    PresensiLog(
-      date: 'Rabu, 25 Oktober 2026',
-      dayName: 'Rabu',
-      dayNum: '25',
-      status: 'On time',
-      badges: [],
-      location: 'Kampus 4',
-      transport: '20.000',
-      masuk: '06:45',
-      pulang: '17:00',
-      durasi: '7 Jam 15 Menit',
-    ),
-    PresensiLog(
-      date: 'Selasa, 24 Oktober 2026',
-      dayName: 'Selasa',
-      dayNum: '24',
-      status: 'On time',
-      badges: [],
-      location: 'Kampus 4',
-      transport: '20.000',
-      masuk: '06:45',
-      pulang: '17:00',
-      durasi: '7 Jam 15 Menit',
-    ),
-    PresensiLog(
-      date: 'Senin, 23 Oktober 2026',
-      dayName: 'Senin',
-      dayNum: '23',
-      status: 'On time',
-      badges: [],
-      location: 'Kampus 4',
-      transport: '20.000',
-      masuk: '06:45',
-      pulang: '17:00',
-      durasi: '7 Jam 15 Menit',
-    ),
-    PresensiLog(
-      date: 'Sabtu, 21 Oktober 2026',
-      dayName: 'Sabtu',
-      dayNum: '21',
-      status: 'On time',
-      badges: [],
-      location: 'Kampus 4',
-      transport: '20.000',
-      masuk: '06:45',
-      pulang: '17:00',
-      durasi: '7 Jam 15 Menit',
-    ),
-  ];
+// ============================================================
+// VIEW COMPONENT: REKAP PRESENSI VIEW
+// ============================================================
+class RekapPresensiView extends StatelessWidget {
+  const RekapPresensiView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -137,95 +72,167 @@ class _RekapPresensiState extends State<RekapPresensi> {
                     ),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 20,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Card Statistik Tendik
-                      const StatistikTendikCard(),
-                      const SizedBox(height: 14),
-
-                      // Row mini summary
-                      Row(
-                        children: [
-                          Expanded(
-                            child: const SummaryMiniCard(
-                              title: 'Transport',
-                              value: '450.000',
-                              unit: 'Rupiah',
-                              iconBgColor: Color(0x142B86C3),
-                              iconColor: Color(0xFF2B86C3),
-                              icon: Icons.directions_car,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: const SummaryMiniCard(
-                              title: 'Total jam',
-                              value: '150:00',
-                              unit: 'jam: menit',
-                              iconBgColor: Color(0x142B86C3),
-                              iconColor: Color(0xFF2B86C3),
-                              icon: Icons.access_time_filled,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 18),
-
-                      // Section Header "Monitoring"
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 8,
+                child: BlocBuilder<RekapPresensiBloc, RekapPresensiState>(
+                  builder: (context, state) {
+                    if (state is RekapPresensiLoading || state is RekapPresensiInitial) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF2B86C3),
                         ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF2B86C3),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          'Monitoring',
-                          style: AppTextStyle.bodyLg.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
+                      );
+                    }
 
-                      // List rekap log presensi
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: logs.length,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                        itemBuilder: (context, index) {
-                          final log = logs[index];
-                          return RekapLogItem(
-                            log: log,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      RekapPresensiDetailPage(log: log),
+                    if (state is RekapPresensiError) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.redAccent,
+                                size: 48,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                state.message,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.bodyMd.copyWith(
+                                  color: Colors.redAccent,
                                 ),
-                              );
-                            },
-                          );
-                        },
-                      ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  context.read<RekapPresensiBloc>().add(
+                                        const FetchRekapPresensiEvent(),
+                                      );
+                                },
+                                icon: const Icon(Icons.refresh, color: Colors.white),
+                                label: Text(
+                                  'Coba Lagi',
+                                  style: AppTextStyle.bodyMd.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF2B86C3),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
 
-                      // Info Disclaimer Banner
-                      const InfoDisclaimerBanner(),
-                      const SizedBox(height: 40),
-                    ],
-                  ),
+                    if (state is RekapPresensiLoaded) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<RekapPresensiBloc>().add(
+                                const RefreshRekapPresensiEvent(),
+                              );
+                        },
+                        color: const Color(0xFF2B86C3),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 20,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Card Statistik Tendik
+                              const StatistikTendikCard(),
+                              const SizedBox(height: 14),
+
+                              // Row mini summary (Dinamis dari BLoC State)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: SummaryMiniCard(
+                                      title: 'Transport',
+                                      value: state.totalTransport,
+                                      unit: 'Rupiah',
+                                      iconBgColor: const Color(0x142B86C3),
+                                      iconColor: const Color(0xFF2B86C3),
+                                      icon: Icons.directions_car,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: SummaryMiniCard(
+                                      title: 'Total jam',
+                                      value: state.totalJam,
+                                      unit: 'jam: menit',
+                                      iconBgColor: const Color(0x142B86C3),
+                                      iconColor: const Color(0xFF2B86C3),
+                                      icon: Icons.access_time_filled,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 18),
+
+                              // Section Header "Monitoring"
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF2B86C3),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  'Monitoring',
+                                  style: AppTextStyle.bodyLg.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+
+                              // List rekap log presensi (Dynamic Looping)
+                              ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: state.logs.length,
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 12),
+                                itemBuilder: (context, index) {
+                                  final log = state.logs[index];
+                                  return RekapLogItem(
+                                    log: log,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              RekapPresensiDetailPage(log: log),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+
+                              // Info Disclaimer Banner
+                              const InfoDisclaimerBanner(),
+                              const SizedBox(height: 40),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
                 ),
               ),
             ),
