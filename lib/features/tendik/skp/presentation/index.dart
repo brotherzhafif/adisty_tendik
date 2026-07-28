@@ -1,166 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import '../bloc/skp_bloc.dart';
+import '../bloc/skp_event.dart';
+import '../bloc/skp_state.dart';
+import '../data/providers/skp_provider.dart';
+import '../data/repositories/skp_repository.dart';
+import '../domain/usecases/get_skp_usecase.dart';
 import 'widgets/skp_app_bar.dart';
 import 'widgets/skp_profile_card.dart';
 import 'widgets/skp_category_card.dart';
 
 // ============================================================
-// HALAMAN: SKP Pegawai Dashboard
-// Menampilkan profil pegawai, selector tahun evaluasi (interactive),
-// dan 3 kategori penilaian (AIK, Tugas Umum, Penunjang) secara responsif.
+// HALAMAN: SKP Pegawai Dashboard (CLEAN ARCHITECTURE + BLOC WRAPPER)
 // ============================================================
-class SkpDashboardSkp extends StatefulWidget {
+class SkpDashboardSkp extends StatelessWidget {
   const SkpDashboardSkp({super.key});
 
   @override
-  State<SkpDashboardSkp> createState() => _SkpDashboardSkpState();
+  Widget build(BuildContext context) {
+    final provider = const SkpProvider();
+    final repository = SkpRepository(provider: provider);
+    final useCase = GetSkpUseCase(repository: repository);
+
+    return BlocProvider(
+      create: (context) => SkpBloc(
+        getSkpUseCase: useCase,
+      )..add(const FetchSkpEvent()),
+      child: const SkpDashboardSkpView(),
+    );
+  }
 }
 
-class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
-  int _activeYearIndex = 1; // Default ke 2026 (index 1)
-
-  static const List<String> _years = ['2025', '2026', '2027'];
-
-  // Data penilaian per tahun
-  static final Map<String, _SkpYearData> _skpDataMap = {
-    '2025': const _SkpYearData(
-      aikScore: 84.50,
-      tugasUmumScore: 85.00,
-      penunjangScore: 88.00,
-      aikIndicators: [
-        SkpIndicatorData(
-          name: 'Refreshing Al-Islam dan Kemuhammadiyahan',
-          score: 85.00,
-        ),
-        SkpIndicatorData(name: 'Pengajian Tingkat Universitas', score: 80.00),
-        SkpIndicatorData(
-          name: 'Pengajian dan Tadarus di Unit Kerja',
-          score: 90.00,
-        ),
-        SkpIndicatorData(name: 'Hafalan Surat Juz 30', score: 80.00),
-        SkpIndicatorData(name: 'Keterlibatan Persyarikatan', score: 87.00),
-        SkpIndicatorData(
-          name: 'Partisipasi di Amal Usaha Muhammadiyah',
-          score: 85.00,
-        ),
-      ],
-      tugasUmumIndicators: [
-        SkpIndicatorData(
-          name: 'Tugas Tambahan Pejabat Struktural',
-          score: 85.00,
-        ),
-        SkpIndicatorData(
-          name: 'Penilaian individu sesuai deskripsi pekerjaan',
-          score: 85.00,
-        ),
-        SkpIndicatorData(
-          name: 'Penilaian pejabat penilai kinerja',
-          score: 85.00,
-        ),
-        SkpIndicatorData(name: 'Kehadiran dalam sebulan', score: 85.00),
-      ],
-      penunjangIndicators: [
-        SkpIndicatorData(name: 'Sertifikasi kompetensi', score: 88.00),
-        SkpIndicatorData(name: 'Pelatihan', score: 88.00),
-        SkpIndicatorData(name: 'Prestasi', score: 88.00),
-        SkpIndicatorData(name: 'Keterlibatan Kepanitiaan', score: 88.00),
-        SkpIndicatorData(name: 'Penghargaan Masa Kerja', score: 88.00),
-      ],
-    ),
-    '2026': const _SkpYearData(
-      aikScore: 88.80,
-      tugasUmumScore: 90.00,
-      penunjangScore: 90.00,
-      aikIndicators: [
-        SkpIndicatorData(
-          name: 'Refreshing Al-Islam dan Kemuhammadiyahan',
-          score: 90.00,
-        ),
-        SkpIndicatorData(name: 'Pengajian Tingkat Universitas', score: 80.00),
-        SkpIndicatorData(
-          name: 'Pengajian dan Tadarus di Unit Kerja',
-          score: 95.00,
-        ),
-        SkpIndicatorData(name: 'Hafalan Surat Juz 30', score: 85.00),
-        SkpIndicatorData(name: 'Keterlibatan Persyarikatan', score: 90.00),
-        SkpIndicatorData(
-          name: 'Partisipasi di Amal Usaha Muhammadiyah',
-          score: 90.00,
-        ),
-      ],
-      tugasUmumIndicators: [
-        SkpIndicatorData(
-          name: 'Tugas Tambahan Pejabat Struktural',
-          score: 90.00,
-        ),
-        SkpIndicatorData(
-          name: 'Penilaian individu sesuai deskripsi pekerjaan',
-          score: 90.00,
-        ),
-        SkpIndicatorData(
-          name: 'Penilaian pejabat penilai kinerja',
-          score: 90.00,
-        ),
-        SkpIndicatorData(name: 'Kehadiran dalam sebulan', score: 90.00),
-      ],
-      penunjangIndicators: [
-        SkpIndicatorData(name: 'Sertifikasi kompetensi', score: 90.00),
-        SkpIndicatorData(name: 'Pelatihan', score: 90.00),
-        SkpIndicatorData(name: 'Prestasi', score: 90.00),
-        SkpIndicatorData(name: 'Keterlibatan Kepanitiaan', score: 90.00),
-        SkpIndicatorData(name: 'Penghargaan Masa Kerja', score: 90.00),
-      ],
-    ),
-    '2027': const _SkpYearData(
-      aikScore: 92.50,
-      tugasUmumScore: 95.00,
-      penunjangScore: 92.00,
-      aikIndicators: [
-        SkpIndicatorData(
-          name: 'Refreshing Al-Islam dan Kemuhammadiyahan',
-          score: 95.00,
-        ),
-        SkpIndicatorData(name: 'Pengajian Tingkat Universitas', score: 90.00),
-        SkpIndicatorData(
-          name: 'Pengajian dan Tadarus di Unit Kerja',
-          score: 98.00,
-        ),
-        SkpIndicatorData(name: 'Hafalan Surat Juz 30', score: 90.00),
-        SkpIndicatorData(name: 'Keterlibatan Persyarikatan', score: 92.00),
-        SkpIndicatorData(
-          name: 'Partisipasi di Amal Usaha Muhammadiyah',
-          score: 90.00,
-        ),
-      ],
-      tugasUmumIndicators: [
-        SkpIndicatorData(
-          name: 'Tugas Tambahan Pejabat Struktural',
-          score: 95.00,
-        ),
-        SkpIndicatorData(
-          name: 'Penilaian individu sesuai deskripsi pekerjaan',
-          score: 95.00,
-        ),
-        SkpIndicatorData(
-          name: 'Penilaian pejabat penilai kinerja',
-          score: 95.00,
-        ),
-        SkpIndicatorData(name: 'Kehadiran dalam sebulan', score: 95.00),
-      ],
-      penunjangIndicators: [
-        SkpIndicatorData(name: 'Sertifikasi kompetensi', score: 92.00),
-        SkpIndicatorData(name: 'Pelatihan', score: 92.00),
-        SkpIndicatorData(name: 'Prestasi', score: 92.00),
-        SkpIndicatorData(name: 'Keterlibatan Kepanitiaan', score: 92.00),
-        SkpIndicatorData(name: 'Penghargaan Masa Kerja', score: 92.00),
-      ],
-    ),
-  };
+// ============================================================
+// VIEW COMPONENT: SKP DASHBOARD SKP VIEW
+// Menampilkan profil pegawai, selector tahun evaluasi (interaktif),
+// dan 3 kategori penilaian (AIK, Tugas Umum, Penunjang) secara responsif.
+// ============================================================
+class SkpDashboardSkpView extends StatelessWidget {
+  const SkpDashboardSkpView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final activeYear = _years[_activeYearIndex];
-    final yearData = _skpDataMap[activeYear]!;
-
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
       body: Column(
@@ -189,72 +70,144 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
                 ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                  child: Column(
-                    children: [
-                      // --- Profile Card ---
-                      SkpProfileCard(
-                        name: 'Ahmad Lufhfi Abdurrosyid, S.kom.',
-                        department: 'BSI - Staff urusan pengembangan',
-                        role: 'Programmer',
-                        avatarUrl: 'https://placehold.co/64x64',
-                        years: _years,
-                        activeYearIndex: _activeYearIndex,
-                        onYearChanged: (index) {
-                          setState(() {
-                            _activeYearIndex = index;
-                          });
+                child: BlocBuilder<SkpBloc, SkpState>(
+                  builder: (context, state) {
+                    if (state is SkpLoading || state is SkpInitial) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF2B86C3),
+                        ),
+                      );
+                    }
+
+                    if (state is SkpError) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.redAccent,
+                                size: 48,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                state.message,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.bodyMd.copyWith(
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  context.read<SkpBloc>().add(
+                                        const FetchSkpEvent(),
+                                      );
+                                },
+                                icon: const Icon(Icons.refresh, color: Colors.white),
+                                label: Text(
+                                  'Coba Lagi',
+                                  style: AppTextStyle.bodyMd.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF2B86C3),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (state is SkpLoaded) {
+                      final profile = state.profile;
+                      final yearData = state.currentYearData;
+
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<SkpBloc>().add(const RefreshSkpEvent());
                         },
-                      ),
-                      const SizedBox(height: 14),
+                        color: const Color(0xFF2B86C3),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                          child: Column(
+                            children: [
+                              // --- Profile Card ---
+                              SkpProfileCard(
+                                name: profile.name,
+                                department: profile.department,
+                                role: profile.role,
+                                avatarUrl: profile.avatarUrl,
+                                years: state.years,
+                                activeYearIndex: state.activeYearIndex,
+                                onYearChanged: (index) {
+                                  context
+                                      .read<SkpBloc>()
+                                      .add(ChangeYearSkpEvent(index));
+                                },
+                              ),
+                              const SizedBox(height: 14),
 
-                      // --- Category 1: Pengamalan AIK ---
-                      SkpCategoryCard(
-                        title: 'Pengamalan AIK',
-                        weight: ' (35%)',
-                        subTitle: 'Pengamalan Al Islam dan Kemuhammadiyahan',
-                        indicators: yearData.aikIndicators,
-                        totalScore: yearData.aikScore,
-                        summaryTitle: 'SKOR Pengalaman AIK',
-                        themeColor: const Color(0xFF2B86C3),
-                        bannerBgColor: const Color(0x192B86C3),
-                        summaryBorderColor: const Color(0xFF0067AD),
-                      ),
-                      const SizedBox(height: 14),
+                              // --- Category 1: Pengamalan AIK ---
+                              SkpCategoryCard(
+                                title: 'Pengamalan AIK',
+                                weight: ' (35%)',
+                                subTitle:
+                                    'Pengamalan Al Islam dan Kemuhammadiyahan',
+                                indicators: yearData.aikIndicators,
+                                totalScore: yearData.aikScore,
+                                summaryTitle: 'SKOR Pengalaman AIK',
+                                themeColor: const Color(0xFF2B86C3),
+                                bannerBgColor: const Color(0x192B86C3),
+                                summaryBorderColor: const Color(0xFF0067AD),
+                              ),
+                              const SizedBox(height: 14),
 
-                      // --- Category 2: Tugas Umum ---
-                      SkpCategoryCard(
-                        title: 'Tugas Umum',
-                        weight: ' (40%)',
-                        subTitle:
-                            'Melaksanakan Tugas Utama Tenaga Kependidikan',
-                        indicators: yearData.tugasUmumIndicators,
-                        totalScore: yearData.tugasUmumScore,
-                        summaryTitle:
-                            'SKOR Pengalaman AIK', // Typos/design labels preserved exactly
-                        themeColor: const Color(0xFF4AAF57),
-                        bannerBgColor: const Color(0x194AAF57),
-                        summaryBorderColor: const Color(0xF54AAF57),
-                      ),
-                      const SizedBox(height: 14),
+                              // --- Category 2: Tugas Umum ---
+                              SkpCategoryCard(
+                                title: 'Tugas Umum',
+                                weight: ' (40%)',
+                                subTitle:
+                                    'Melaksanakan Tugas Utama Tenaga Kependidikan',
+                                indicators: yearData.tugasUmumIndicators,
+                                totalScore: yearData.tugasUmumScore,
+                                summaryTitle: 'SKOR Pengalaman AIK',
+                                themeColor: const Color(0xFF4AAF57),
+                                bannerBgColor: const Color(0x194AAF57),
+                                summaryBorderColor: const Color(0xF54AAF57),
+                              ),
+                              const SizedBox(height: 14),
 
-                      // --- Category 3: Penunjang ---
-                      SkpCategoryCard(
-                        title: 'Penunjang',
-                        weight: ' (25%)',
-                        subTitle:
-                            'Melaksanakan Aktivitas Penunjang Tenaga Kependidikan',
-                        indicators: yearData.penunjangIndicators,
-                        totalScore: yearData.penunjangScore,
-                        summaryTitle:
-                            'SKOR Pengalaman AIK', // Typos/design labels preserved exactly
-                        themeColor: const Color(0xFFFFAC2F),
-                        bannerBgColor: const Color(0x19FFAC2F),
-                        summaryBorderColor: const Color(0x19FFAC2F),
-                      ),
-                    ],
-                  ),
+                              // --- Category 3: Penunjang ---
+                              SkpCategoryCard(
+                                title: 'Penunjang',
+                                weight: ' (25%)',
+                                subTitle:
+                                    'Melaksanakan Aktivitas Penunjang Tenaga Kependidikan',
+                                indicators: yearData.penunjangIndicators,
+                                totalScore: yearData.penunjangScore,
+                                summaryTitle: 'SKOR Pengalaman AIK',
+                                themeColor: const Color(0xFFFFAC2F),
+                                bannerBgColor: const Color(0x19FFAC2F),
+                                summaryBorderColor: const Color(0x19FFAC2F),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
                 ),
               ),
             ),
@@ -263,25 +216,4 @@ class _SkpDashboardSkpState extends State<SkpDashboardSkp> {
       ),
     );
   }
-}
-
-// ============================================================
-// MODEL INTERNAL: Penilaian per tahun
-// ============================================================
-class _SkpYearData {
-  final double aikScore;
-  final double tugasUmumScore;
-  final double penunjangScore;
-  final List<SkpIndicatorData> aikIndicators;
-  final List<SkpIndicatorData> tugasUmumIndicators;
-  final List<SkpIndicatorData> penunjangIndicators;
-
-  const _SkpYearData({
-    required this.aikScore,
-    required this.tugasUmumScore,
-    required this.penunjangScore,
-    required this.aikIndicators,
-    required this.tugasUmumIndicators,
-    required this.penunjangIndicators,
-  });
 }

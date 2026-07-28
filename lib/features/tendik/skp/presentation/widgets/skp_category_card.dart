@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import '../../data/models/skp_model.dart';
 
 // ============================================================
-// MODEL: Data Indikator SKP
+// TYPEDEF: Compatibility Alias untuk SkpIndicatorModel
 // ============================================================
-class SkpIndicatorData {
-  final String name;
-  final double score;
-
-  const SkpIndicatorData({required this.name, required this.score});
-}
+typedef SkpIndicatorData = SkpIndicatorModel;
 
 // ============================================================
 // WIDGET: Card Kategori SKP (AIK / Tugas Umum / Penunjang)

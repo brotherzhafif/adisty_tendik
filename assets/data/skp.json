@@ -1,0 +1,230 @@
+{
+  "status": "success",
+  "message": "Berhasil mengambil data SKP pegawai",
+  "profile": {
+    "name": "Ahmad Lufhfi Abdurrosyid, S.kom.",
+    "department": "BSI - Staff urusan pengembangan",
+    "role": "Programmer",
+    "avatar_url": "https://placehold.co/64x64"
+  },
+  "years": [
+    "2025",
+    "2026",
+    "2027"
+  ],
+  "skp_data": {
+    "2025": {
+      "aik_score": 84.50,
+      "tugas_umum_score": 85.00,
+      "penunjang_score": 88.00,
+      "aik_indicators": [
+        {
+          "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
+          "score": 85.00
+        },
+        {
+          "name": "Pengajian Tingkat Universitas",
+          "score": 80.00
+        },
+        {
+          "name": "Pengajian dan Tadarus di Unit Kerja",
+          "score": 90.00
+        },
+        {
+          "name": "Hafalan Surat Juz 30",
+          "score": 80.00
+        },
+        {
+          "name": "Keterlibatan Persyarikatan",
+          "score": 87.00
+        },
+        {
+          "name": "Partisipasi di Amal Usaha Muhammadiyah",
+          "score": 85.00
+        }
+      ],
+      "tugas_umum_indicators": [
+        {
+          "name": "Tugas Tambahan Pejabat Struktural",
+          "score": 85.00
+        },
+        {
+          "name": "Penilaian individu sesuai deskripsi pekerjaan",
+          "score": 85.00
+        },
+        {
+          "name": "Penilaian pejabat penilai kinerja",
+          "score": 85.00
+        },
+        {
+          "name": "Kehadiran dalam sebulan",
+          "score": 85.00
+        }
+      ],
+      "penunjang_indicators": [
+        {
+          "name": "Sertifikasi kompetensi",
+          "score": 88.00
+        },
+        {
+          "name": "Pelatihan",
+          "score": 88.00
+        },
+        {
+          "name": "Prestasi",
+          "score": 88.00
+        },
+        {
+          "name": "Keterlibatan Kepanitiaan",
+          "score": 88.00
+        },
+        {
+          "name": "Penghargaan Masa Kerja",
+          "score": 88.00
+        }
+      ]
+    },
+    "2026": {
+      "aik_score": 88.80,
+      "tugas_umum_score": 90.00,
+      "penunjang_score": 90.00,
+      "aik_indicators": [
+        {
+          "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
+          "score": 90.00
+        },
+        {
+          "name": "Pengajian Tingkat Universitas",
+          "score": 80.00
+        },
+        {
+          "name": "Pengajian dan Tadarus di Unit Kerja",
+          "score": 95.00
+        },
+        {
+          "name": "Hafalan Surat Juz 30",
+          "score": 85.00
+        },
+        {
+          "name": "Keterlibatan Persyarikatan",
+          "score": 90.00
+        },
+        {
+          "name": "Partisipasi di Amal Usaha Muhammadiyah",
+          "score": 90.00
+        }
+      ],
+      "tugas_umum_indicators": [
+        {
+          "name": "Tugas Tambahan Pejabat Struktural",
+          "score": 90.00
+        },
+        {
+          "name": "Penilaian individu sesuai deskripsi pekerjaan",
+          "score": 90.00
+        },
+        {
+          "name": "Penilaian pejabat penilai kinerja",
+          "score": 90.00
+        },
+        {
+          "name": "Kehadiran dalam sebulan",
+          "score": 90.00
+        }
+      ],
+      "penunjang_indicators": [
+        {
+          "name": "Sertifikasi kompetensi",
+          "score": 90.00
+        },
+        {
+          "name": "Pelatihan",
+          "score": 90.00
+        },
+        {
+          "name": "Prestasi",
+          "score": 90.00
+        },
+        {
+          "name": "Keterlibatan Kepanitiaan",
+          "score": 90.00
+        },
+        {
+          "name": "Penghargaan Masa Kerja",
+          "score": 90.00
+        }
+      ]
+    },
+    "2027": {
+      "aik_score": 92.50,
+      "tugas_umum_score": 95.00,
+      "penunjang_score": 92.00,
+      "aik_indicators": [
+        {
+          "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
+          "score": 95.00
+        },
+        {
+          "name": "Pengajian Tingkat Universitas",
+          "score": 90.00
+        },
+        {
+          "name": "Pengajian dan Tadarus di Unit Kerja",
+          "score": 98.00
+        },
+        {
+          "name": "Hafalan Surat Juz 30",
+          "score": 90.00
+        },
+        {
+          "name": "Keterlibatan Persyarikatan",
+          "score": 92.00
+        },
+        {
+          "name": "Partisipasi di Amal Usaha Muhammadiyah",
+          "score": 90.00
+        }
+      ],
+      "tugas_umum_indicators": [
+        {
+          "name": "Tugas Tambahan Pejabat Struktural",
+          "score": 95.00
+        },
+        {
+          "name": "Penilaian individu sesuai deskripsi pekerjaan",
+          "score": 95.00
+        },
+        {
+          "name": "Penilaian pejabat penilai kinerja",
+          "score": 95.00
+        },
+        {
+          "name": "Kehadiran dalam sebulan",
+          "score": 95.00
+        }
+      ],
+      "penunjang_indicators": [
+        {
+          "name": "Sertifikasi kompetensi",
+          "score": 92.00
+        },
+        {
+          "name": "Pelatihan",
+          "score": 92.00
+        },
+        {
+          "name": "Prestasi",
+          "score": 92.00
+        },
+        {
+          "name": "Keterlibatan Kepanitiaan",
+          "score": 92.00
+        },
+        {
+          "name": "Penghargaan Masa Kerja",
+          "score": 92.00
+        }
+      ]
+    }
+  }
+}
