@@ -1,10 +1,32 @@
 import 'package:flutter/material.dart';
+import '../../data/models/presensi_hari_ini_model.dart';
 
 class InfoPresensiCard extends StatelessWidget {
-  const InfoPresensiCard({super.key});
+  final PresensiHariIniDetailModel? detail;
+
+  const InfoPresensiCard({super.key, this.detail});
 
   @override
   Widget build(BuildContext context) {
+    final dateValue = detail?.date.isNotEmpty == true
+        ? detail!.date
+        : 'Rabu, 9 September 2023';
+    final statusValue = detail?.statusPresensi.isNotEmpty == true
+        ? detail!.statusPresensi
+        : 'On time';
+    final locationValue = detail?.location.isNotEmpty == true
+        ? detail!.location
+        : 'Kampus 4';
+    final transportValue = detail?.transport.isNotEmpty == true
+        ? detail!.transport
+        : 'Rp 20.000';
+    final jamMasukValue = detail?.jamMasuk.isNotEmpty == true
+        ? detail!.jamMasuk
+        : '07.00';
+    final jamPulangValue = detail?.jamPulang.isNotEmpty == true
+        ? detail!.jamPulang
+        : '-';
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -41,7 +63,7 @@ class InfoPresensiCard extends StatelessWidget {
               size: 20,
             ),
             label: 'Tanggal',
-            value: 'Rabu, 9 September 2023',
+            value: dateValue,
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1E2B86C3),
@@ -51,7 +73,7 @@ class InfoPresensiCard extends StatelessWidget {
               size: 20,
             ),
             label: 'Status Presensi',
-            value: 'On time',
+            value: statusValue,
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1EE65768),
@@ -61,7 +83,7 @@ class InfoPresensiCard extends StatelessWidget {
               size: 20,
             ),
             label: 'Lokasi',
-            value: 'Kampus 4',
+            value: locationValue,
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1E2B86C3),
@@ -71,19 +93,19 @@ class InfoPresensiCard extends StatelessWidget {
               size: 20,
             ),
             label: 'Transport',
-            value: 'Rp 20.000',
+            value: transportValue,
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1E4AAF57),
             icon: const Icon(Icons.login, color: Color(0xFF4AAF57), size: 20),
             label: 'Jam Masuk',
-            value: '07.00',
+            value: jamMasukValue,
           ),
           _buildInfoRow(
             iconBgColor: const Color(0x1EFFA426),
             icon: const Icon(Icons.logout, color: Color(0xFFFFA426), size: 20),
             label: 'Jam Pulang',
-            value: '-',
+            value: jamPulangValue,
             isLast: true,
           ),
         ],
