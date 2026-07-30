@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../bloc/home_presensi_bloc.dart';
+import '../bloc/home_presensi_event.dart';
+import '../bloc/home_presensi_state.dart';
+import '../data/providers/home_presensi_provider.dart';
+import '../data/repositories/home_presensi_repository.dart';
+import '../domain/usecases/get_home_presensi_usecase.dart';
 import 'widgets/presensi_state.dart';
 import 'widgets/tombol_presensi_wrapper.dart';
 import 'widgets/profile_header.dart';
@@ -10,66 +17,137 @@ import '../../presensi_hari_ini/presentation/index.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
-// HALAMAN UTAMA - HomePage
+// HALAMAN UTAMA - HomePage (CLEAN ARCHITECTURE WRAPPER)
 // ============================================================
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    final provider = const HomePresensiProvider();
+    final repository = HomePresensiRepository(provider: provider);
+    final useCase = GetHomePresensiUseCase(repository: repository);
+
+    return BlocProvider(
+      create: (context) => HomePresensiBloc(
+        getHomePresensiUseCase: useCase,
+      )..add(const FetchHomePresensiEvent()),
+      child: const HomePageView(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
-  PresensiState _currentPresensiState = PresensiState.belumPresensi;
-
-  // Callback untuk flow tombol presensi
-  void _advanceState() {
-    setState(() {
-      switch (_currentPresensiState) {
-        case PresensiState.belumPresensi:
-          _currentPresensiState = PresensiState.shift1Selesai;
-          break;
-        case PresensiState.shift1Selesai:
-          _currentPresensiState = PresensiState.pulang;
-          break;
-        case PresensiState.pulang:
-          break;
-      }
-    });
-  }
-
-  // Setelah dialog konfirmasi pulang berhasil
-  void _resetState() {
-    setState(() {
-      _currentPresensiState = PresensiState.belumPresensi;
-    });
-  }
+// ============================================================
+// VIEW COMPONENT - HOME PAGE VIEW
+// ============================================================
+class HomePageView extends StatelessWidget {
+  const HomePageView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // --- Header Profil ---
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
+        child: BlocBuilder<HomePresensiBloc, HomePresensiState>(
+          builder: (context, state) {
+            if (state is HomePresensiLoading || state is HomePresensiInitial) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Color(0xFF2B86C3),
                 ),
-                child: ProfileHeader(),
-              ),
+              );
+            }
 
-              // --- Konten Informasi (Presensi + Layanan) ---
-              _InformationSection(
-                state: _currentPresensiState,
-                onAdvanceState: _advanceState,
-                onResetState: _resetState,
-              ),
-            ],
-          ),
+            if (state is HomePresensiError) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.redAccent,
+                        size: 48,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        state.message,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.bodyMd.copyWith(
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          context.read<HomePresensiBloc>().add(
+                                const FetchHomePresensiEvent(),
+                              );
+                        },
+                        icon: const Icon(Icons.refresh, color: Colors.white),
+                        label: Text(
+                          'Coba Lagi',
+                          style: AppTextStyle.bodyMd.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF2B86C3),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            if (state is HomePresensiLoaded) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<HomePresensiBloc>().add(
+                        const RefreshHomePresensiEvent(),
+                      );
+                },
+                color: const Color(0xFF2B86C3),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      // --- Header Profil (Dinamis dari BLoC State) ---
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        child: ProfileHeader(profile: state.profile),
+                      ),
+
+                      // --- Konten Informasi (Presensi + Layanan) ---
+                      _InformationSection(
+                        state: state.presensiState,
+                        onAdvanceState: () {
+                          context
+                              .read<HomePresensiBloc>()
+                              .add(const AdvancePresensiStateEvent());
+                        },
+                        onResetState: () {
+                          context
+                              .read<HomePresensiBloc>()
+                              .add(const ResetPresensiStateEvent());
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
         ),
       ),
       bottomNavigationBar: const _Navbar(),

@@ -150,12 +150,6 @@ class DeviceContextService {
       ),
     );
 
-    // 4. Validasi hasil koordinat (guard terhadap nilai tidak terduga)
-    // ignore: unnecessary_null_comparison
-    if (position.latitude == null || position.longitude == null) {
-      throw Exception('Gagal mendapatkan koordinat lokasi yang akurat');
-    }
-
     return position;
   }
 }

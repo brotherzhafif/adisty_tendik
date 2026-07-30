@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:adisty_tendik_module/features/tendik/notifikasi/presentation/index.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import '../../data/models/home_presensi_model.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
+  final HomeProfileModel? profile;
+
+  const ProfileHeader({super.key, this.profile});
 
   @override
   Widget build(BuildContext context) {
+    final nameText = profile?.name.isNotEmpty == true ? profile!.name : 'Hi Agung';
+    final greetingText = profile?.greeting.isNotEmpty == true ? profile!.greeting : 'Selamat datang di Adisty';
+    final avatarImage = profile?.avatarUrl.isNotEmpty == true ? profile!.avatarUrl : 'https://placehold.co/64x64';
+    final unreadCount = profile?.unreadNotificationCount ?? 3;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,8 +50,8 @@ class ProfileHeader extends StatelessWidget {
                       width: 64,
                       height: 64,
                       decoration: ShapeDecoration(
-                        image: const DecorationImage(
-                          image: NetworkImage('https://placehold.co/64x64'),
+                        image: DecorationImage(
+                          image: NetworkImage(avatarImage),
                           fit: BoxFit.cover,
                         ),
                         shape: RoundedRectangleBorder(
@@ -71,7 +79,7 @@ class ProfileHeader extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        'Hi Agung',
+                        nameText,
                         textAlign: TextAlign.left,
                         style: AppTextStyle.headingXxl,
                         overflow: TextOverflow.ellipsis,
@@ -80,7 +88,7 @@ class ProfileHeader extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  'Selamat datang di Adisty',
+                  greetingText,
                   style: AppTextStyle.bodyMd,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -115,28 +123,29 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                top: 2,
-                right: 2,
-                child: Container(
-                  width: 16,
-                  height: 16,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 222, 40, 40),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '3',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyle.bodyXs.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+              if (unreadCount > 0)
+                Positioned(
+                  top: 2,
+                  right: 2,
+                  child: Container(
+                    width: 16,
+                    height: 16,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 222, 40, 40),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        unreadCount.toString(),
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.bodyXs.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
