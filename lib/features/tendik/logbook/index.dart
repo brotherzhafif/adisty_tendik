@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import 'bloc/logbook_bloc.dart';
+import 'bloc/logbook_event.dart';
+import 'bloc/logbook_state.dart';
+import 'data/models/logbook_model.dart';
+import 'data/providers/logbook_provider.dart';
+import 'data/repositories/logbook_repository.dart';
+import 'domain/usecases/get_logbook_usecase.dart';
 import 'widgets/logbook_app_bar.dart';
 import 'widgets/logbook_profile_card.dart';
 import 'widgets/logbook_section_header.dart';
@@ -8,180 +17,38 @@ import 'detail.dart';
 import 'form.dart';
 
 // ============================================================
-// MODEL: Data satu bulan logbook
+// TYPEDEF: Compatibility Alias untuk LogbookBulanDataModel
 // ============================================================
-class LogbookBulanData {
-  final String labelBulan;
-  final List<LogbookActivityData> aktivitas;
-
-  // Stats (null = belum ada data skor untuk bulan ini)
-  final int? totalSkor;
-  final int maxSkor;
-  final String? kategori;
-  final Color? kategoriColor;
-  final int? progressPersen;
-
-  const LogbookBulanData({
-    required this.labelBulan,
-    required this.aktivitas,
-    this.totalSkor,
-    this.maxSkor = 100,
-    this.kategori,
-    this.kategoriColor,
-    this.progressPersen,
-  });
-
-  bool get hasSkor => totalSkor != null;
-}
+typedef LogbookBulanData = LogbookBulanDataModel;
 
 // ============================================================
-// HALAMAN: Logbook Dashboard Tendik
-// Menampilkan profil pegawai, navigasi bulan (swipeable),
-// dan daftar aktivitas logbook untuk bulan yang dipilih.
+// HALAMAN: Logbook Dashboard Tendik (CLEAN ARCHITECTURE + BLOC WRAPPER)
 // ============================================================
-class LogbookPage extends StatefulWidget {
+class LogbookPage extends StatelessWidget {
   const LogbookPage({super.key});
 
   @override
-  State<LogbookPage> createState() => _LogbookPageState();
+  Widget build(BuildContext context) {
+    final provider = const LogbookProvider();
+    final repository = LogbookRepository(provider: provider);
+    final useCase = GetLogbookUseCase(repository: repository);
+
+    return BlocProvider(
+      create: (context) => LogbookBloc(
+        getLogbookUseCase: useCase,
+      )..add(const FetchLogbookEvent()),
+      child: const LogbookPageView(),
+    );
+  }
 }
 
-class _LogbookPageState extends State<LogbookPage> {
-  int _bulanIndex = 1;
-
-  // --- Data dummy per bulan ---
-  // Pada implementasi nyata, data ini diambil dari BLoC / repository
-  static final List<LogbookBulanData> _dataBulan = [
-    // Mei 2026 — sudah ada skor
-    LogbookBulanData(
-      labelBulan: 'Mei 2026',
-      totalSkor: 90,
-      maxSkor: 100,
-      kategori: 'Baik',
-      kategoriColor: const Color(0xFF4AAF57),
-      progressPersen: 80,
-      aktivitas: const [
-        LogbookActivityData(
-          tanggal: '06',
-          bulan: 'MEI',
-          hariNama: 'Rabu',
-          judul:
-              'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
-          deskripsi:
-              'Tambah internal server nama di hostname diisi softskill.id...',
-        ),
-        LogbookActivityData(
-          tanggal: '07',
-          bulan: 'MEI',
-          hariNama: 'Kamis',
-          judul:
-              'Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi - Utama Programmer',
-          deskripsi:
-              'Aktivitas pengujian keamanan untuk widget yang telah selesai...',
-        ),
-      ],
-    ),
-
-    // Juni 2026 — sudah ada skor
-    LogbookBulanData(
-      labelBulan: 'Juni 2026',
-      totalSkor: 85,
-      maxSkor: 100,
-      kategori: 'Baik',
-      kategoriColor: const Color(0xFF4AAF57),
-      progressPersen: 75,
-      aktivitas: const [
-        LogbookActivityData(
-          tanggal: '03',
-          bulan: 'JUNI',
-          hariNama: 'Selasa',
-          judul:
-              'Membuat Dokumentasi Teknis Sistem Aplikasi - Utama Programmer',
-          deskripsi:
-              'Pembuatan dokumen teknis untuk sistem yang sedang dikembangkan...',
-        ),
-        LogbookActivityData(
-          tanggal: '05',
-          bulan: 'JUNI',
-          hariNama: 'Kamis',
-          judul: 'Melakukan Code Review dan Refactoring - Utama Programmer',
-          deskripsi: 'Mereview kode dan melakukan perbaikan struktur kode...',
-        ),
-      ],
-    ),
-
-    // Juli 2026 — belum ada skor (bulan berjalan)
-    LogbookBulanData(
-      labelBulan: 'Juli 2026',
-      aktivitas: const [
-        LogbookActivityData(
-          tanggal: '03',
-          bulan: 'JULI',
-          hariNama: 'Kamis',
-          judul:
-              'Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer',
-          deskripsi:
-              'Aktivitas pengujian keamanan untuk widget yang telah selesai dikembangkan...',
-        ),
-        LogbookActivityData(
-          tanggal: '04',
-          bulan: 'JULI',
-          hariNama: 'Jumat',
-          judul:
-              'Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer',
-          deskripsi:
-              'Aktivitas pengujian keamanan untuk widget yang telah sembuang ke1 komposisi...',
-        ),
-        LogbookActivityData(
-          tanggal: '05',
-          bulan: 'JULI',
-          hariNama: 'Sabtu',
-          judul: 'Melakukan Pekerjaan Tambahan Selain Jabdes Utama - Tambahan',
-          deskripsi:
-              'Activity beresih, TA revisi + geld makan anak computer programmerku...',
-        ),
-        LogbookActivityData(
-          tanggal: '06',
-          bulan: 'JULI',
-          hariNama: 'Minggu',
-          judul:
-              'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
-          deskripsi:
-              'Tambah internal server nama di hostname diisi softskill.id Informasi kosong...',
-        ),
-        LogbookActivityData(
-          tanggal: '07',
-          bulan: 'JULI',
-          hariNama: 'Senin',
-          judul:
-              'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
-          deskripsi:
-              'Tambah internal server nama di hostname diisi softskill.id Informasi kosong...',
-        ),
-        LogbookActivityData(
-          tanggal: '08',
-          bulan: 'JULI',
-          hariNama: 'Selasa',
-          judul:
-              'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
-          deskripsi:
-              'Tambah internal server nama di hostname diisi softskill.id Informasi kosong...',
-        ),
-        LogbookActivityData(
-          tanggal: '09',
-          bulan: 'JULI',
-          hariNama: 'Rabu',
-          judul:
-              'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
-          deskripsi:
-              'Tambah internal server nama di hostname diisi softskill.id Informasi kosong...',
-        ),
-      ],
-    ),
-
-    // Agustus 2026 — belum ada data
-    const LogbookBulanData(labelBulan: 'Agustus 2026', aktivitas: []),
-  ];
+// ============================================================
+// VIEW COMPONENT: LOGBOOK PAGE VIEW
+// Menampilkan profil pegawai, navigasi bulan (swipeable),
+// dan daftar aktivitas logbook untuk bulan yang dipilih.
+// ============================================================
+class LogbookPageView extends StatelessWidget {
+  const LogbookPageView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -195,88 +62,144 @@ class _LogbookPageState extends State<LogbookPage> {
             onBack: () => Navigator.of(context).maybePop(),
           ),
 
-          // --- Konten Utama (scrollable) ---
+          // --- Konten Utama ---
           Expanded(
-            child: _LogbookBody(
-              dataBulan: _dataBulan,
-              bulanIndex: _bulanIndex,
-              onBulanChanged: (index) => setState(() => _bulanIndex = index),
+            child: Container(
+              width: double.infinity,
+              decoration: const ShapeDecoration(
+                color: Color(0xFFF6F7F9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(34),
+                    topRight: Radius.circular(34),
+                  ),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
+                ),
+                child: BlocBuilder<LogbookBloc, LogbookState>(
+                  builder: (context, state) {
+                    if (state is LogbookLoading || state is LogbookInitial) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF2B86C3),
+                        ),
+                      );
+                    }
+
+                    if (state is LogbookError) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.redAccent,
+                                size: 48,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                state.message,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.bodyMd.copyWith(
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  context.read<LogbookBloc>().add(
+                                        const FetchLogbookEvent(),
+                                      );
+                                },
+                                icon: const Icon(Icons.refresh, color: Colors.white),
+                                label: Text(
+                                  'Coba Lagi',
+                                  style: AppTextStyle.bodyMd.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF2B86C3),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (state is LogbookLoaded) {
+                      final currentBulan = state.currentBulanData;
+
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          context
+                              .read<LogbookBloc>()
+                              .add(const RefreshLogbookEvent());
+                        },
+                        color: const Color(0xFF2B86C3),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // --- Card Gabungan Header & Selector Bulan ---
+                              _LogbookHeaderCard(
+                                profile: state.profile,
+                                dataBulan: state.dataBulan,
+                                bulanIndex: state.bulanIndex,
+                                onBulanChanged: (index) {
+                                  context
+                                      .read<LogbookBloc>()
+                                      .add(ChangeBulanLogbookEvent(index));
+                                },
+                              ),
+
+                              const SizedBox(height: 24),
+
+                              // --- Header Section Aktivitas ---
+                              LogbookSectionHeader(
+                                jumlahAktivitas: currentBulan.aktivitas.length,
+                                onTambah: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LogbookFormPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              // --- Daftar Aktivitas ---
+                              _DaftarAktivitas(
+                                daftarAktivitas: currentBulan.aktivitas,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// ============================================================
-// KOMPONEN: Body konten logbook (area putih melengkung)
-// ============================================================
-class _LogbookBody extends StatelessWidget {
-  final List<LogbookBulanData> dataBulan;
-  final int bulanIndex;
-  final ValueChanged<int> onBulanChanged;
-
-  const _LogbookBody({
-    required this.dataBulan,
-    required this.bulanIndex,
-    required this.onBulanChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: const ShapeDecoration(
-        color: Color(0xFFF6F7F9),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(34),
-            topRight: Radius.circular(34),
-          ),
-        ),
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(34),
-          topRight: Radius.circular(34),
-        ),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // --- Card Gabungan: Profil (Statis) + Selector Bulan (Swipeable) + Statistik (Statis/Dinamis) ---
-              _LogbookHeaderCard(
-                dataBulan: dataBulan,
-                bulanIndex: bulanIndex,
-                onBulanChanged: onBulanChanged,
-              ),
-
-              const SizedBox(height: 24),
-
-              // --- Header Section Aktivitas ---
-              LogbookSectionHeader(
-                jumlahAktivitas: dataBulan[bulanIndex].aktivitas.length,
-                onTambah: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LogbookFormPage(),
-                    ),
-                  );
-                },
-              ),
-
-              const SizedBox(height: 16),
-
-              // --- Daftar Aktivitas ---
-              _DaftarAktivitas(
-                daftarAktivitas: dataBulan[bulanIndex].aktivitas,
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -288,11 +211,13 @@ class _LogbookBody extends StatelessWidget {
 // Hanya navigator bulan di tengah yang dapat digeser (swipe).
 // ============================================================
 class _LogbookHeaderCard extends StatefulWidget {
-  final List<LogbookBulanData> dataBulan;
+  final LogbookProfileModel profile;
+  final List<LogbookBulanDataModel> dataBulan;
   final int bulanIndex;
   final ValueChanged<int> onBulanChanged;
 
   const _LogbookHeaderCard({
+    required this.profile,
     required this.dataBulan,
     required this.bulanIndex,
     required this.onBulanChanged,
@@ -315,7 +240,11 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
 
   @override
   Widget build(BuildContext context) {
-    final bulanAktif = widget.dataBulan[widget.bulanIndex];
+    final bulanAktif = widget.dataBulan.isNotEmpty &&
+            widget.bulanIndex >= 0 &&
+            widget.bulanIndex < widget.dataBulan.length
+        ? widget.dataBulan[widget.bulanIndex]
+        : const LogbookBulanDataModel(labelBulan: '', aktivitas: []);
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -361,20 +290,30 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // --- Profil Pegawai (Statis) ---
-            const LogbookProfileCard(
-              namaLengkap: 'Ahmad Luthfi Abdurrosyid, S.Kom.',
-              unitKerja: 'RD - Sub Direktorat Pengembangan',
-              jabatan: 'Programmer',
-              subUnit: 'Aplikasi dan Basis',
-              photoUrl: 'https://placehold.co/64x64',
+            // --- Profil Pegawai (Dinamis dari BLoC State) ---
+            LogbookProfileCard(
+              namaLengkap: widget.profile.namaLengkap.isNotEmpty
+                  ? widget.profile.namaLengkap
+                  : 'Ahmad Luthfi Abdurrosyid, S.Kom.',
+              unitKerja: widget.profile.unitKerja.isNotEmpty
+                  ? widget.profile.unitKerja
+                  : 'RD - Sub Direktorat Pengembangan',
+              jabatan: widget.profile.jabatan.isNotEmpty
+                  ? widget.profile.jabatan
+                  : 'Programmer',
+              subUnit: widget.profile.subUnit.isNotEmpty
+                  ? widget.profile.subUnit
+                  : 'Aplikasi dan Basis',
+              photoUrl: widget.profile.photoUrl.isNotEmpty
+                  ? widget.profile.photoUrl
+                  : 'https://placehold.co/64x64',
             ),
 
             // --- Row Selector Bulan & Tahun ---
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Panah Kiri (Statis)
+                // Panah Kiri
                 IconButton(
                   icon: const Icon(Icons.chevron_left_rounded, size: 24),
                   color: widget.bulanIndex > 0
@@ -397,16 +336,15 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                               ? const Offset(-0.4, 0)
                               : const Offset(0.4, 0);
                           return SlideTransition(
-                            position:
-                                Tween<Offset>(
-                                  begin: offset,
-                                  end: Offset.zero,
-                                ).animate(
-                                  CurvedAnimation(
-                                    parent: animation,
-                                    curve: Curves.easeOutCubic,
-                                  ),
-                                ),
+                            position: Tween<Offset>(
+                              begin: offset,
+                              end: Offset.zero,
+                            ).animate(
+                              CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeOutCubic,
+                              ),
+                            ),
                             child: FadeTransition(
                               opacity: animation,
                               child: child,
@@ -414,10 +352,8 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                           );
                         },
                         child: Text(
-                          widget.dataBulan[widget.bulanIndex].labelBulan,
-                          key: ValueKey(
-                            widget.dataBulan[widget.bulanIndex].labelBulan,
-                          ),
+                          bulanAktif.labelBulan,
+                          key: ValueKey(bulanAktif.labelBulan),
                           style: const TextStyle(
                             color: Color(0xFF293241),
                             fontSize: 16,
@@ -432,7 +368,7 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                   ),
                 ),
 
-                // Panah Kanan (Statis)
+                // Panah Kanan
                 IconButton(
                   icon: const Icon(Icons.chevron_right_rounded, size: 24),
                   color: widget.bulanIndex < widget.dataBulan.length - 1
@@ -445,7 +381,7 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
               ],
             ),
 
-            // --- Stats (Statis/Dinamis berdasarkan bulan aktif) ---
+            // --- Stats (Dinamis berdasarkan bulan aktif) ---
             if (bulanAktif.hasSkor) ...[
               const SizedBox(height: 12),
               LogbookMonthStats(
@@ -467,7 +403,7 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
 // KOMPONEN: Daftar item aktivitas
 // ============================================================
 class _DaftarAktivitas extends StatelessWidget {
-  final List<LogbookActivityData> daftarAktivitas;
+  final List<LogbookActivityModel> daftarAktivitas;
 
   const _DaftarAktivitas({required this.daftarAktivitas});
 

@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import '../data/models/logbook_model.dart';
 
 // ============================================================
-// MODEL: Data item aktivitas logbook
+// TYPEDEF: Compatibility Alias untuk LogbookActivityModel
 // ============================================================
-class LogbookActivityData {
-  final String tanggal; // e.g. '03'
-  final String bulan; // e.g. 'JULI'
-  final String hariNama; // e.g. 'Jumat'
-  final String judul; // Judul kegiatan
-  final String deskripsi; // Deskripsi singkat
-
-  const LogbookActivityData({
-    required this.tanggal,
-    required this.bulan,
-    required this.hariNama,
-    required this.judul,
-    required this.deskripsi,
-  });
-}
+typedef LogbookActivityData = LogbookActivityModel;
 
 // ============================================================
 // WIDGET: Item Aktivitas Logbook (Reusable)

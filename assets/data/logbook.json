@@ -1,0 +1,128 @@
+{
+  "status": "success",
+  "message": "Berhasil mengambil data logbook",
+  "profile": {
+    "nama_lengkap": "Ahmad Luthfi Abdurrosyid, S.Kom.",
+    "unit_kerja": "RD - Sub Direktorat Pengembangan",
+    "jabatan": "Programmer",
+    "sub_unit": "Aplikasi dan Basis",
+    "photo_url": "https://placehold.co/64x64"
+  },
+  "data_bulan": [
+    {
+      "label_bulan": "Mei 2026",
+      "total_skor": 90,
+      "max_skor": 100,
+      "aktivitas": [
+        {
+          "id": "1",
+          "tanggal": "06",
+          "bulan": "MEI",
+          "hari_nama": "Rabu",
+          "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
+          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id..."
+        },
+        {
+          "id": "2",
+          "tanggal": "07",
+          "bulan": "MEI",
+          "hari_nama": "Kamis",
+          "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi - Utama Programmer",
+          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai..."
+        }
+      ]
+    },
+    {
+      "label_bulan": "Juni 2026",
+      "total_skor": 85,
+      "max_skor": 100,
+      "aktivitas": [
+        {
+          "id": "3",
+          "tanggal": "03",
+          "bulan": "JUNI",
+          "hari_nama": "Selasa",
+          "judul": "Membuat Dokumentasi Teknis Sistem Aplikasi - Utama Programmer",
+          "deskripsi": "Pembuatan dokumen teknis untuk sistem yang sedang dikembangkan..."
+        },
+        {
+          "id": "4",
+          "tanggal": "05",
+          "bulan": "JUNI",
+          "hari_nama": "Kamis",
+          "judul": "Melakukan Code Review dan Refactoring - Utama Programmer",
+          "deskripsi": "Mereview kode dan melakukan perbaikan struktur kode..."
+        }
+      ]
+    },
+    {
+      "label_bulan": "Juli 2026",
+      "total_skor": null,
+      "max_skor": 100,
+      "aktivitas": [
+        {
+          "id": "5",
+          "tanggal": "03",
+          "bulan": "JULI",
+          "hari_nama": "Kamis",
+          "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer",
+          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai dikembangkan..."
+        },
+        {
+          "id": "6",
+          "tanggal": "04",
+          "bulan": "JULI",
+          "hari_nama": "Jumat",
+          "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer",
+          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah sembuang ke1 komposisi..."
+        },
+        {
+          "id": "7",
+          "tanggal": "05",
+          "bulan": "JULI",
+          "hari_nama": "Sabtu",
+          "judul": "Melakukan Pekerjaan Tambahan Selain Jabdes Utama - Tambahan",
+          "deskripsi": "Activity beresih, TA revisi + geld makan anak computer programmerku..."
+        },
+        {
+          "id": "8",
+          "tanggal": "06",
+          "bulan": "JULI",
+          "hari_nama": "Minggu",
+          "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
+          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id Informasi kosong..."
+        },
+        {
+          "id": "9",
+          "tanggal": "07",
+          "bulan": "JULI",
+          "hari_nama": "Senin",
+          "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
+          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id Informasi kosong..."
+        },
+        {
+          "id": "10",
+          "tanggal": "08",
+          "bulan": "JULI",
+          "hari_nama": "Selasa",
+          "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
+          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id Informasi kosong..."
+        },
+        {
+          "id": "11",
+          "tanggal": "09",
+          "bulan": "JULI",
+          "hari_nama": "Rabu",
+          "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
+          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id Informasi kosong..."
+        }
+      ]
+    },
+    {
+      "label_bulan": "Agustus 2026",
+      "total_skor": null,
+      "max_skor": 100,
+      "aktivitas": []
+    }
+  ]
+}
