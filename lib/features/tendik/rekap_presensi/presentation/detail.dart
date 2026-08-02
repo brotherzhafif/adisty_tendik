@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:adisty_tendik_module/features/tendik/presensi_hari_ini/presentation/form.dart';
+import 'widgets/lokasi_presensi_card.dart';
 import 'widgets/presensi_log_model.dart';
 import 'widgets/detail_info_row.dart';
 import 'widgets/info_disclaimer_banner.dart';
@@ -198,6 +199,16 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                 : 'Shift 1',
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 14),
+
+                      // ── Card: Lokasi Presensi (Interactive Map) ──
+                      LokasiPresensiCard(
+                        namaLokasi: log.location.isNotEmpty
+                            ? log.location
+                            : 'Kampus 4 - Universitas Ahmad Dahlan',
+                        latitude: log.latitude,
+                        longitude: log.longitude,
                       ),
                       const SizedBox(height: 14),
 

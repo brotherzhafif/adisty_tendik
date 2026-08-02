@@ -8,6 +8,7 @@ import '../data/providers/presensi_hari_ini_provider.dart';
 import '../data/repositories/presensi_hari_ini_repository.dart';
 import '../domain/usecases/get_presensi_hari_ini_usecase.dart';
 import 'widgets/info_presensi_card.dart';
+import 'widgets/lokasi_presensi_card.dart';
 import 'widgets/batas_koreksi_info.dart';
 import 'widgets/ajukan_koreksi_card.dart';
 import 'form.dart';
@@ -26,9 +27,9 @@ class LandingPresensiHariIni extends StatelessWidget {
     final useCase = GetPresensiHariIniUseCase(repository: repository);
 
     return BlocProvider(
-      create: (context) => PresensiHariIniBloc(
-        getPresensiHariIniUseCase: useCase,
-      )..add(const FetchPresensiHariIniEvent()),
+      create: (context) =>
+          PresensiHariIniBloc(getPresensiHariIniUseCase: useCase)
+            ..add(const FetchPresensiHariIniEvent()),
       child: const LandingPresensiHariIniView(),
     );
   }
@@ -77,9 +78,7 @@ class LandingPresensiHariIniView extends StatelessWidget {
             if (state is PresensiHariIniLoading ||
                 state is PresensiHariIniInitial) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xFF2B86C3),
-                ),
+                child: CircularProgressIndicator(color: Color(0xFF2B86C3)),
               );
             }
 
@@ -107,8 +106,8 @@ class LandingPresensiHariIniView extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () {
                           context.read<PresensiHariIniBloc>().add(
-                                const FetchPresensiHariIniEvent(),
-                              );
+                            const FetchPresensiHariIniEvent(),
+                          );
                         },
                         icon: const Icon(Icons.refresh, color: Colors.white),
                         label: Text(
@@ -123,7 +122,7 @@ class LandingPresensiHariIniView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -134,21 +133,44 @@ class LandingPresensiHariIniView extends StatelessWidget {
               return RefreshIndicator(
                 onRefresh: () async {
                   context.read<PresensiHariIniBloc>().add(
-                        const RefreshPresensiHariIniEvent(),
-                      );
+                    const RefreshPresensiHariIniEvent(),
+                  );
                 },
                 color: const Color(0xFF2B86C3),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 32),
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Text(
+                          state.detail.date.isNotEmpty
+                              ? state.detail.date
+                              : 'Jumat, 13 Oktober 2023',
+                          style: const TextStyle(
+                            color: Color(0xFF8B9098),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            height: 1.50,
+                            letterSpacing: -0.18,
+                          ),
+                        ),
+                      ),
                       InfoPresensiCard(detail: state.detail),
                       const SizedBox(height: 24),
-                      BatasKoreksiInfo(
-                          maxHari: state.detail.maxHariKoreksi),
+                      LokasiPresensiCard(
+                        namaLokasi: state.detail.location.isNotEmpty
+                            ? state.detail.location
+                            : 'Kampus 4 - Universitas Ahmad Dahlan',
+                      ),
+                      const SizedBox(height: 24),
+                      BatasKoreksiInfo(maxHari: state.detail.maxHariKoreksi),
                       const SizedBox(height: 24),
                       AjukanKoreksiCard(
                         onTap: () {

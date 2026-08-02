@@ -32,7 +32,9 @@ class InfoPresensiCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         shadows: const [
           BoxShadow(
             color: Color(0x087281DF),
@@ -53,57 +55,53 @@ class InfoPresensiCard extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildInfoRow(
             iconBgColor: const Color(0x1E4AAF57),
-            icon: const Icon(
-              Icons.calendar_today,
-              color: Color(0xFF4AAF57),
-              size: 20,
-            ),
+            iconColor: const Color(0xFF4AAF57),
+            icon: Icons.calendar_today_rounded,
             label: 'Tanggal',
             value: dateValue,
           ),
+          const SizedBox(height: 16),
           _buildInfoRow(
             iconBgColor: const Color(0x1E2B86C3),
-            icon: const Icon(
-              Icons.check_circle_outline,
-              color: Color(0xFF2B86C3),
-              size: 20,
-            ),
+            iconColor: const Color(0xFF2B86C3),
+            icon: Icons.check_circle_outline_rounded,
             label: 'Status Presensi',
             value: statusValue,
           ),
+          const SizedBox(height: 16),
           _buildInfoRow(
             iconBgColor: const Color(0x1EE65768),
-            icon: const Icon(
-              Icons.location_on_outlined,
-              color: Color(0xFFE65768),
-              size: 20,
-            ),
+            iconColor: const Color(0xFFE65768),
+            icon: Icons.location_on_outlined,
             label: 'Lokasi',
             value: locationValue,
           ),
+          const SizedBox(height: 16),
           _buildInfoRow(
             iconBgColor: const Color(0x1E2B86C3),
-            icon: const Icon(
-              Icons.directions_car_outlined,
-              color: Color(0xFF2B86C3),
-              size: 20,
-            ),
+            iconColor: const Color(0xFF2B86C3),
+            icon: Icons.directions_car_outlined,
             label: 'Transport',
             value: transportValue,
           ),
+          const SizedBox(height: 16),
           _buildInfoRow(
             iconBgColor: const Color(0x1E4AAF57),
-            icon: const Icon(Icons.login, color: Color(0xFF4AAF57), size: 20),
+            iconColor: const Color(0xFF4AAF57),
+            icon: Icons.login_rounded,
             label: 'Jam Masuk',
             value: jamMasukValue,
           ),
+          const SizedBox(height: 16),
           _buildInfoRow(
             iconBgColor: const Color(0x1EFFA426),
-            icon: const Icon(Icons.logout, color: Color(0xFFFFA426), size: 20),
+            iconColor: const Color(0xFFFFA426),
+            icon: Icons.logout_rounded,
             label: 'Jam Pulang',
             value: jamPulangValue,
             isLast: true,
@@ -115,21 +113,28 @@ class InfoPresensiCard extends StatelessWidget {
 
   Widget _buildInfoRow({
     required Color iconBgColor,
-    required Widget icon,
+    required Color iconColor,
+    required IconData icon,
     required String label,
     required String value,
     bool isLast = false,
   }) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8),
-      decoration: isLast
-          ? null
-          : const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 0.50, color: Color(0xFFE0E0E0)),
+      decoration: BoxDecoration(
+        border: isLast
+            ? null
+            : const Border(
+                bottom: BorderSide(
+                  width: 0.50,
+                  color: Color(0xFFE0E0E0),
+                ),
               ),
-            ),
+      ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -141,20 +146,30 @@ class InfoPresensiCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(40),
               ),
             ),
-            child: Center(child: icon),
+            child: Center(
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: 20,
+              ),
+            ),
           ),
           const SizedBox(width: 16),
           Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 label,
+                textAlign: TextAlign.right,
                 style: const TextStyle(
                   color: Color(0xFF5F6570),
                   fontSize: 14,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w400,
                   height: 1.43,
+                  letterSpacing: -0.08,
                 ),
               ),
               Text(
@@ -165,6 +180,7 @@ class InfoPresensiCard extends StatelessWidget {
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.w600,
                   height: 1.50,
+                  letterSpacing: -0.27,
                 ),
               ),
             ],

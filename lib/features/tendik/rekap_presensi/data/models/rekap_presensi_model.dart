@@ -11,6 +11,8 @@ class PresensiLogModel extends Equatable {
   final String status;
   final List<String> badges;
   final String location;
+  final double latitude;
+  final double longitude;
   final String transport;
   final String masuk;
   final String pulang;
@@ -25,6 +27,8 @@ class PresensiLogModel extends Equatable {
     required this.status,
     required this.badges,
     required this.location,
+    this.latitude = -7.8331,
+    this.longitude = 110.3831,
     required this.transport,
     required this.masuk,
     required this.pulang,
@@ -44,6 +48,8 @@ class PresensiLogModel extends Equatable {
               .toList() ??
           const [],
       location: json['location'] as String? ?? '',
+      latitude: (json['latitude'] as num?)?.toDouble() ?? -7.8331,
+      longitude: (json['longitude'] as num?)?.toDouble() ?? 110.3831,
       transport: json['transport'] as String? ?? '',
       masuk: json['masuk'] as String? ?? '',
       pulang: json['pulang'] as String? ?? '',
@@ -61,6 +67,8 @@ class PresensiLogModel extends Equatable {
       'status': status,
       'badges': badges,
       'location': location,
+      'latitude': latitude,
+      'longitude': longitude,
       'transport': transport,
       'masuk': masuk,
       'pulang': pulang,
@@ -78,6 +86,8 @@ class PresensiLogModel extends Equatable {
         status,
         badges,
         location,
+        latitude,
+        longitude,
         transport,
         masuk,
         pulang,

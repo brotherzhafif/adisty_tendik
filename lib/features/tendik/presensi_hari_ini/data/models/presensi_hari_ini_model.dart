@@ -7,6 +7,8 @@ class PresensiHariIniDetailModel extends Equatable {
   final String date;
   final String statusPresensi;
   final String location;
+  final double latitude;
+  final double longitude;
   final String transport;
   final String jamMasuk;
   final String jamPulang;
@@ -16,6 +18,8 @@ class PresensiHariIniDetailModel extends Equatable {
     required this.date,
     required this.statusPresensi,
     required this.location,
+    this.latitude = -7.8331,
+    this.longitude = 110.3831,
     required this.transport,
     required this.jamMasuk,
     required this.jamPulang,
@@ -26,6 +30,8 @@ class PresensiHariIniDetailModel extends Equatable {
       : date = '',
         statusPresensi = '',
         location = '',
+        latitude = -7.8331,
+        longitude = 110.3831,
         transport = '',
         jamMasuk = '',
         jamPulang = '',
@@ -36,6 +42,8 @@ class PresensiHariIniDetailModel extends Equatable {
       date: json['date'] as String? ?? '',
       statusPresensi: json['status_presensi'] as String? ?? '',
       location: json['location'] as String? ?? '',
+      latitude: (json['latitude'] as num?)?.toDouble() ?? -7.8331,
+      longitude: (json['longitude'] as num?)?.toDouble() ?? 110.3831,
       transport: json['transport'] as String? ?? '',
       jamMasuk: json['jam_masuk'] as String? ?? '',
       jamPulang: json['jam_pulang'] as String? ?? '',
@@ -48,6 +56,8 @@ class PresensiHariIniDetailModel extends Equatable {
       'date': date,
       'status_presensi': statusPresensi,
       'location': location,
+      'latitude': latitude,
+      'longitude': longitude,
       'transport': transport,
       'jam_masuk': jamMasuk,
       'jam_pulang': jamPulang,
@@ -60,6 +70,8 @@ class PresensiHariIniDetailModel extends Equatable {
         date,
         statusPresensi,
         location,
+        latitude,
+        longitude,
         transport,
         jamMasuk,
         jamPulang,

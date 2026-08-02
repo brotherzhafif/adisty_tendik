@@ -315,7 +315,7 @@ class _ElevatedCard extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(20),
         ),
         shadows: _AppColors.cardShadow,
       ),
