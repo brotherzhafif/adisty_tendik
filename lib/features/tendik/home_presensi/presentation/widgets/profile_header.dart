@@ -13,7 +13,6 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final nameText = profile?.name.isNotEmpty == true ? profile!.name : 'Hi Agung';
     final greetingText = profile?.greeting.isNotEmpty == true ? profile!.greeting : 'Selamat datang di Adisty';
-    final avatarImage = profile?.avatarUrl.isNotEmpty == true ? profile!.avatarUrl : 'https://placehold.co/64x64';
     final unreadCount = profile?.unreadNotificationCount ?? 3;
 
     return Row(
@@ -41,26 +40,32 @@ class ProfileHeader extends StatelessWidget {
                   borderRadius: BorderRadius.circular(64),
                 ),
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Container(
-                      width: 64,
-                      height: 64,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(avatarImage),
-                          fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(64),
+                child: (profile?.avatarUrl != null &&
+                        profile!.avatarUrl.isNotEmpty &&
+                        !profile!.avatarUrl.contains('placehold.co'))
+                    ? Image.network(
+                        profile!.avatarUrl,
+                        width: 64,
+                        height: 64,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Center(
+                          child: Icon(
+                            Icons.person_rounded,
+                            color: Colors.white,
+                            size: 38,
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(64),
+                      )
+                    : const Center(
+                        child: Icon(
+                          Icons.person_rounded,
+                          color: Colors.white,
+                          size: 38,
                         ),
                       ),
-                    ),
-                  ),
-                ],
               ),
             ),
 

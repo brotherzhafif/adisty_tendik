@@ -62,6 +62,7 @@ class LogbookActivityItem extends StatelessWidget {
               child: _ActivityContent(
                 judul: data.judul,
                 deskripsi: data.deskripsi,
+                jumlahSubAktivitas: data.daftarSubAktivitas.length,
               ),
             ),
 
@@ -147,8 +148,13 @@ class _DateColumn extends StatelessWidget {
 class _ActivityContent extends StatelessWidget {
   final String judul;
   final String deskripsi;
+  final int jumlahSubAktivitas;
 
-  const _ActivityContent({required this.judul, required this.deskripsi});
+  const _ActivityContent({
+    required this.judul,
+    required this.deskripsi,
+    this.jumlahSubAktivitas = 1,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -156,14 +162,45 @@ class _ActivityContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          judul,
-          style: AppTextStyle.bodySm.copyWith(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-          ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                judul,
+                style: AppTextStyle.bodySm.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (jumlahSubAktivitas > 1) ...[
+              const SizedBox(width: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 6,
+                  vertical: 2,
+                ),
+                decoration: ShapeDecoration(
+                  color: const Color(0x192B86C3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  '$jumlahSubAktivitas Aktivitas',
+                  style: const TextStyle(
+                    color: Color(0xFF2B86C3),
+                    fontSize: 9,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ],
         ),
         const SizedBox(height: 2),
         Text(

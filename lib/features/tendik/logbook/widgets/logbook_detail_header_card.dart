@@ -9,12 +9,18 @@ class LogbookDetailHeaderCard extends StatelessWidget {
   final String tanggalLengkap; // e.g. 'Jumat, 03 Juli 2026'
   final String waktuDibuat; // e.g. 'Dibuat pada 03 Juli 2026, 10:25 WIB'
   final String status; // e.g. 'Tersimpan'
+  final int totalKategori;
+  final int currentKategoriIndex;
+  final ValueChanged<int>? onKategoriChanged;
 
   const LogbookDetailHeaderCard({
     super.key,
     required this.tanggalLengkap,
     required this.waktuDibuat,
     required this.status,
+    this.totalKategori = 1,
+    this.currentKategoriIndex = 1,
+    this.onKategoriChanged,
   });
 
   @override
@@ -43,76 +49,161 @@ class LogbookDetailHeaderCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
         children: [
-          // --- Icon Container Bulat ---
-          Container(
-            width: 52,
-            height: 52,
-            decoration: const ShapeDecoration(
-              color: Color(0x192B86C3),
-              shape: CircleBorder(),
-            ),
-            child: const Icon(
-              Icons.calendar_today_rounded,
-              color: Color(0xFF2B86C3),
-              size: 24,
-            ),
-          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // --- Icon Container Bulat ---
+              Container(
+                width: 52,
+                height: 52,
+                decoration: const ShapeDecoration(
+                  color: Color(0x192B86C3),
+                  shape: CircleBorder(),
+                ),
+                child: const Icon(
+                  Icons.calendar_today_rounded,
+                  color: Color(0xFF2B86C3),
+                  size: 24,
+                ),
+              ),
 
-          const SizedBox(width: 12),
+              const SizedBox(width: 12),
 
-          // --- Kolom Info Teks ---
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tanggalLengkap,
-                  style: AppTextStyle.bodyMd.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Nunito',
+              // --- Kolom Info Teks ---
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tanggalLengkap,
+                      style: AppTextStyle.bodyMd.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Nunito',
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      waktuDibuat,
+                      style: const TextStyle(
+                        color: Color(0xFFCCCED1),
+                        fontSize: 10,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.w400,
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 8),
+
+              // --- Badge Status ---
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: ShapeDecoration(
+                  color: const Color(0x194AAF57),
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(width: 1, color: Color(0xF54AAF57)),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  waktuDibuat,
+                child: Text(
+                  status,
                   style: const TextStyle(
-                    color: Color(0xFFCCCED1),
+                    color: Color(0xF54AAF57),
                     fontSize: 10,
                     fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w400,
-                    height: 1.3,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
 
-          const SizedBox(width: 8),
+          const SizedBox(height: 12),
 
-          // --- Badge Status ---
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: ShapeDecoration(
-              color: const Color(0x194AAF57),
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(width: 1, color: Color(0xF54AAF57)),
-                borderRadius: BorderRadius.circular(8),
+          // --- Row Selector Kategori Aktivitas ---
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: Icon(
+                  Icons.chevron_left_rounded,
+                  color: currentKategoriIndex > 1
+                      ? const Color(0xFF293241)
+                      : const Color(0xFFCCCED1),
+                  size: 20,
+                ),
+                onPressed: currentKategoriIndex > 1
+                    ? () => onKategoriChanged?.call(currentKategoriIndex - 1)
+                    : null,
               ),
-            ),
-            child: Text(
-              status,
-              style: const TextStyle(
-                color: Color(0xF54AAF57),
-                fontSize: 10,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w600,
+              const SizedBox(width: 8),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Kategori Aktivitas',
+                    style: TextStyle(
+                      color: Color(0xFF2B86C3),
+                      fontSize: 12,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w700,
+                      height: 1.33,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: ShapeDecoration(
+                      color: const Color(0x192B86C3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    child: Text(
+                      '$currentKategoriIndex',
+                      style: const TextStyle(
+                        color: Color(0xFF2B86C3),
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        height: 1.43,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(width: 8),
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: Icon(
+                  Icons.chevron_right_rounded,
+                  color: currentKategoriIndex < totalKategori
+                      ? const Color(0xFF293241)
+                      : const Color(0xFFCCCED1),
+                  size: 20,
+                ),
+                onPressed: currentKategoriIndex < totalKategori
+                    ? () => onKategoriChanged?.call(currentKategoriIndex + 1)
+                    : null,
+              ),
+            ],
           ),
         ],
       ),

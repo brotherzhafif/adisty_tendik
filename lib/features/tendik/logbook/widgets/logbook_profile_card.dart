@@ -39,7 +39,7 @@ class LogbookProfileCard extends StatelessWidget {
           // --- Foto Profil ---
           _ProfileAvatar(photoUrl: photoUrl),
 
-          const SizedBox(width: 12),
+          const SizedBox(width: 6),
 
           // --- Info Pegawai ---
           Expanded(
@@ -66,42 +66,49 @@ class _ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasValidUrl = photoUrl != null &&
+        photoUrl!.isNotEmpty &&
+        !photoUrl!.contains('placehold.co');
+
     return Container(
       width: 64,
       height: 64,
       decoration: ShapeDecoration(
         gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: Alignment(0.50, -0.00),
+          end: Alignment(0.50, 1.00),
           colors: [Color(0xFFF6CE65), Color(0xFFDE7C28)],
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(64),
-        child: photoUrl != null
+        child: hasValidUrl
             ? Image.network(
                 photoUrl!,
                 width: 64,
                 height: 64,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) =>
-                    _AvatarPlaceholder(),
+                    const _DefaultAvatarIcon(),
               )
-            : _AvatarPlaceholder(),
+            : const _DefaultAvatarIcon(),
       ),
     );
   }
 }
 
-// ============================================================
-// WIDGET PRIVAT: Placeholder avatar jika foto tidak tersedia
-// ============================================================
-class _AvatarPlaceholder extends StatelessWidget {
+class _DefaultAvatarIcon extends StatelessWidget {
+  const _DefaultAvatarIcon();
+
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Icon(Icons.person_rounded, size: 36, color: Colors.white),
+      child: Icon(
+        Icons.person_rounded,
+        color: Colors.white,
+        size: 38,
+      ),
     );
   }
 }
@@ -129,57 +136,68 @@ class _ProfileInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Nama
-        Text(
-          namaLengkap,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 13,
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w700,
-            height: 1.4,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+          child: Text(
+            namaLengkap,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w700,
+              height: 1.33,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
         ),
-        const SizedBox(height: 2),
         // Unit Kerja
-        Text(
-          unitKerja,
-          style: const TextStyle(
-            color: Color(0xFFAEB1B7),
-            fontSize: 10,
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w500,
-            height: 1.5,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+          child: Text(
+            unitKerja,
+            style: const TextStyle(
+              color: Color(0xFFAEB1B7),
+              fontSize: 10,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w500,
+              height: 1.60,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
         // Jabatan
-        Text(
-          jabatan,
-          style: const TextStyle(
-            color: Color(0xFFAEB1B7),
-            fontSize: 10,
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w500,
-            height: 1.5,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+          child: Text(
+            jabatan,
+            style: const TextStyle(
+              color: Color(0xFFAEB1B7),
+              fontSize: 10,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w500,
+              height: 1.60,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
         // Sub Unit
-        Text(
-          subUnit,
-          style: const TextStyle(
-            color: Color(0xFFAEB1B7),
-            fontSize: 10,
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w500,
-            height: 1.5,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+          child: Text(
+            subUnit,
+            style: const TextStyle(
+              color: Color(0xFFAEB1B7),
+              fontSize: 10,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w500,
+              height: 1.60,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

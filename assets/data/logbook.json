@@ -20,7 +20,19 @@
           "bulan": "MEI",
           "hari_nama": "Rabu",
           "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
-          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id..."
+          "deskripsi": "Tambah internal server nama di hostname diisi softskill.id...",
+          "sub_aktivitas": [
+            {
+              "id": "1-1",
+              "judul": "Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer",
+              "deskripsi": "Tambah internal server nama di hostname diisi softskill.id Informasi kosong..."
+            },
+            {
+              "id": "1-2",
+              "judul": "Pengujian Algoritma & Validasi Data Form - Utama Programmer",
+              "deskripsi": "Melakukan validasi skema data JSON dan simulasi respon API internal."
+            }
+          ]
         },
         {
           "id": "2",
@@ -28,7 +40,14 @@
           "bulan": "MEI",
           "hari_nama": "Kamis",
           "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi - Utama Programmer",
-          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai..."
+          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai...",
+          "sub_aktivitas": [
+            {
+              "id": "2-1",
+              "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi - Utama Programmer",
+              "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai..."
+            }
+          ]
         }
       ]
     },
@@ -66,7 +85,24 @@
           "bulan": "JULI",
           "hari_nama": "Kamis",
           "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer",
-          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai dikembangkan..."
+          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah selesai dikembangkan...",
+          "sub_aktivitas": [
+            {
+              "id": "5-1",
+              "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer",
+              "deskripsi": "Pada hari ini, saya melakukan pembuatan algoritma untuk proses fungsi-fungsi aplikasi sesuai kebutuhan sistem.\nFokus utama adalah memastikan alur proses berjalan sesuai logika bisnis.\n\nDetail kegiatan:\n- Mendesain alur algoritma internal server.\n- Menentukan hostname dan konfigurasi.\n- Menambahkan validasi data form."
+            },
+            {
+              "id": "5-2",
+              "judul": "Optimasi Performa Query & Database Refactoring - Utama Programmer",
+              "deskripsi": "Melakukan optimasi query database PostgreSQL dan refactoring fungsi repositori logbook untuk mempercepat response time sistem."
+            },
+            {
+              "id": "5-3",
+              "judul": "Rapat Koordinasi Tim Subdit Pengembangan - Tambahan",
+              "deskripsi": "Mengikuti rapat koordinasi mingguan bersama tim pengembang untuk pembahasan timeline rilis fitur logbook tendik."
+            }
+          ]
         },
         {
           "id": "6",
@@ -74,7 +110,19 @@
           "bulan": "JULI",
           "hari_nama": "Jumat",
           "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer",
-          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah sembuang ke1 komposisi..."
+          "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah sembuang ke1 komposisi...",
+          "sub_aktivitas": [
+            {
+              "id": "6-1",
+              "judul": "Melakukan Pengujian Unit-unit Fungsi Sistem Aplikasi Yang Sudah Dibuat - Utama Programmer",
+              "deskripsi": "Aktivitas pengujian keamanan untuk widget yang telah sembuang ke1 komposisi..."
+            },
+            {
+              "id": "6-2",
+              "judul": "Penyusunan Laporan Hasil Testing Sistem - Utama Programmer",
+              "deskripsi": "Menyusun dokumentasi bug report dan hasil testing unit module tendik."
+            }
+          ]
         },
         {
           "id": "7",

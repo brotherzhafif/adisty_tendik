@@ -2,6 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
 // ============================================================
+// DATA MODEL: LOGBOOK SUB ACTIVITY MODEL
+// ============================================================
+class LogbookSubActivityModel extends Equatable {
+  final String id;
+  final String judul;
+  final String deskripsi;
+  final String? kategoriNama;
+
+  const LogbookSubActivityModel({
+    required this.id,
+    required this.judul,
+    required this.deskripsi,
+    this.kategoriNama,
+  });
+
+  factory LogbookSubActivityModel.fromJson(Map<String, dynamic> json) {
+    return LogbookSubActivityModel(
+      id: json['id'] as String? ?? '',
+      judul: json['judul'] as String? ?? '',
+      deskripsi: json['deskripsi'] as String? ?? '',
+      kategoriNama: json['kategori_nama'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'judul': judul,
+      'deskripsi': deskripsi,
+      'kategori_nama': kategoriNama,
+    };
+  }
+
+  @override
+  List<Object?> get props => [id, judul, deskripsi, kategoriNama];
+}
+
+// ============================================================
 // DATA MODEL: LOGBOOK ACTIVITY MODEL
 // ============================================================
 class LogbookActivityModel extends Equatable {
@@ -11,6 +49,7 @@ class LogbookActivityModel extends Equatable {
   final String hariNama;
   final String judul;
   final String deskripsi;
+  final List<LogbookSubActivityModel> subAktivitas;
 
   const LogbookActivityModel({
     this.id = '',
@@ -19,7 +58,22 @@ class LogbookActivityModel extends Equatable {
     required this.hariNama,
     required this.judul,
     required this.deskripsi,
+    this.subAktivitas = const [],
   });
+
+  /// Mengambil daftar sub-aktivitas jika ada, atau fallback 1 item dari judul & deskripsi
+  List<LogbookSubActivityModel> get daftarSubAktivitas {
+    if (subAktivitas.isNotEmpty) {
+      return subAktivitas;
+    }
+    return [
+      LogbookSubActivityModel(
+        id: id,
+        judul: judul,
+        deskripsi: deskripsi,
+      ),
+    ];
+  }
 
   factory LogbookActivityModel.fromJson(Map<String, dynamic> json) {
     return LogbookActivityModel(
@@ -29,6 +83,11 @@ class LogbookActivityModel extends Equatable {
       hariNama: json['hari_nama'] as String? ?? '',
       judul: json['judul'] as String? ?? '',
       deskripsi: json['deskripsi'] as String? ?? '',
+      subAktivitas: (json['sub_aktivitas'] as List<dynamic>?)
+              ?.map((e) =>
+                  LogbookSubActivityModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
   }
 
@@ -40,11 +99,13 @@ class LogbookActivityModel extends Equatable {
       'hari_nama': hariNama,
       'judul': judul,
       'deskripsi': deskripsi,
+      'sub_aktivitas': subAktivitas.map((e) => e.toJson()).toList(),
     };
   }
 
   @override
-  List<Object?> get props => [id, tanggal, bulan, hariNama, judul, deskripsi];
+  List<Object?> get props =>
+      [id, tanggal, bulan, hariNama, judul, deskripsi, subAktivitas];
 }
 
 // ============================================================

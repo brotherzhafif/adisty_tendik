@@ -1,15 +1,21 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
+import 'data/models/logbook_model.dart';
 
 // ============================================================
-// HALAMAN: Tambah Logbook (Form)
+// HALAMAN: Tambah / Edit Logbook (Form)
 // Form interaktif untuk menambah atau mengedit data logbook.
 // ============================================================
 class LogbookFormPage extends StatefulWidget {
-  const LogbookFormPage({super.key});
+  final LogbookActivityModel? initialData;
+  final LogbookSubActivityModel? initialSubData;
+
+  const LogbookFormPage({super.key, this.initialData, this.initialSubData});
 
   @override
   State<LogbookFormPage> createState() => _LogbookFormPageState();
@@ -25,64 +31,95 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
   String _selectedSatuan = 'Item';
   final TextEditingController _uraianController = TextEditingController();
 
-  // List Dummy Pilihan Jabatan
-  final List<String> _listJabatan = [
-    'Utama Programmer',
-    'Sub Direktorat Pengembangan',
-    'Administrator Sistem',
-    'Analis Kebijakan',
-    'Analis Kepegawaian',
-    'Analis Keuangan',
-    'Analis Pengadaan',
-    'Arsiparis',
-    'Auditor Internal',
-    'Bendahara Pengeluaran',
-    'Bendahara Penerimaan',
-    'Desainer Grafis',
-    'Dokter Kampus',
-    'Front Office Staff',
-    'Humas dan Protokol',
-    'Instruktur Lab Komputer',
-    'Instruktur Lab Bahasa',
-    'Junior Programmer',
-    'Kabag Akademik',
-    'Kabag Kemahasiswaan',
-    'Kabag Keuangan',
-    'Kabag Kepegawaian',
-    'Kabag Umum',
-    'Kasubag Administrasi',
-    'Kasubag Keuangan',
-    'Kasubag Rumah Tangga',
-    'Kepala Biro SDM',
-    'Kepala Biro Keuangan',
-    'Kepala UPT Perpustakaan',
-    'Kepala UPT TIK',
-    'Koordinator Layanan Akademik',
-    'Laboran',
-    'Manajer Aset',
-    'Operator SIAKAD',
-    'Operator Keuangan',
-    'Operator Kepegawaian',
-    'Petugas Kebersihan',
-    'Petugas Keamanan',
-    'Petugas Perpustakaan',
-    'Pranata Humas',
-    'Pranata Komputer',
-    'Pranata Laboratorium',
-    'Sekretaris Dekan',
-    'Sekretaris Rektor',
-    'Senior Programmer',
-    'Staf Administrasi',
-    'Staf Keuangan',
-    'Staf Pengadaan',
-    'Staf Perpustakaan',
-    'Teknisi Jaringan',
-    'Teknisi Perangkat Keras',
-    'Tenaga Kearsipan',
-  ];
-
-  // List Dummy Satuan Kuantitas
+  List<String> _listJabatan = [];
   final List<String> _listSatuan = ['Item', 'Dokumen', 'Sistem', 'Laporan'];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMasterData();
+
+    if (widget.initialSubData != null || widget.initialData != null) {
+      final sub = widget.initialSubData;
+      final main = widget.initialData;
+
+      final deskripsi = sub?.deskripsi ?? main?.deskripsi ?? '';
+      _uraianController.text = deskripsi;
+
+      final judul = sub?.judul ?? main?.judul ?? '';
+      if (judul.isNotEmpty) {
+        _selectedJabatan = judul;
+      }
+
+      if (main != null && main.tanggal.isNotEmpty && main.bulan.isNotEmpty) {
+        final day = int.tryParse(main.tanggal) ?? 10;
+        final month = _parseBulan(main.bulan);
+        _selectedDate = DateTime(2026, month, day);
+      }
+    }
+  }
+
+  Future<void> _loadMasterData() async {
+    try {
+      final String response = await rootBundle.loadString(
+        'assets/data/logbook_jabatan.json',
+      );
+      final Map<String, dynamic> data = json.decode(response);
+      if (data['data'] != null) {
+        final List<dynamic> rawJabatan = data['data'];
+        setState(() {
+          _listJabatan = rawJabatan.map((e) => e.toString()).toList();
+          if (_selectedJabatan.isEmpty && _listJabatan.isNotEmpty) {
+            _selectedJabatan = _listJabatan.first;
+          }
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading logbook_jabatan.json: $e');
+    }
+  }
+
+  int _parseBulan(String monthStr) {
+    switch (monthStr.toUpperCase()) {
+      case 'JAN':
+      case 'JANUARI':
+        return 1;
+      case 'FEB':
+      case 'FEBRUARI':
+        return 2;
+      case 'MAR':
+      case 'MARET':
+        return 3;
+      case 'APR':
+      case 'APRIL':
+        return 4;
+      case 'MEI':
+        return 5;
+      case 'JUNI':
+      case 'JUN':
+        return 6;
+      case 'JULI':
+      case 'JUL':
+        return 7;
+      case 'AGU':
+      case 'AGUSTUS':
+        return 8;
+      case 'SEP':
+      case 'SEPTEMBER':
+        return 9;
+      case 'OKT':
+      case 'OKTOBER':
+        return 10;
+      case 'NOV':
+      case 'NOVEMBER':
+        return 11;
+      case 'DES':
+      case 'DESEMBER':
+        return 12;
+      default:
+        return 7;
+    }
+  }
 
   // Helper Date Picker (iOS-style Cupertino modal)
   Future<void> _pilihTanggal(BuildContext context) async {
@@ -301,6 +338,9 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isEdit =
+        widget.initialData != null || widget.initialSubData != null;
+    final String pageTitle = isEdit ? 'Edit Logbook' : 'Tambah Logbook';
     final String labelTanggal =
         '${_selectedDate.day.toString().padLeft(2, '0')}/${_selectedDate.month.toString().padLeft(2, '0')}/${_selectedDate.year}';
 
@@ -310,7 +350,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
         children: [
           // --- AppBar ---
           LogbookAppBar(
-            title: 'Tambah Logbook',
+            title: pageTitle,
             onBack: () => Navigator.of(context).maybePop(),
           ),
 
@@ -616,15 +656,19 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
 
                         // --- Tombol Aksi ---
                         _FormActions(
+                          isEdit: isEdit,
                           onBatal: () => Navigator.of(context).maybePop(),
                           onSimpan: () {
                             if (_formKey.currentState!.validate()) {
-                              // Simulasikan penyimpanan data sukses
                               showAppDialog(
                                 context,
                                 type: AppDialogType.success,
-                                title: 'Logbook Tersimpan',
-                                message: 'Data logbook Anda berhasil disimpan.',
+                                title: isEdit
+                                    ? 'Logbook Diperbarui'
+                                    : 'Logbook Tersimpan',
+                                message: isEdit
+                                    ? 'Data logbook Anda berhasil diperbarui.'
+                                    : 'Data logbook Anda berhasil disimpan.',
                                 onClose: () => Navigator.of(context).pop(),
                               );
                             }
@@ -686,8 +730,13 @@ class _InputLabel extends StatelessWidget {
 class _FormActions extends StatelessWidget {
   final VoidCallback onBatal;
   final VoidCallback onSimpan;
+  final bool isEdit;
 
-  const _FormActions({required this.onBatal, required this.onSimpan});
+  const _FormActions({
+    required this.onBatal,
+    required this.onSimpan,
+    this.isEdit = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -704,7 +753,7 @@ class _FormActions extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: Text(
+            child: const Text(
               'Batal',
               style: TextStyle(
                 color: Color(0xFF2B86C3),
@@ -718,7 +767,7 @@ class _FormActions extends StatelessWidget {
 
         const SizedBox(width: 12),
 
-        // Tombol Simpan
+        // Tombol Simpan / Perbarui
         Expanded(
           child: ElevatedButton(
             onPressed: onSimpan,
@@ -732,8 +781,8 @@ class _FormActions extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Simpan',
-              style: TextStyle(
+              isEdit ? 'Simpan Perubahan' : 'Simpan',
+              style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Open Sans',
                 fontWeight: FontWeight.w600,

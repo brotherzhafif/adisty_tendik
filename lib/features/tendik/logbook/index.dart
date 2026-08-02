@@ -52,155 +52,221 @@ class LogbookPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF2B86C3),
-      body: Column(
-        children: [
-          // --- AppBar Biru ---
-          LogbookAppBar(
-            title: 'Logbook',
-            onBack: () => Navigator.of(context).maybePop(),
-          ),
+    return BlocBuilder<LogbookBloc, LogbookState>(
+      builder: (context, state) {
+        final bool showTambahButton =
+            state is LogbookLoaded && !state.currentBulanData.hasSkor;
 
-          // --- Konten Utama ---
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: const ShapeDecoration(
-                color: Color(0xFFF6F7F9),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(34),
-                    topRight: Radius.circular(34),
+        return Scaffold(
+          backgroundColor: const Color(0xFF2B86C3),
+          floatingActionButton: showTambahButton
+              ? Material(
+                  elevation: 6,
+                  shadowColor: const Color(0x332B86C3),
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color(0xFF2B86C3),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LogbookFormPage(),
+                        ),
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 10,
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            'Tambah',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                              height: 1.43,
+                              letterSpacing: -0.08,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              : null,
+          body: Column(
+            children: [
+              // --- AppBar Biru ---
+              LogbookAppBar(
+                title: 'Logbook',
+                onBack: () => Navigator.of(context).maybePop(),
+              ),
+
+              // --- Konten Utama ---
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFFF6F7F9),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(34),
+                        topRight: Radius.circular(34),
+                      ),
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(34),
+                      topRight: Radius.circular(34),
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        if (state is LogbookLoading ||
+                            state is LogbookInitial) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xFF2B86C3),
+                            ),
+                          );
+                        }
+
+                        if (state is LogbookError) {
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.error_outline,
+                                    color: Colors.redAccent,
+                                    size: 48,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    state.message,
+                                    textAlign: TextAlign.center,
+                                    style: AppTextStyle.bodyMd.copyWith(
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  ElevatedButton.icon(
+                                    onPressed: () {
+                                      context.read<LogbookBloc>().add(
+                                            const FetchLogbookEvent(),
+                                          );
+                                    },
+                                    icon: const Icon(
+                                      Icons.refresh,
+                                      color: Colors.white,
+                                    ),
+                                    label: Text(
+                                      'Coba Lagi',
+                                      style: AppTextStyle.bodyMd.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF2B86C3),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+
+                        if (state is LogbookLoaded) {
+                          final currentBulan = state.currentBulanData;
+
+                          return RefreshIndicator(
+                            onRefresh: () async {
+                              context
+                                  .read<LogbookBloc>()
+                                  .add(const RefreshLogbookEvent());
+                            },
+                            color: const Color(0xFF2B86C3),
+                            child: SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              padding: const EdgeInsets.fromLTRB(
+                                16,
+                                20,
+                                16,
+                                24,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // --- Card Gabungan Header & Selector Bulan ---
+                                  _LogbookHeaderCard(
+                                    profile: state.profile,
+                                    dataBulan: state.dataBulan,
+                                    bulanIndex: state.bulanIndex,
+                                    onBulanChanged: (index) {
+                                      context
+                                          .read<LogbookBloc>()
+                                          .add(ChangeBulanLogbookEvent(index));
+                                    },
+                                  ),
+
+                                  const SizedBox(height: 24),
+
+                                  // --- Header Section Aktivitas ---
+                                  LogbookSectionHeader(
+                                    jumlahAktivitas:
+                                        currentBulan.aktivitas.length,
+                                    showTambah: !currentBulan.hasSkor,
+                                    onTambah: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LogbookFormPage(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+
+                                  const SizedBox(height: 16),
+
+                                  // --- Daftar Aktivitas ---
+                                  _DaftarAktivitas(
+                                    daftarAktivitas: currentBulan.aktivitas,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+
+                        return const SizedBox.shrink();
+                      },
+                    ),
                   ),
                 ),
               ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(34),
-                  topRight: Radius.circular(34),
-                ),
-                child: BlocBuilder<LogbookBloc, LogbookState>(
-                  builder: (context, state) {
-                    if (state is LogbookLoading || state is LogbookInitial) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFF2B86C3),
-                        ),
-                      );
-                    }
-
-                    if (state is LogbookError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.error_outline,
-                                color: Colors.redAccent,
-                                size: 48,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                state.message,
-                                textAlign: TextAlign.center,
-                                style: AppTextStyle.bodyMd.copyWith(
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  context.read<LogbookBloc>().add(
-                                        const FetchLogbookEvent(),
-                                      );
-                                },
-                                icon: const Icon(Icons.refresh, color: Colors.white),
-                                label: Text(
-                                  'Coba Lagi',
-                                  style: AppTextStyle.bodyMd.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF2B86C3),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-
-                    if (state is LogbookLoaded) {
-                      final currentBulan = state.currentBulanData;
-
-                      return RefreshIndicator(
-                        onRefresh: () async {
-                          context
-                              .read<LogbookBloc>()
-                              .add(const RefreshLogbookEvent());
-                        },
-                        color: const Color(0xFF2B86C3),
-                        child: SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // --- Card Gabungan Header & Selector Bulan ---
-                              _LogbookHeaderCard(
-                                profile: state.profile,
-                                dataBulan: state.dataBulan,
-                                bulanIndex: state.bulanIndex,
-                                onBulanChanged: (index) {
-                                  context
-                                      .read<LogbookBloc>()
-                                      .add(ChangeBulanLogbookEvent(index));
-                                },
-                              ),
-
-                              const SizedBox(height: 24),
-
-                              // --- Header Section Aktivitas ---
-                              LogbookSectionHeader(
-                                jumlahAktivitas: currentBulan.aktivitas.length,
-                                onTambah: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LogbookFormPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // --- Daftar Aktivitas ---
-                              _DaftarAktivitas(
-                                daftarAktivitas: currentBulan.aktivitas,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-
-                    return const SizedBox.shrink();
-                  },
-                ),
-              ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -387,9 +453,6 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
               LogbookMonthStats(
                 totalSkor: bulanAktif.totalSkor!,
                 maxSkor: bulanAktif.maxSkor,
-                kategori: bulanAktif.kategori!,
-                kategoriColor: bulanAktif.kategoriColor!,
-                progressPersen: bulanAktif.progressPersen!,
               ),
             ],
           ],
