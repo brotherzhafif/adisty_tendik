@@ -10,6 +10,7 @@ import '../domain/usecases/get_skp_usecase.dart';
 import 'widgets/skp_app_bar.dart';
 import 'widgets/skp_profile_card.dart';
 import 'widgets/skp_category_card.dart';
+import 'widgets/skp_total_score_card.dart';
 
 // ============================================================
 // HALAMAN: SKP Pegawai Dashboard (CLEAN ARCHITECTURE + BLOC WRAPPER)
@@ -24,9 +25,8 @@ class SkpDashboardSkp extends StatelessWidget {
     final useCase = GetSkpUseCase(repository: repository);
 
     return BlocProvider(
-      create: (context) => SkpBloc(
-        getSkpUseCase: useCase,
-      )..add(const FetchSkpEvent()),
+      create: (context) =>
+          SkpBloc(getSkpUseCase: useCase)..add(const FetchSkpEvent()),
       child: const SkpDashboardSkpView(),
     );
   }
@@ -104,10 +104,13 @@ class SkpDashboardSkpView extends StatelessWidget {
                               ElevatedButton.icon(
                                 onPressed: () {
                                   context.read<SkpBloc>().add(
-                                        const FetchSkpEvent(),
-                                      );
+                                    const FetchSkpEvent(),
+                                  );
                                 },
-                                icon: const Icon(Icons.refresh, color: Colors.white),
+                                icon: const Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                ),
                                 label: Text(
                                   'Coba Lagi',
                                   style: AppTextStyle.bodyMd.copyWith(
@@ -120,7 +123,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -138,7 +141,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                         color: const Color(0xFF2B86C3),
                         child: SingleChildScrollView(
                           physics: const AlwaysScrollableScrollPhysics(),
-                          padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                          padding: const EdgeInsets.fromLTRB(21, 21, 21, 24),
                           child: Column(
                             children: [
                               // --- Profile Card ---
@@ -150,9 +153,9 @@ class SkpDashboardSkpView extends StatelessWidget {
                                 years: state.years,
                                 activeYearIndex: state.activeYearIndex,
                                 onYearChanged: (index) {
-                                  context
-                                      .read<SkpBloc>()
-                                      .add(ChangeYearSkpEvent(index));
+                                  context.read<SkpBloc>().add(
+                                    ChangeYearSkpEvent(index),
+                                  );
                                 },
                               ),
                               const SizedBox(height: 14),
@@ -165,7 +168,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                                     'Pengamalan Al Islam dan Kemuhammadiyahan',
                                 indicators: yearData.aikIndicators,
                                 totalScore: yearData.aikScore,
-                                summaryTitle: 'SKOR Pengalaman AIK',
+                                summaryTitle: 'SKOR Pengamalan AIK',
                                 themeColor: const Color(0xFF2B86C3),
                                 bannerBgColor: const Color(0x192B86C3),
                                 summaryBorderColor: const Color(0xFF0067AD),
@@ -180,7 +183,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                                     'Melaksanakan Tugas Utama Tenaga Kependidikan',
                                 indicators: yearData.tugasUmumIndicators,
                                 totalScore: yearData.tugasUmumScore,
-                                summaryTitle: 'SKOR Pengalaman AIK',
+                                summaryTitle: 'SKOR Tugas Utama',
                                 themeColor: const Color(0xFF4AAF57),
                                 bannerBgColor: const Color(0x194AAF57),
                                 summaryBorderColor: const Color(0xF54AAF57),
@@ -195,11 +198,17 @@ class SkpDashboardSkpView extends StatelessWidget {
                                     'Melaksanakan Aktivitas Penunjang Tenaga Kependidikan',
                                 indicators: yearData.penunjangIndicators,
                                 totalScore: yearData.penunjangScore,
-                                summaryTitle: 'SKOR Pengalaman AIK',
+                                summaryTitle: 'SKOR Penunjang',
                                 themeColor: const Color(0xFFFFAC2F),
                                 bannerBgColor: const Color(0x19FFAC2F),
                                 summaryBorderColor: const Color(0x19FFAC2F),
                               ),
+                              const SizedBox(height: 14),
+
+                              // --- Total Skor SKP Card ---
+                              SkpTotalScoreCard(score: yearData.totalSkpScore),
+
+                              const SizedBox(height: 30),
                             ],
                           ),
                         ),

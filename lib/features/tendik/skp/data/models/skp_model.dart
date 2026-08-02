@@ -7,10 +7,7 @@ class SkpIndicatorModel extends Equatable {
   final String name;
   final double score;
 
-  const SkpIndicatorModel({
-    required this.name,
-    required this.score,
-  });
+  const SkpIndicatorModel({required this.name, required this.score});
 
   factory SkpIndicatorModel.fromJson(Map<String, dynamic> json) {
     return SkpIndicatorModel(
@@ -20,10 +17,7 @@ class SkpIndicatorModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'score': score,
-    };
+    return {'name': name, 'score': score};
   }
 
   @override
@@ -41,6 +35,9 @@ class SkpYearDataModel extends Equatable {
   final List<SkpIndicatorModel> tugasUmumIndicators;
   final List<SkpIndicatorModel> penunjangIndicators;
 
+  double get totalSkpScore =>
+      (aikScore * 0.35) + (tugasUmumScore * 0.40) + (penunjangScore * 0.25);
+
   const SkpYearDataModel({
     required this.aikScore,
     required this.tugasUmumScore,
@@ -51,28 +48,37 @@ class SkpYearDataModel extends Equatable {
   });
 
   const SkpYearDataModel.empty()
-      : aikScore = 0.0,
-        tugasUmumScore = 0.0,
-        penunjangScore = 0.0,
-        aikIndicators = const [],
-        tugasUmumIndicators = const [],
-        penunjangIndicators = const [];
+    : aikScore = 0.0,
+      tugasUmumScore = 0.0,
+      penunjangScore = 0.0,
+      aikIndicators = const [],
+      tugasUmumIndicators = const [],
+      penunjangIndicators = const [];
 
   factory SkpYearDataModel.fromJson(Map<String, dynamic> json) {
     return SkpYearDataModel(
       aikScore: (json['aik_score'] as num?)?.toDouble() ?? 0.0,
       tugasUmumScore: (json['tugas_umum_score'] as num?)?.toDouble() ?? 0.0,
       penunjangScore: (json['penunjang_score'] as num?)?.toDouble() ?? 0.0,
-      aikIndicators: (json['aik_indicators'] as List<dynamic>?)
-              ?.map((e) => SkpIndicatorModel.fromJson(e as Map<String, dynamic>))
+      aikIndicators:
+          (json['aik_indicators'] as List<dynamic>?)
+              ?.map(
+                (e) => SkpIndicatorModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
-      tugasUmumIndicators: (json['tugas_umum_indicators'] as List<dynamic>?)
-              ?.map((e) => SkpIndicatorModel.fromJson(e as Map<String, dynamic>))
+      tugasUmumIndicators:
+          (json['tugas_umum_indicators'] as List<dynamic>?)
+              ?.map(
+                (e) => SkpIndicatorModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
-      penunjangIndicators: (json['penunjang_indicators'] as List<dynamic>?)
-              ?.map((e) => SkpIndicatorModel.fromJson(e as Map<String, dynamic>))
+      penunjangIndicators:
+          (json['penunjang_indicators'] as List<dynamic>?)
+              ?.map(
+                (e) => SkpIndicatorModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
     );
@@ -84,21 +90,24 @@ class SkpYearDataModel extends Equatable {
       'tugas_umum_score': tugasUmumScore,
       'penunjang_score': penunjangScore,
       'aik_indicators': aikIndicators.map((e) => e.toJson()).toList(),
-      'tugas_umum_indicators':
-          tugasUmumIndicators.map((e) => e.toJson()).toList(),
-      'penunjang_indicators': penunjangIndicators.map((e) => e.toJson()).toList(),
+      'tugas_umum_indicators': tugasUmumIndicators
+          .map((e) => e.toJson())
+          .toList(),
+      'penunjang_indicators': penunjangIndicators
+          .map((e) => e.toJson())
+          .toList(),
     };
   }
 
   @override
   List<Object?> get props => [
-        aikScore,
-        tugasUmumScore,
-        penunjangScore,
-        aikIndicators,
-        tugasUmumIndicators,
-        penunjangIndicators,
-      ];
+    aikScore,
+    tugasUmumScore,
+    penunjangScore,
+    aikIndicators,
+    tugasUmumIndicators,
+    penunjangIndicators,
+  ];
 }
 
 // ============================================================
@@ -118,10 +127,10 @@ class SkpProfileModel extends Equatable {
   });
 
   const SkpProfileModel.empty()
-      : name = '',
-        department = '',
-        role = '',
-        avatarUrl = '';
+    : name = '',
+      department = '',
+      role = '',
+      avatarUrl = '';
 
   factory SkpProfileModel.fromJson(Map<String, dynamic> json) {
     return SkpProfileModel(
@@ -178,7 +187,8 @@ class SkpResponseModel extends Equatable {
       profile: json['profile'] != null
           ? SkpProfileModel.fromJson(json['profile'] as Map<String, dynamic>)
           : const SkpProfileModel.empty(),
-      years: (json['years'] as List<dynamic>?)
+      years:
+          (json['years'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
