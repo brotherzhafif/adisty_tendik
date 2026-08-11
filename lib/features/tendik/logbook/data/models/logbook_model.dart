@@ -160,6 +160,68 @@ class LogbookBulanDataModel extends Equatable {
     }
   }
 
+  /// Parsing tahun dari labelBulan (misal: "Mei 2026")
+  int get year {
+    final parts = labelBulan.trim().split(' ');
+    if (parts.length >= 2) {
+      return int.tryParse(parts.last) ?? DateTime.now().year;
+    }
+    return DateTime.now().year;
+  }
+
+  /// Parsing bulan dari labelBulan (misal: "Mei 2026")
+  int get month {
+    final parts = labelBulan.trim().split(' ');
+    if (parts.isNotEmpty) {
+      switch (parts.first.toLowerCase()) {
+        case 'januari':
+        case 'jan':
+          return 1;
+        case 'februari':
+        case 'feb':
+          return 2;
+        case 'maret':
+        case 'mar':
+          return 3;
+        case 'april':
+        case 'apr':
+          return 4;
+        case 'mei':
+          return 5;
+        case 'juni':
+        case 'jun':
+          return 6;
+        case 'juli':
+        case 'jul':
+          return 7;
+        case 'agustus':
+        case 'agu':
+        case 'agt':
+          return 8;
+        case 'september':
+        case 'sep':
+          return 9;
+        case 'oktober':
+        case 'okt':
+          return 10;
+        case 'november':
+        case 'nov':
+          return 11;
+        case 'desember':
+        case 'des':
+          return 12;
+      }
+    }
+    return 1;
+  }
+
+  /// Memeriksa apakah bulan/tahun data ini melebihi [date] (tanggal acuan)
+  bool isAfterDate(DateTime date) {
+    if (year > date.year) return true;
+    if (year == date.year && month > date.month) return true;
+    return false;
+  }
+
   factory LogbookBulanDataModel.fromJson(Map<String, dynamic> json) {
     return LogbookBulanDataModel(
       labelBulan: json['label_bulan'] as String? ?? '',

@@ -121,86 +121,116 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
     }
   }
 
-  // Helper Date Picker (iOS-style Cupertino modal)
+  // Helper Date Picker (Cupertino untuk iOS, Material untuk Android)
   Future<void> _pilihTanggal(BuildContext context) async {
-    DateTime tempDate = _selectedDate;
+    final bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
-    final DateTime? picked = await showModalBottomSheet<DateTime>(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 300,
-          child: Column(
-            children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        'Batal',
-                        style: TextStyle(
-                          color: Color(0xFFE65768),
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+    if (isIOS) {
+      DateTime tempDate = _selectedDate;
+
+      final DateTime? picked = await showModalBottomSheet<DateTime>(
+        context: context,
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                // Header
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          'Batal',
+                          style: TextStyle(
+                            color: Color(0xFFE65768),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      'Pilih Tanggal',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, tempDate),
-                      child: Text(
-                        'Pilih',
+                      const Text(
+                        'Pilih Tanggal',
                         style: TextStyle(
-                          color: Color(0xFF0067AD),
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
                         ),
                       ),
-                    ),
-                  ],
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, tempDate),
+                        child: const Text(
+                          'Pilih',
+                          style: TextStyle(
+                            color: Color(0xFF0067AD),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Divider(height: 1),
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime: _selectedDate,
-                  minimumDate: DateTime(2020),
-                  maximumDate: DateTime(2030, 12, 31),
-                  onDateTimeChanged: (DateTime newDate) {
-                    tempDate = newDate;
-                  },
+                const Divider(height: 1),
+                Expanded(
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: _selectedDate,
+                    minimumDate: DateTime(2020),
+                    maximumDate: DateTime(2030, 12, 31),
+                    onDateTimeChanged: (DateTime newDate) {
+                      tempDate = newDate;
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+              ],
+            ),
+          );
+        },
+      );
 
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+        });
+      }
+    } else {
+      // Android / Default Material DatePicker
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030, 12, 31),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xFF2B86C3),
+                onPrimary: Colors.white,
+                onSurface: Color(0xFF293241),
+              ),
+            ),
+            child: child!,
+          );
+        },
+      );
+
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+        });
+      }
     }
   }
 

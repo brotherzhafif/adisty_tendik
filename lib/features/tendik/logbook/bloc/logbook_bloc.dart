@@ -19,8 +19,16 @@ class LogbookBloc extends Bloc<LogbookEvent, LogbookState> {
     emit(const LogbookLoading());
     try {
       final response = await getLogbookUseCase.execute();
-      int defaultIndex = 2; // Default ke Juli 2026 (index 2) jika tersedia
-      if (response.dataBulan.length <= defaultIndex) {
+      final now = DateTime.now();
+      int defaultIndex = response.dataBulan.indexWhere(
+        (b) => b.year == now.year && b.month == now.month,
+      );
+      if (defaultIndex == -1) {
+        defaultIndex = response.dataBulan.lastIndexWhere(
+          (b) => !b.isAfterDate(now),
+        );
+      }
+      if (defaultIndex == -1) {
         defaultIndex = response.dataBulan.isNotEmpty ? 0 : 0;
       }
       emit(

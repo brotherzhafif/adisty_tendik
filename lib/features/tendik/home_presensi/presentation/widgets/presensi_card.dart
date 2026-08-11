@@ -33,7 +33,7 @@ class PresensiCard extends StatelessWidget {
             children: [
               Text(
                 'Presensi Hari ini',
-                style: AppTextStyle.bodyMd,
+                style: AppTextStyle.bodyMd.copyWith(color: Colors.white),
               ),
               Text(
                 'Selasa, 30 Desember 2025',

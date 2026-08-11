@@ -233,16 +233,7 @@ class LogbookPageView extends StatelessWidget {
                                   LogbookSectionHeader(
                                     jumlahAktivitas:
                                         currentBulan.aktivitas.length,
-                                    showTambah: !currentBulan.hasSkor,
-                                    onTambah: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LogbookFormPage(),
-                                        ),
-                                      );
-                                    },
+                                    showTambah: false,
                                   ),
 
                                   const SizedBox(height: 16),
@@ -304,6 +295,12 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
     }
   }
 
+  bool _canGoNext() {
+    if (widget.bulanIndex >= widget.dataBulan.length - 1) return false;
+    final nextBulan = widget.dataBulan[widget.bulanIndex + 1];
+    return !nextBulan.isAfterDate(DateTime.now());
+  }
+
   @override
   Widget build(BuildContext context) {
     final bulanAktif = widget.dataBulan.isNotEmpty &&
@@ -312,12 +309,14 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
         ? widget.dataBulan[widget.bulanIndex]
         : const LogbookBulanDataModel(labelBulan: '', aktivitas: []);
 
+    final bool canGoNext = _canGoNext();
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onHorizontalDragEnd: (details) {
         final dx = details.velocity.pixelsPerSecond.dx;
         if (dx < -300) {
-          if (widget.bulanIndex < widget.dataBulan.length - 1) {
+          if (canGoNext) {
             widget.onBulanChanged(widget.bulanIndex + 1);
           }
         } else if (dx > 300) {
@@ -434,15 +433,19 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                   ),
                 ),
 
-                // Panah Kanan
-                IconButton(
-                  icon: const Icon(Icons.chevron_right_rounded, size: 24),
-                  color: widget.bulanIndex < widget.dataBulan.length - 1
-                      ? const Color(0xFF293241)
-                      : const Color(0xFFCCCED1),
-                  onPressed: widget.bulanIndex < widget.dataBulan.length - 1
-                      ? () => widget.onBulanChanged(widget.bulanIndex + 1)
-                      : null,
+                // Panah Kanan (Sembunyi jika bulan/tahun berikutnya melebihi bulan/tahun saat ini)
+                Visibility(
+                  visible: canGoNext,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: IconButton(
+                    icon: const Icon(Icons.chevron_right_rounded, size: 24),
+                    color: const Color(0xFF293241),
+                    onPressed: canGoNext
+                        ? () => widget.onBulanChanged(widget.bulanIndex + 1)
+                        : null,
+                  ),
                 ),
               ],
             ),

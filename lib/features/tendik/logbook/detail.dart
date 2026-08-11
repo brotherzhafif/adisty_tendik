@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
 import 'widgets/logbook_detail_header_card.dart';
 import 'widgets/logbook_detail_content_card.dart';
@@ -114,7 +113,9 @@ class _LogbookDetailPageState extends State<LogbookDetailPage> {
                           itemBuilder: (context, index) {
                             final item = subAktivitasList[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 2.0,
+                              ),
                               child: LogbookDetailContentCard(
                                 judulAktivitas: item.judul,
                                 deskripsiAktivitas: item.deskripsi,
@@ -166,27 +167,47 @@ class _LogbookDetailPageState extends State<LogbookDetailPage> {
 
                       const SizedBox(height: 24),
 
-                      // --- Tombol Aksi di Bawah ---
-                      _ActionButtonRow(
-                        onHapus: () {
-                          showAppDialog(
-                            context,
-                            type: AppDialogType.info,
-                            title: 'Belum Tersedia',
-                            message: 'Fungsi Hapus belum diimplementasi.',
-                          );
-                        },
-                        onEdit: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LogbookFormPage(
-                                initialData: widget.activity,
-                                initialSubData: subAktivitasList[_currentIndex],
+                      // --- Tombol Edit Logbook (Full Width) ---
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LogbookFormPage(
+                                  initialData: widget.activity,
+                                  initialSubData:
+                                      subAktivitasList[_currentIndex],
+                                ),
                               ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF2B86C3),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          );
-                        },
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit_rounded, size: 16),
+                              SizedBox(width: 6),
+                              Text(
+                                'Edit Logbook',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Open Sans',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -225,78 +246,5 @@ class _LogbookDetailPageState extends State<LogbookDetailPage> {
   String _capitalize(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1).toLowerCase();
-  }
-}
-
-// ============================================================
-// KOMPONEN PRIVAT: Row tombol Hapus & Edit
-// ============================================================
-class _ActionButtonRow extends StatelessWidget {
-  final VoidCallback onHapus;
-  final VoidCallback onEdit;
-
-  const _ActionButtonRow({required this.onHapus, required this.onEdit});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // --- Tombol Hapus ---
-        Expanded(
-          child: OutlinedButton(
-            onPressed: onHapus,
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              side: const BorderSide(color: Color(0xFF2B86C3), width: 1.5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text(
-              'Hapus',
-              style: TextStyle(
-                color: Color(0xFF2B86C3),
-                fontSize: 14,
-                fontFamily: 'Open Sans',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(width: 12),
-
-        // --- Tombol Edit ---
-        Expanded(
-          child: ElevatedButton(
-            onPressed: onEdit,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2B86C3),
-              foregroundColor: Colors.white,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.edit_rounded, size: 16),
-                SizedBox(width: 6),
-                Text(
-                  'Edit Logbook',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Open Sans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }
