@@ -56,103 +56,135 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
     }
   }
 
-  // Slide Time Picker (Cupertino modal popup)
-  Future<void> _selectTimeCupertino(BuildContext context, bool isMasuk) async {
+  // Slide Time Picker (Cupertino modal untuk iOS, Material showTimePicker untuk Android)
+  Future<void> _selectTime(BuildContext context, bool isMasuk) async {
     final TimeOfDay initialTime = isMasuk ? _jamMasuk : _jamPulang;
-    final DateTime initialDateTime = DateTime(
-      2026,
-      1,
-      1,
-      initialTime.hour,
-      initialTime.minute,
-    );
+    final bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
-    final DateTime? selectedDateTime = await showModalBottomSheet<DateTime>(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext context) {
-        DateTime tempDateTime = initialDateTime;
-        return SizedBox(
-          height: 300,
-          child: Column(
-            children: [
-              // Header picker
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        'Batal',
-                        style: TextStyle(
-                          color: Color(0xFFE65768),
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+    if (isIOS) {
+      final DateTime initialDateTime = DateTime(
+        2026,
+        1,
+        1,
+        initialTime.hour,
+        initialTime.minute,
+      );
+
+      final DateTime? selectedDateTime = await showModalBottomSheet<DateTime>(
+        context: context,
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (BuildContext context) {
+          DateTime tempDateTime = initialDateTime;
+          return SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                // Header picker
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          'Batal',
+                          style: TextStyle(
+                            color: Color(0xFFE65768),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      isMasuk
-                          ? 'Pilih Jam Masuk Baru'
-                          : 'Pilih Jam Pulang Baru',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, tempDateTime),
-                      child: Text(
-                        'Pilih',
-                        style: TextStyle(
-                          color: Color(0xFF0067AD),
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+                      Text(
+                        isMasuk
+                            ? 'Pilih Jam Masuk Baru'
+                            : 'Pilih Jam Pulang Baru',
+                        style: const TextStyle(
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
                         ),
                       ),
-                    ),
-                  ],
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, tempDateTime),
+                        child: const Text(
+                          'Pilih',
+                          style: TextStyle(
+                            color: Color(0xFF0067AD),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Divider(height: 1),
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.time,
-                  use24hFormat: true,
-                  initialDateTime: initialDateTime,
-                  onDateTimeChanged: (DateTime newDateTime) {
-                    tempDateTime = newDateTime;
-                  },
+                const Divider(height: 1),
+                Expanded(
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.time,
+                    use24hFormat: true,
+                    initialDateTime: initialDateTime,
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      tempDateTime = newDateTime;
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+              ],
+            ),
+          );
+        },
+      );
 
-    if (selectedDateTime != null) {
-      setState(() {
-        final time = TimeOfDay(
-          hour: selectedDateTime.hour,
-          minute: selectedDateTime.minute,
-        );
-        if (isMasuk) {
-          _jamMasuk = time;
-        } else {
-          _jamPulang = time;
-        }
-      });
+      if (selectedDateTime != null) {
+        setState(() {
+          final time = TimeOfDay(
+            hour: selectedDateTime.hour,
+            minute: selectedDateTime.minute,
+          );
+          if (isMasuk) {
+            _jamMasuk = time;
+          } else {
+            _jamPulang = time;
+          }
+        });
+      }
+    } else {
+      // Android / Default Material TimePicker
+      final TimeOfDay? picked = await showTimePicker(
+        context: context,
+        initialTime: initialTime,
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xFF2B86C3),
+                onPrimary: Colors.white,
+                onSurface: Color(0xFF293241),
+              ),
+            ),
+            child: child!,
+          );
+        },
+      );
+
+      if (picked != null) {
+        setState(() {
+          if (isMasuk) {
+            _jamMasuk = picked;
+          } else {
+            _jamPulang = picked;
+          }
+        });
+      }
     }
   }
 
@@ -252,7 +284,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                       ),
                       const SizedBox(height: 6),
                       InkWell(
-                        onTap: () => _selectTimeCupertino(context, true),
+                        onTap: () => _selectTime(context, true),
                         child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
@@ -294,7 +326,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                       ),
                       const SizedBox(height: 6),
                       InkWell(
-                        onTap: () => _selectTimeCupertino(context, false),
+                        onTap: () => _selectTime(context, false),
                         child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(

@@ -29,9 +29,9 @@ class HomePage extends StatelessWidget {
     final useCase = GetHomePresensiUseCase(repository: repository);
 
     return BlocProvider(
-      create: (context) => HomePresensiBloc(
-        getHomePresensiUseCase: useCase,
-      )..add(const FetchHomePresensiEvent()),
+      create: (context) =>
+          HomePresensiBloc(getHomePresensiUseCase: useCase)
+            ..add(const FetchHomePresensiEvent()),
       child: const HomePageView(),
     );
   }
@@ -52,9 +52,7 @@ class HomePageView extends StatelessWidget {
           builder: (context, state) {
             if (state is HomePresensiLoading || state is HomePresensiInitial) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xFF2B86C3),
-                ),
+                child: CircularProgressIndicator(color: Color(0xFF2B86C3)),
               );
             }
 
@@ -82,8 +80,8 @@ class HomePageView extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () {
                           context.read<HomePresensiBloc>().add(
-                                const FetchHomePresensiEvent(),
-                              );
+                            const FetchHomePresensiEvent(),
+                          );
                         },
                         icon: const Icon(Icons.refresh, color: Colors.white),
                         label: Text(
@@ -98,7 +96,7 @@ class HomePageView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -109,8 +107,8 @@ class HomePageView extends StatelessWidget {
               return RefreshIndicator(
                 onRefresh: () async {
                   context.read<HomePresensiBloc>().add(
-                        const RefreshHomePresensiEvent(),
-                      );
+                    const RefreshHomePresensiEvent(),
+                  );
                 },
                 color: const Color(0xFF2B86C3),
                 child: SingleChildScrollView(
@@ -130,14 +128,14 @@ class HomePageView extends StatelessWidget {
                       _InformationSection(
                         state: state.presensiState,
                         onAdvanceState: () {
-                          context
-                              .read<HomePresensiBloc>()
-                              .add(const AdvancePresensiStateEvent());
+                          context.read<HomePresensiBloc>().add(
+                            const AdvancePresensiStateEvent(),
+                          );
                         },
                         onResetState: () {
-                          context
-                              .read<HomePresensiBloc>()
-                              .add(const ResetPresensiStateEvent());
+                          context.read<HomePresensiBloc>().add(
+                            const ResetPresensiStateEvent(),
+                          );
                         },
                       ),
                     ],

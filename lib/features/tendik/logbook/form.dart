@@ -252,95 +252,196 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
     }
   }
 
-  // Helper Kuantitas Picker (CupertinoPicker drum iOS)
+  // Helper Kuantitas Picker (CupertinoPicker drum untuk iOS, Material Number Dialog untuk Android)
   Future<void> _pilihKuantitas(BuildContext context) async {
-    int tempKuantitas = _kuantitas;
-    await showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 300,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        'Batal',
-                        style: TextStyle(
-                          color: Color(0xFFE65768),
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+    final bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+
+    if (isIOS) {
+      int tempKuantitas = _kuantitas;
+      await showModalBottomSheet<void>(
+        context: context,
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          'Batal',
+                          style: TextStyle(
+                            color: Color(0xFFE65768),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      'Pilih Kuantitas',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() => _kuantitas = tempKuantitas);
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Pilih',
+                      const Text(
+                        'Pilih Kuantitas',
                         style: TextStyle(
-                          color: Color(0xFF0067AD),
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() => _kuantitas = tempKuantitas);
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'Pilih',
+                          style: TextStyle(
+                            color: Color(0xFF0067AD),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(height: 1),
+                Expanded(
+                  child: CupertinoPicker(
+                    itemExtent: 40,
+                    scrollController: FixedExtentScrollController(
+                      initialItem: _kuantitas - 1,
+                    ),
+                    onSelectedItemChanged: (int index) {
+                      tempKuantitas = index + 1;
+                    },
+                    children: List.generate(
+                      99,
+                      (index) => Center(
+                        child: Text(
+                          '${index + 1}',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    } else {
+      // Android / Default Material Number Dialog
+      final controller = TextEditingController(text: _kuantitas.toString());
+      final int? result = await showDialog<int>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            title: const Text(
+              'Pilih Kuantitas',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF293241),
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  autofocus: true,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Nunito',
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Jumlah Kuantitas',
+                    hintText: 'Masukkan angka (1-99)',
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Color(0xFF2B86C3),
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  'Batal',
+                  style: TextStyle(
+                    color: Color(0xFFE65768),
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              const Divider(height: 1),
-              Expanded(
-                child: CupertinoPicker(
-                  itemExtent: 40,
-                  scrollController: FixedExtentScrollController(
-                    initialItem: _kuantitas - 1,
+              ElevatedButton(
+                onPressed: () {
+                  final val = int.tryParse(controller.text);
+                  if (val != null && val > 0 && val <= 99) {
+                    Navigator.pop(context, val);
+                  } else {
+                    Navigator.pop(context, _kuantitas);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF2B86C3),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  onSelectedItemChanged: (int index) {
-                    tempKuantitas = index + 1;
-                  },
-                  children: List.generate(
-                    99,
-                    (index) => Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+                ),
+                child: const Text(
+                  'Pilih',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ],
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+
+      if (result != null) {
+        setState(() => _kuantitas = result);
+      }
+    }
   }
 
   // Helper Satuan Picker (Modal Sederhana)
