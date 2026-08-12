@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import 'kategori_aktivitas_picker_modal.dart';
 
 // ============================================================
 // WIDGET: Kartu Header Detail Logbook
@@ -11,7 +12,10 @@ class LogbookDetailHeaderCard extends StatelessWidget {
   final String status; // e.g. 'Tersimpan'
   final int totalKategori;
   final int currentKategoriIndex;
+  final String? currentKategoriNama;
+  final List<String>? listKategori;
   final ValueChanged<int>? onKategoriChanged;
+  final ValueChanged<String>? onKategoriSelected;
 
   const LogbookDetailHeaderCard({
     super.key,
@@ -20,7 +24,10 @@ class LogbookDetailHeaderCard extends StatelessWidget {
     required this.status,
     this.totalKategori = 1,
     this.currentKategoriIndex = 1,
+    this.currentKategoriNama,
+    this.listKategori,
     this.onKategoriChanged,
+    this.onKategoriSelected,
   });
 
   @override
@@ -150,43 +157,63 @@ class LogbookDetailHeaderCard extends StatelessWidget {
                     : null,
               ),
               const SizedBox(width: 8),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Kategori Aktivitas',
-                    style: TextStyle(
-                      color: Color(0xFF2B86C3),
-                      fontSize: 12,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w700,
-                      height: 1.33,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: ShapeDecoration(
-                      color: const Color(0x192B86C3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
+              InkWell(
+                onTap: () async {
+                  final categories = listKategori != null && listKategori!.isNotEmpty
+                      ? listKategori!
+                      : [currentKategoriNama ?? 'Aktivitas Utama'];
+                  final result = await KategoriAktivitasPickerModal.show(
+                    context,
+                    listKategori: categories,
+                    selectedKategori: currentKategoriNama ?? '',
+                  );
+                  if (result != null && context.mounted) {
+                    onKategoriSelected?.call(result);
+                  }
+                },
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Kategori Aktivitas',
+                        style: TextStyle(
+                          color: Color(0xFF2B86C3),
+                          fontSize: 12,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w700,
+                          height: 1.33,
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      '$currentKategoriIndex',
-                      style: const TextStyle(
-                        color: Color(0xFF2B86C3),
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        height: 1.43,
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: ShapeDecoration(
+                          color: const Color(0x192B86C3),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                        ),
+                        child: Text(
+                          '$currentKategoriIndex',
+                          style: const TextStyle(
+                            color: Color(0xFF2B86C3),
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 1.43,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
               const SizedBox(width: 8),
               IconButton(

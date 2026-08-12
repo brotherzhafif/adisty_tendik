@@ -8,10 +8,7 @@ import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 class SkpTotalScoreCard extends StatelessWidget {
   final double score;
 
-  const SkpTotalScoreCard({
-    super.key,
-    required this.score,
-  });
+  const SkpTotalScoreCard({super.key, required this.score});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +18,7 @@ class SkpTotalScoreCard extends StatelessWidget {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 1,
-            color: Color(0xFF0067AD),
-          ),
+          side: const BorderSide(width: 1, color: Color(0xFF0067AD)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

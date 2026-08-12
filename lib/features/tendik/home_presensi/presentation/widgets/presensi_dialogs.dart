@@ -3,317 +3,226 @@ import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 class DialogKonfirmasiPulang extends StatelessWidget {
   final VoidCallback? onConfirmed;
-  const DialogKonfirmasiPulang({super.key, this.onConfirmed});
+  final VoidCallback? onLanjutShift;
+
+  const DialogKonfirmasiPulang({
+    super.key,
+    this.onConfirmed,
+    this.onLanjutShift,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DialogPilihanPulang(
+      onPulang: onConfirmed,
+      onLanjutShift: onLanjutShift,
+    );
+  }
+}
+
+// ============================================================
+// DIALOG: PILIHAN TINDAKAN SEBELUM PULANG (LANJUT SHIFT / PULANG / BATAL)
+// ============================================================
+class DialogPilihanPulang extends StatelessWidget {
+  final VoidCallback? onPulang;
+  final VoidCallback? onLanjutShift;
+
+  const DialogPilihanPulang({
+    super.key,
+    this.onPulang,
+    this.onLanjutShift,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       elevation: 0,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 315,
-            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 12),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 428),
+        padding: const EdgeInsets.all(20),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // --- Judul ---
+            const Text(
+              'Yakin dengan pilihan mu?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Nunito',
+                fontWeight: FontWeight.w700,
+                height: 1.44,
+                letterSpacing: -0.32,
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 12,
+            const SizedBox(height: 6),
+
+            // --- Subjudul ---
+            const Text(
+              'Pilih tindakan yang ingin kamu lakukan sekarang.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+                fontFamily: 'Nunito',
+                fontWeight: FontWeight.w500,
+                height: 1.50,
+                letterSpacing: -0.27,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // --- Row 2 Tombol: Lanjut Shift & Pulang (Responsif) ---
+            Row(
               children: [
-                Container(
-                  width: 206,
-                  height: 169,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/(presensi)_kucing_presensi_bertanya.png',
-                      ),
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 4,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 9,
-                          children: [
-                            SizedBox(
-                              width: 297,
-                              child: Text(
-                                'Konfirmasi Pulang',
-                                textAlign: TextAlign.center,
-                                style: AppTextStyle.headingLg.copyWith(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 234,
-                              child: Text(
-                                'Apakah anda yakin ingin melakukkan presensi pulang?',
-                                textAlign: TextAlign.center,
-                                style: AppTextStyle.bodySm.copyWith(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 270,
-                  padding: const EdgeInsets.all(10),
-                  decoration: ShapeDecoration(
-                    color: const Color(0x1E4AAF57),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 10,
-                    children: [
-                      Opacity(
-                        opacity: 0.96,
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Jam Pulang ',
-                                style: TextStyle(
-                                  color: Color(0xFF293241),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.33,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' 17:15\n',
-                                style: TextStyle(
-                                  color: Color(0xF54AAF57),
-                                  /* status-green */
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.33,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Selasa, 30 Desember 2026',
-                                style: TextStyle(
-                                  color: Color(0xFF293241),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.33,
-                                ),
-                              ),
-                            ],
+                // Tombol Lanjut Shift
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      onLanjutShift?.call();
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 1,
+                            color: Color(0xFF0067AD),
                           ),
-                          textAlign: TextAlign.center,
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 270,
-                  padding: const EdgeInsets.all(10),
-                  decoration: ShapeDecoration(
-                    color: const Color(0x1E0067AD),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 10,
-                    children: [
-                      SizedBox(width: 16, height: 16),
-                      Opacity(
-                        opacity: 0.96,
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Kampus 4 ',
-                                style: TextStyle(
-                                  color: Color(0xFF0067AD),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.33,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '- Gedung Kedokteran',
-                                style: TextStyle(
-                                  color: Color(0xFF0067AD),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.33,
-                                ),
-                              ),
-                            ],
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.schedule_rounded,
+                            color: Color(0xFF0067AD),
+                            size: 20,
                           ),
-                        ),
+                          SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              'Lanjut Shift',
+                              style: TextStyle(
+                                color: Color(0xFF0067AD),
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                height: 1.30,
+                                letterSpacing: -0.18,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 2,
-                  children: [
-                    // Tombol Batal
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: SizedBox(
-                        width: 120,
-                        height: 48,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 9,
-                          children: [
-                            Container(
-                              width: 131,
-                              height: 48,
-                              padding: const EdgeInsets.all(6),
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                    width: 1,
-                                    color: Color(0xFFFFAC30),
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                spacing: 10,
-                                children: [
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      'Batal',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0xFFFFAC30),
-                                        fontSize: 18,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.44,
-                                        letterSpacing: -0.25,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+
+                const SizedBox(width: 12),
+
+                // Tombol Pulang
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (context) => DialogPresensiBerhasil(
+                          onConfirmed: onPulang,
+                        ),
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 1,
+                            color: Color(0xFFE65768),
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    ),
-                    // Tombol Iya
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              DialogPresensiBerhasil(onConfirmed: onConfirmed),
-                        );
-                      },
-                      child: SizedBox(
-                        width: 130,
-                        height: 48,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 9,
-                          children: [
-                            Container(
-                              width: 131,
-                              height: 48,
-                              padding: const EdgeInsets.all(6),
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFFFAC30),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.logout_rounded,
+                            color: Color(0xFFE65768),
+                            size: 20,
+                          ),
+                          SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              'Pulang',
+                              style: TextStyle(
+                                color: Color(0xFFE65768),
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                height: 1.30,
+                                letterSpacing: -0.18,
                               ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                spacing: 10,
-                                children: [
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      'Iya',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.44,
-                                        letterSpacing: -0.25,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+
+            const SizedBox(height: 14),
+
+            // --- Tombol Batal ---
+            InkWell(
+              onTap: () => Navigator.of(context).pop(),
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: ShapeDecoration(
+                  color: const Color(0x1E2B86C3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'Batal',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF2B86C3),
+                    fontSize: 16,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w700,
+                    height: 1.50,
+                    letterSpacing: -0.27,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:adisty_tendik_module/core/widgets/app_dialog.dart';
 import 'widgets/logbook_app_bar.dart';
+import 'widgets/kategori_aktivitas_picker_modal.dart';
 import 'data/models/logbook_model.dart';
 
 // ============================================================
@@ -27,6 +28,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
   // Form State
   DateTime _selectedDate = DateTime(2026, 7, 10);
   String _selectedJabatan = 'Utama Programmer';
+  String _selectedKategori = 'Pengembangan Aplikasi & System Development';
   int _kuantitas = 1;
   String _selectedSatuan = 'Item';
   final TextEditingController _uraianController = TextEditingController();
@@ -248,6 +250,29 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
     if (result != null) {
       setState(() {
         _selectedJabatan = result;
+      });
+    }
+  }
+
+  List<String> _listKategoriHari = [
+    'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
+    'Pengujian Algoritma & Validasi Data Form - Utama Programmer',
+    'Optimasi Performa Query & Database Refactoring - Utama Programmer',
+    'Penyusunan Dokumentasi API & System Architecture - Utama Programmer',
+    'Melakukan Code Review dan Refactoring - Utama Programmer'
+  ];
+
+  // Helper Kategori Aktivitas Picker (Modal Bottom Sheet dari Data Aktivitas Hari Terpilih)
+  Future<void> _pilihKategoriAktivitas(BuildContext context) async {
+    final String? result = await KategoriAktivitasPickerModal.show(
+      context,
+      listKategori: _listKategoriHari,
+      selectedKategori: _selectedKategori,
+    );
+    if (result != null) {
+      if (!mounted) return;
+      setState(() {
+        _selectedKategori = result;
       });
     }
   }
@@ -646,7 +671,52 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
 
                               const SizedBox(height: 16),
 
-                              // --- Input 3: Kuantitas & Satuan ---
+                              // --- Input 3: Kategori Aktivitas ---
+                              const _InputLabel(label: 'Kategori Aktivitas'),
+                              const SizedBox(height: 6),
+                              InkWell(
+                                onTap: () => _pilihKategoriAktivitas(context),
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: const Color(0xFFE7E8E9),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          _selectedKategori,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontFamily: 'Nunito',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: Color(0xFFAEB1B7),
+                                        size: 22,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              // --- Input 4: Kuantitas & Satuan ---
                               const _InputLabel(label: 'Kuantitas'),
                               const SizedBox(height: 6),
                               Row(

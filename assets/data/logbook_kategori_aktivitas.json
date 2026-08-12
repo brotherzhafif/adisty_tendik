@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "message": "Berhasil mengambil data master kategori aktivitas logbook",
+  "data": [
+    "Pengembangan Aplikasi & System Development",
+    "Pemeliharaan Infrastructure & Network",
+    "Manajemen Basis Data & Server",
+    "Dukungan Teknis & Helpdesk Layanan",
+    "Koordinasi & Rapat Internal/Eksternal",
+    "Penyusunan Dokumentasi Teknis & Laporan",
+    "Pengujian System & Quality Assurance",
+    "Pelatihan & Pendampingan Pengguna",
+    "Pengembangan Keahlian & Workshop AIK",
+    "Aktivitas Penunjang & Tugas Tambahan",
+    "Manajemen Aset & Pengadaan TIK",
+    "Monitoring & Evaluasi Kinerja Sistem"
+  ]
+}

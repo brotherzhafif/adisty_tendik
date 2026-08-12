@@ -10,12 +10,14 @@ class TombolPresensiWrapper extends StatefulWidget {
   final PresensiState state;
   final VoidCallback? onAdvanceState;
   final VoidCallback? onResetState;
+  final VoidCallback? onLanjutShift;
 
   const TombolPresensiWrapper({
     super.key,
     required this.state,
     this.onAdvanceState,
     this.onResetState,
+    this.onLanjutShift,
   });
 
   @override
@@ -72,9 +74,12 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
       if (widget.state == PresensiState.pulang) {
         showDialog(
           context: context,
-          builder: (context) => DialogKonfirmasiPulang(
-            onConfirmed: () {
+          builder: (context) => DialogPilihanPulang(
+            onPulang: () {
               widget.onResetState?.call();
+            },
+            onLanjutShift: () {
+              widget.onLanjutShift?.call();
             },
           ),
         );

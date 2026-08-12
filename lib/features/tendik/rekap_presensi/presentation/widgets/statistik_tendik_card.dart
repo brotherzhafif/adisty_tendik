@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import '../../data/models/rekap_presensi_model.dart';
 
+import 'bulan_picker_modal.dart';
+
 // ============================================================
 // KOMPONEN: CARD STATISTIK TENDIK (dengan swipe & tombol ganti bulan)
 // ============================================================
@@ -151,39 +153,60 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
                         : null,
                   ),
 
-                  // Label bulan dengan animasi slide
+                  // Label bulan dengan animasi slide & tap untuk buka picker modal searchable
                   Expanded(
-                    child: SizedBox(
-                      height: 36,
-                      child: Center(
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 280),
-                          transitionBuilder: (child, animation) {
-                            final offset = _slideLeft
-                                ? const Offset(-0.4, 0)
-                                : const Offset(0.4, 0);
-                            return SlideTransition(
-                              position: Tween<Offset>(begin: offset, end: Offset.zero)
-                                  .animate(
-                                    CurvedAnimation(
-                                      parent: animation,
-                                      curve: Curves.easeOutCubic,
-                                    ),
+                    child: InkWell(
+                      onTap: () async {
+                        final listBulanLabels = widget.dataBulan
+                            .map((b) => b.labelBulan)
+                            .toList();
+                        final selectedIndex = await BulanPickerModal.show(
+                          context,
+                          listBulan: listBulanLabels,
+                          selectedBulan: bulanAktif.labelBulan,
+                        );
+                        if (selectedIndex != null && selectedIndex != -1) {
+                          widget.onBulanChanged(selectedIndex);
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: SizedBox(
+                        height: 36,
+                        child: Center(
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 280),
+                            transitionBuilder: (child, animation) {
+                              final offset = _slideLeft
+                                  ? const Offset(-0.4, 0)
+                                  : const Offset(0.4, 0);
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: offset,
+                                  end: Offset.zero,
+                                ).animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOutCubic,
                                   ),
-                              child: FadeTransition(opacity: animation, child: child),
-                            );
-                          },
-                          child: Text(
-                            bulanAktif.labelBulan,
-                            key: ValueKey(bulanAktif.labelBulan),
-                            style: const TextStyle(
-                              color: Color(0xFFF6F7F7),
-                              fontSize: 22,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: -0.46,
+                                ),
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                            child: Text(
+                              bulanAktif.labelBulan,
+                              key: ValueKey(bulanAktif.labelBulan),
+                              style: const TextStyle(
+                                color: Color(0xFFF6F7F7),
+                                fontSize: 22,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: -0.46,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),

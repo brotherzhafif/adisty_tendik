@@ -10,8 +10,13 @@ import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 // ============================================================
 class PresensiCard extends StatelessWidget {
   final PresensiState state;
+  final bool isLanjutShift;
 
-  const PresensiCard({super.key, this.state = PresensiState.belumPresensi});
+  const PresensiCard({
+    super.key,
+    this.state = PresensiState.belumPresensi,
+    this.isLanjutShift = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +105,7 @@ class PresensiCard extends StatelessWidget {
               child: _PresensiBox(
                 label: 'Pulang',
                 labelColor: const Color(0xFFFFAC2F),
-                jam: '14.00',
+                jam: isLanjutShift ? '17.30' : '14.00',
                 iconPath: 'assets/icons/(home_page)_keluar-icon.svg',
               ),
             ),

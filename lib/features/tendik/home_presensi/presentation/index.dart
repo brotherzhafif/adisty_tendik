@@ -157,7 +157,7 @@ class HomePageView extends StatelessWidget {
 // KOMPONEN: SECTION INFORMASI UTAMA
 // Wrapper untuk semua section: presensi & layanan
 // ============================================================
-class _InformationSection extends StatelessWidget {
+class _InformationSection extends StatefulWidget {
   final PresensiState state;
   final VoidCallback? onAdvanceState;
   final VoidCallback? onResetState;
@@ -167,6 +167,21 @@ class _InformationSection extends StatelessWidget {
     this.onAdvanceState,
     this.onResetState,
   });
+
+  @override
+  State<_InformationSection> createState() => _InformationSectionState();
+}
+
+class _InformationSectionState extends State<_InformationSection> {
+  bool _isLanjutShift = false;
+
+  @override
+  void didUpdateWidget(covariant _InformationSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.state == PresensiState.belumPresensi) {
+      _isLanjutShift = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -205,17 +220,26 @@ class _InformationSection extends StatelessWidget {
                         spacing: 11,
                         children: [
                           // Card Presensi (biru) — berubah sesuai state
-                          PresensiCard(state: state),
+                          PresensiCard(
+                            state: widget.state,
+                            isLanjutShift: _isLanjutShift,
+                          ),
 
                           // Row Statistik — hanya muncul setelah masuk
-                          if (state != PresensiState.belumPresensi)
+                          if (widget.state != PresensiState.belumPresensi)
                             const StatistikPresensi(),
 
                           // Tombol Presensi + hint
                           TombolPresensiWrapper(
-                            state: state,
-                            onAdvanceState: onAdvanceState,
-                            onResetState: onResetState,
+                            state: widget.state,
+                            onAdvanceState: widget.onAdvanceState,
+                            onResetState: () {
+                              setState(() => _isLanjutShift = false);
+                              widget.onResetState?.call();
+                            },
+                            onLanjutShift: () {
+                              setState(() => _isLanjutShift = true);
+                            },
                           ),
                         ],
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detail.dart';
 import 'widgets/riwayat_pengajuan_item.dart';
+import '../../rekap_presensi/presentation/widgets/bulan_picker_modal.dart';
 
 // ============================================================
 // DATA MODEL: RIWAYAT PENGAJUAN DATA ITEM & BULAN
@@ -401,42 +402,61 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
                             : null,
                       ),
 
-                      // Teks Bulan & Tahun (AnimatedSwitcher)
+                      // Teks Bulan & Tahun (AnimatedSwitcher & Search Picker Modal)
                       Expanded(
-                        child: SizedBox(
-                          height: 36,
-                          child: Center(
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 280),
-                              transitionBuilder: (child, animation) {
-                                final offset = _slideLeft
-                                    ? const Offset(-0.4, 0)
-                                    : const Offset(0.4, 0);
-                                return SlideTransition(
-                                  position: Tween<Offset>(
-                                    begin: offset,
-                                    end: Offset.zero,
-                                  ).animate(
-                                    CurvedAnimation(
-                                      parent: animation,
-                                      curve: Curves.easeOutCubic,
+                        child: InkWell(
+                          onTap: () async {
+                            final listBulanLabels = _daftarBulanDummy
+                                .map((b) => b.labelBulan)
+                                .toList();
+                            final selectedIndex = await BulanPickerModal.show(
+                              context,
+                              listBulan: listBulanLabels,
+                              selectedBulan: bulanAktif.labelBulan,
+                            );
+                            if (selectedIndex != null && selectedIndex != -1) {
+                              setState(() {
+                                _slideLeft = selectedIndex < _currentIndex;
+                                _currentIndex = selectedIndex;
+                              });
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(8),
+                          child: SizedBox(
+                            height: 36,
+                            child: Center(
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 280),
+                                transitionBuilder: (child, animation) {
+                                  final offset = _slideLeft
+                                      ? const Offset(-0.4, 0)
+                                      : const Offset(0.4, 0);
+                                  return SlideTransition(
+                                    position: Tween<Offset>(
+                                      begin: offset,
+                                      end: Offset.zero,
+                                    ).animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeOutCubic,
+                                      ),
                                     ),
+                                    child: FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  bulanAktif.labelBulan,
+                                  key: ValueKey(bulanAktif.labelBulan),
+                                  style: const TextStyle(
+                                    color: Color(0xFF293241),
+                                    fontSize: 15,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.4,
                                   ),
-                                  child: FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                bulanAktif.labelBulan,
-                                key: ValueKey(bulanAktif.labelBulan),
-                                style: const TextStyle(
-                                  color: Color(0xFF293241),
-                                  fontSize: 15,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.4,
                                 ),
                               ),
                             ),
