@@ -1,0 +1,114 @@
+{
+  "status": "success",
+  "message": "Berhasil mengambil data monitoring presensi",
+  "data_tanggal": [
+    {
+      "id": "1",
+      "hari_nama": "Rabu",
+      "tanggal_lengkap": "9 September 2026",
+      "label_tanggal": "Rabu, 9 September 2026",
+      "pegawai": [
+        {
+          "id": "p1",
+          "nama": "Ahmad Luthfi Abdurrosyid, S.Kom.",
+          "unit": "BSI - Staff urusan pengembangan",
+          "jabatan": "Programmer",
+          "lokasi": "Kampus 4 UAD",
+          "status": "On Time",
+          "masuk": "07.58",
+          "pulang": "-.-",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": "Koreksi jam masuk karena pemadaman listrik lokal server gedung."
+        },
+        {
+          "id": "p2",
+          "nama": "NUR SITI FATHIMAH, S.E.",
+          "unit": "BSI - Sub Direktorat Layanan",
+          "jabatan": "Analis Layanan",
+          "lokasi": "Kampus 2 UAD",
+          "status": "On Time",
+          "masuk": "07.45",
+          "pulang": "16.02",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": null
+        },
+        {
+          "id": "p3",
+          "nama": "DWI PURWANTO, M.T.",
+          "unit": "BSI - Sub Direktorat Infrastruktur",
+          "jabatan": "Administrator Jaringan",
+          "lokasi": "Kampus 4 UAD",
+          "status": "Late",
+          "masuk": "08.15",
+          "pulang": "-.-",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": "Keterlambatan karena kendala jaringan transportasi umum pagi hari."
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "hari_nama": "Kamis",
+      "tanggal_lengkap": "10 September 2026",
+      "label_tanggal": "Kamis, 10 September 2026",
+      "pegawai": [
+        {
+          "id": "p1",
+          "nama": "Ahmad Luthfi Abdurrosyid, S.Kom.",
+          "unit": "BSI - Staff urusan pengembangan",
+          "jabatan": "Programmer",
+          "lokasi": "Kampus 4 UAD",
+          "status": "On Time",
+          "masuk": "06.50",
+          "pulang": "17.00",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": null
+        },
+        {
+          "id": "p4",
+          "nama": "RINA ASTUTI, S.T.",
+          "unit": "BSI - Sub Direktorat Sistem Informasi",
+          "jabatan": "Database Administrator",
+          "lokasi": "Kampus 1 UAD",
+          "status": "On Time",
+          "masuk": "07.10",
+          "pulang": "16.30",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": null
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "hari_nama": "Jumat",
+      "tanggal_lengkap": "11 September 2026",
+      "label_tanggal": "Jumat, 11 September 2026",
+      "pegawai": [
+        {
+          "id": "p2",
+          "nama": "NUR SITI FATHIMAH, S.E.",
+          "unit": "BSI - Sub Direktorat Layanan",
+          "jabatan": "Analis Layanan",
+          "lokasi": "Kampus 2 UAD",
+          "status": "On Time",
+          "masuk": "07.30",
+          "pulang": "16.30",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": null
+        },
+        {
+          "id": "p3",
+          "nama": "DWI PURWANTO, M.T.",
+          "unit": "BSI - Sub Direktorat Infrastruktur",
+          "jabatan": "Administrator Jaringan",
+          "lokasi": "Kampus 4 UAD",
+          "status": "On Time",
+          "masuk": "07.20",
+          "pulang": "16.45",
+          "photo_url": "https://placehold.co/64x64",
+          "alasan_koreksi": null
+        }
+      ]
+    }
+  ]
+}

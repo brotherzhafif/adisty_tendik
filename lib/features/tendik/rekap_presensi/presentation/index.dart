@@ -8,6 +8,7 @@ import '../data/providers/rekap_presensi_provider.dart';
 import '../data/repositories/rekap_presensi_repository.dart';
 import '../domain/usecases/get_rekap_presensi_usecase.dart';
 import 'detail.dart';
+import 'monitoring_index.dart';
 import 'widgets/statistik_tendik_card.dart';
 import 'widgets/summary_mini_card.dart';
 import 'widgets/info_disclaimer_banner.dart';
@@ -27,9 +28,9 @@ class RekapPresensi extends StatelessWidget {
     final useCase = GetRekapPresensiUseCase(repository: repository);
 
     return BlocProvider(
-      create: (context) => RekapPresensiBloc(
-        getRekapPresensiUseCase: useCase,
-      )..add(const FetchRekapPresensiEvent()),
+      create: (context) =>
+          RekapPresensiBloc(getRekapPresensiUseCase: useCase)
+            ..add(const FetchRekapPresensiEvent()),
       child: const RekapPresensiView(),
     );
   }
@@ -54,7 +55,10 @@ class RekapPresensiView extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Row(
                   children: [
                     InkWell(
@@ -105,7 +109,8 @@ class RekapPresensiView extends StatelessWidget {
                 ),
                 child: BlocBuilder<RekapPresensiBloc, RekapPresensiState>(
                   builder: (context, state) {
-                    if (state is RekapPresensiLoading || state is RekapPresensiInitial) {
+                    if (state is RekapPresensiLoading ||
+                        state is RekapPresensiInitial) {
                       return const Center(
                         child: CircularProgressIndicator(
                           color: Color(0xFF2B86C3),
@@ -137,10 +142,13 @@ class RekapPresensiView extends StatelessWidget {
                               ElevatedButton.icon(
                                 onPressed: () {
                                   context.read<RekapPresensiBloc>().add(
-                                        const FetchRekapPresensiEvent(),
-                                      );
+                                    const FetchRekapPresensiEvent(),
+                                  );
                                 },
-                                icon: const Icon(Icons.refresh, color: Colors.white),
+                                icon: const Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                ),
                                 label: Text(
                                   'Coba Lagi',
                                   style: AppTextStyle.bodyMd.copyWith(
@@ -153,7 +161,7 @@ class RekapPresensiView extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -166,8 +174,8 @@ class RekapPresensiView extends StatelessWidget {
                       return RefreshIndicator(
                         onRefresh: () async {
                           context.read<RekapPresensiBloc>().add(
-                                const RefreshRekapPresensiEvent(),
-                              );
+                            const RefreshRekapPresensiEvent(),
+                          );
                         },
                         color: const Color(0xFF2B86C3),
                         child: SingleChildScrollView(
@@ -185,8 +193,8 @@ class RekapPresensiView extends StatelessWidget {
                                 bulanIndex: state.bulanIndex,
                                 onBulanChanged: (index) {
                                   context.read<RekapPresensiBloc>().add(
-                                        ChangeBulanRekapPresensiEvent(index),
-                                      );
+                                    ChangeBulanRekapPresensiEvent(index),
+                                  );
                                 },
                               ),
                               const SizedBox(height: 14),
@@ -219,28 +227,77 @@ class RekapPresensiView extends StatelessWidget {
                               ),
                               const SizedBox(height: 18),
 
-                              // Section Header "Monitoring"
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 14,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF2B86C3),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  'Monitoring',
-                                  style: AppTextStyle.bodyLg.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
+                              // Section Header: "Riwayat Presensi" & Tombol "Monitoring" (Frame1000001514)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Riwayat Presensi',
+                                    style: TextStyle(
+                                      color: Color(0xFF293241),
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.50,
+                                      letterSpacing: -0.18,
+                                    ),
                                   ),
-                                ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MonitoringPresensi(),
+                                        ),
+                                      );
+                                    },
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 6,
+                                      ),
+                                      decoration: ShapeDecoration(
+                                        color: const Color(0xFF2B86C3),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.remove_red_eye_outlined,
+                                            color: Colors.white,
+                                            size: 16,
+                                          ),
+                                          SizedBox(width: 6),
+                                          Text(
+                                            'Monitoring',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontFamily: 'Nunito',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.49,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 14),
+                              const SizedBox(height: 12),
 
                               // List rekap log presensi (Dinamis BLoC per Bulan)
                               ListView.separated(
+                                padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: currentBulan.logs.length,

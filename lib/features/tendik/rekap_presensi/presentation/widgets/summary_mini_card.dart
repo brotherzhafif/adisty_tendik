@@ -30,9 +30,19 @@ class SummaryMiniCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
+            color: Color(0x087281DF),
+            blurRadius: 4.11,
+            offset: Offset(0, 0.52),
+          ),
+          BoxShadow(
+            color: Color(0x0C7281DF),
+            blurRadius: 6.99,
+            offset: Offset(0, 1.78),
+          ),
+          BoxShadow(
             color: Color(0x0F7281DF),
-            blurRadius: 10,
-            offset: Offset(0, 4),
+            blurRadius: 10.20,
+            offset: Offset(0, 4.11),
           ),
         ],
       ),
@@ -59,7 +69,7 @@ class SummaryMiniCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Color(0xFF293241),
-                    fontSize: 14,
+                    fontSize: 16,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
