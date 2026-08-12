@@ -246,7 +246,7 @@ class _Navbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 80,
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -271,9 +271,10 @@ class _Navbar extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 'assets/icons/(home_page)_home-icon.svg',
-                width: 40,
-                height: 40,
+                width: 30,
+                height: 30,
               ),
+              const SizedBox(height: 4),
               Text(
                 'Beranda',
                 style: AppTextStyle.bodySm.copyWith(
@@ -302,9 +303,10 @@ class _Navbar extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   'assets/icons/(home_page)_presensi-icon.svg',
-                  width: 40,
-                  height: 40,
+                  width: 30,
+                  height: 30,
                 ),
+                const SizedBox(height: 4),
                 Text(
                   'Presensi',
                   style: AppTextStyle.bodySm.copyWith(
@@ -325,9 +327,10 @@ class _Navbar extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 'assets/icons/(home_page)_profile-icon.svg',
-                width: 40,
-                height: 40,
+                width: 30,
+                height: 30,
               ),
+              const SizedBox(height: 4),
               Text(
                 'Profil',
                 style: AppTextStyle.bodySm.copyWith(

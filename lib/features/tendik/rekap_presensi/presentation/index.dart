@@ -45,32 +45,63 @@ class RekapPresensiView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text('Rekap Presensi', style: AppTextStyle.headingXl),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const ShapeDecoration(
-                  color: Color(0xFFF6F7F9),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(34),
-                      topRight: Radius.circular(34),
+      body: Column(
+        children: [
+          // --- Header Biru (AppBar Statis Menyatu dengan Blue Background) ---
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2B86C3),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.of(context).maybePop(),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
                     ),
+                    Expanded(
+                      child: Text(
+                        'Rekap Presensi',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.headingXl,
+                      ),
+                    ),
+                    const SizedBox(width: 40),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // --- Konten Utama (Rounded Top Container + ClipRRect) ---
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: const ShapeDecoration(
+                color: Color(0xFFF6F7F9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(34),
+                    topRight: Radius.circular(34),
                   ),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
                 ),
                 child: BlocBuilder<RekapPresensiBloc, RekapPresensiState>(
                   builder: (context, state) {
@@ -130,6 +161,8 @@ class RekapPresensiView extends StatelessWidget {
                     }
 
                     if (state is RekapPresensiLoaded) {
+                      final currentBulan = state.currentBulanData;
+
                       return RefreshIndicator(
                         onRefresh: () async {
                           context.read<RekapPresensiBloc>().add(
@@ -146,17 +179,25 @@ class RekapPresensiView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Card Statistik Tendik
-                              const StatistikTendikCard(),
+                              // Card Statistik Tendik (Dinamis dari BLoC State)
+                              StatistikTendikCard(
+                                dataBulan: state.dataBulan,
+                                bulanIndex: state.bulanIndex,
+                                onBulanChanged: (index) {
+                                  context.read<RekapPresensiBloc>().add(
+                                        ChangeBulanRekapPresensiEvent(index),
+                                      );
+                                },
+                              ),
                               const SizedBox(height: 14),
 
-                              // Row mini summary (Dinamis dari BLoC State)
+                              // Row mini summary (Dinamis dari BLoC State per Bulan)
                               Row(
                                 children: [
                                   Expanded(
                                     child: SummaryMiniCard(
                                       title: 'Transport',
-                                      value: state.totalTransport,
+                                      value: currentBulan.totalTransport,
                                       unit: 'Rupiah',
                                       iconBgColor: const Color(0x142B86C3),
                                       iconColor: const Color(0xFF2B86C3),
@@ -167,7 +208,7 @@ class RekapPresensiView extends StatelessWidget {
                                   Expanded(
                                     child: SummaryMiniCard(
                                       title: 'Total jam',
-                                      value: state.totalJam,
+                                      value: currentBulan.totalJam,
                                       unit: 'jam: menit',
                                       iconBgColor: const Color(0x142B86C3),
                                       iconColor: const Color(0xFF2B86C3),
@@ -198,15 +239,15 @@ class RekapPresensiView extends StatelessWidget {
                               ),
                               const SizedBox(height: 14),
 
-                              // List rekap log presensi (Dynamic Looping)
+                              // List rekap log presensi (Dinamis BLoC per Bulan)
                               ListView.separated(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: state.logs.length,
+                                itemCount: currentBulan.logs.length,
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(height: 12),
                                 itemBuilder: (context, index) {
-                                  final log = state.logs[index];
+                                  final log = currentBulan.logs[index];
                                   return RekapLogItem(
                                     log: log,
                                     onTap: () {
@@ -236,8 +277,8 @@ class RekapPresensiView extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

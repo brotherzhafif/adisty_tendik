@@ -8,8 +8,24 @@ import '../../data/models/skp_model.dart';
 typedef SkpIndicatorData = SkpIndicatorModel;
 
 // ============================================================
+// THEME PALETTE FOR SKP CATEGORIES (MODULUS BASED DYNAMIC COLORING)
+// ============================================================
+class SkpThemePalette {
+  final Color themeColor;
+  final Color bannerBgColor;
+  final Color summaryBorderColor;
+
+  const SkpThemePalette({
+    required this.themeColor,
+    required this.bannerBgColor,
+    required this.summaryBorderColor,
+  });
+}
+
+// ============================================================
 // WIDGET: Card Kategori SKP (AIK / Tugas Umum / Penunjang)
 // Menampilkan tabel indikator nilai dan ringkasan skor akhir.
+// Menggunakan logic modulus index untuk mewarnai card secara dinamis.
 // ============================================================
 class SkpCategoryCard extends StatelessWidget {
   final String title;
@@ -18,9 +34,28 @@ class SkpCategoryCard extends StatelessWidget {
   final List<SkpIndicatorData> indicators;
   final double totalScore;
   final String summaryTitle;
-  final Color themeColor;
-  final Color bannerBgColor;
-  final Color summaryBorderColor;
+  final int categoryIndex;
+  final Color? themeColor;
+  final Color? bannerBgColor;
+  final Color? summaryBorderColor;
+
+  static const List<SkpThemePalette> _palettes = [
+    SkpThemePalette(
+      themeColor: Color(0xFF2B86C3),
+      bannerBgColor: Color(0x192B86C3),
+      summaryBorderColor: Color(0xFF0067AD),
+    ),
+    SkpThemePalette(
+      themeColor: Color(0xFF4AAF57),
+      bannerBgColor: Color(0x194AAF57),
+      summaryBorderColor: Color(0xF54AAF57),
+    ),
+    SkpThemePalette(
+      themeColor: Color(0xFFFFAC2F),
+      bannerBgColor: Color(0x19FFAC2F),
+      summaryBorderColor: Color(0x19FFAC2F),
+    ),
+  ];
 
   const SkpCategoryCard({
     super.key,
@@ -30,13 +65,21 @@ class SkpCategoryCard extends StatelessWidget {
     required this.indicators,
     required this.totalScore,
     required this.summaryTitle,
-    required this.themeColor,
-    required this.bannerBgColor,
-    required this.summaryBorderColor,
+    this.categoryIndex = 0,
+    this.themeColor,
+    this.bannerBgColor,
+    this.summaryBorderColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Dynamic palette selection via modulus
+    final palette = _palettes[categoryIndex.abs() % _palettes.length];
+    final Color effectiveThemeColor = themeColor ?? palette.themeColor;
+    final Color effectiveBannerBgColor = bannerBgColor ?? palette.bannerBgColor;
+    final Color effectiveSummaryBorderColor =
+        summaryBorderColor ?? palette.summaryBorderColor;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -84,7 +127,7 @@ class SkpCategoryCard extends StatelessWidget {
                     horizontal: 8,
                     vertical: 2,
                   ),
-                  decoration: BoxDecoration(color: bannerBgColor),
+                  decoration: BoxDecoration(color: effectiveBannerBgColor),
                   child: Row(
                     children: [
                       Text(
@@ -97,7 +140,7 @@ class SkpCategoryCard extends StatelessWidget {
                       ),
                       Text(
                         weight,
-                        style: AppTextStyle.bodySm.copyWith(color: themeColor),
+                        style: AppTextStyle.bodySm.copyWith(color: effectiveThemeColor),
                       ),
                     ],
                   ),
@@ -109,7 +152,7 @@ class SkpCategoryCard extends StatelessWidget {
                     horizontal: 8,
                     vertical: 2,
                   ),
-                  decoration: BoxDecoration(color: bannerBgColor),
+                  decoration: BoxDecoration(color: effectiveBannerBgColor),
                   child: Text(
                     subTitle,
                     style: const TextStyle(
@@ -131,8 +174,8 @@ class SkpCategoryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header Row: Indikator & Skor (0-100)
-              Padding(
-                padding: const EdgeInsets.only(left: 2, right: 10, bottom: 8),
+              const Padding(
+                padding: EdgeInsets.only(left: 2, right: 10, bottom: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -165,7 +208,7 @@ class SkpCategoryCard extends StatelessWidget {
                 width: double.infinity,
                 clipBehavior: Clip.antiAlias,
                 decoration: ShapeDecoration(
-                  color: bannerBgColor,
+                  color: effectiveBannerBgColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -204,7 +247,7 @@ class SkpCategoryCard extends StatelessWidget {
                             child: Text(
                               indicator.score.toStringAsFixed(2),
                               style: AppTextStyle.bodyMd.copyWith(
-                                color: themeColor,
+                                color: effectiveThemeColor,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Nunito',
                               ),
@@ -225,9 +268,9 @@ class SkpCategoryCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
             decoration: ShapeDecoration(
-              color: bannerBgColor,
+              color: effectiveBannerBgColor,
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: summaryBorderColor),
+                side: BorderSide(width: 1, color: effectiveSummaryBorderColor),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -253,7 +296,7 @@ class SkpCategoryCard extends StatelessWidget {
                       TextSpan(
                         text: totalScore.toStringAsFixed(2),
                         style: TextStyle(
-                          color: themeColor,
+                          color: effectiveThemeColor,
                           fontSize: 24,
                           fontFamily: 'Nunito',
                           fontWeight: FontWeight.w700,

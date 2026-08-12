@@ -83,30 +83,6 @@ class PresensiCard extends StatelessWidget {
           ],
         );
 
-      // ── State: Shift 1 Selesai ─────────────────────────────
-      case PresensiState.shift1Selesai:
-        return Row(
-          children: [
-            Expanded(
-              child: _PresensiBox(
-                label: 'Shift 1 (Selesai)',
-                labelColor: const Color(0xFF18C079),
-                jam: '06:45 - 14.00',
-                iconPath: 'assets/icons/(home_page)_masuk-icon.svg',
-              ),
-            ),
-            _separator(),
-            Expanded(
-              child: _PresensiBox(
-                label: 'Shift 2 (Berikutnya)',
-                labelColor: const Color(0xFF0067AD),
-                jam: '14.00 - 19.00',
-                iconPath: 'assets/icons/(home_page)_keluar-icon.svg',
-              ),
-            ),
-          ],
-        );
-
       // ── State: Pulang ──────────────────────────────────────
       case PresensiState.pulang:
         return Row(

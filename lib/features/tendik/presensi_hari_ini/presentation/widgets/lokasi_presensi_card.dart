@@ -84,7 +84,7 @@ class LokasiPresensiCard extends StatelessWidget {
                 initialCenter: locationPoint,
                 initialZoom: 16.0,
                 interactionOptions: const InteractionOptions(
-                  flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                  flags: InteractiveFlag.none,
                 ),
               ),
               children: [

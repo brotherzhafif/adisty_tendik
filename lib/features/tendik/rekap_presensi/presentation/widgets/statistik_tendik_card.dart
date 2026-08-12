@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import '../../data/models/rekap_presensi_model.dart';
 
 // ============================================================
 // KOMPONEN: CARD STATISTIK TENDIK (dengan swipe & tombol ganti bulan)
 // ============================================================
 class StatistikTendikCard extends StatefulWidget {
-  const StatistikTendikCard({super.key});
+  final List<RekapBulanDataModel> dataBulan;
+  final int bulanIndex;
+  final ValueChanged<int> onBulanChanged;
+
+  const StatistikTendikCard({
+    super.key,
+    required this.dataBulan,
+    required this.bulanIndex,
+    required this.onBulanChanged,
+  });
 
   @override
   State<StatistikTendikCard> createState() => _StatistikTendikCardState();
@@ -13,75 +23,8 @@ class StatistikTendikCard extends StatefulWidget {
 
 class _StatistikTendikCardState extends State<StatistikTendikCard>
     with SingleTickerProviderStateMixin {
-  // Bulan & tahun aktif (default: Oktober 2026)
-  int _month = 10;
-  int _year = 2026;
-
-  // Arah slide untuk AnimatedSwitcher
   bool _slideLeft = true;
-
-  // AnimationController untuk micro-animation
   late AnimationController _animController;
-
-  final List<String> _monthNames = const [
-    'Januari',
-    'Februari',
-    'Maret',
-    'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Agustus',
-    'September',
-    'Oktober',
-    'November',
-    'Desember',
-  ];
-
-  // ---- Mock data per bulan (key: "mm-yyyy") ----
-  // Dalam proyek nyata ini diambil dari BLoC/API
-  Map<String, _MonthData> get _mockData => {
-    '10-2026': const _MonthData(
-      totalHariKerja: 20,
-      persentase: 90,
-      onTime: 12,
-      late: 3,
-      absen: 2,
-    ),
-    '09-2026': const _MonthData(
-      totalHariKerja: 22,
-      persentase: 86,
-      onTime: 14,
-      late: 4,
-      absen: 3,
-    ),
-    '08-2026': const _MonthData(
-      totalHariKerja: 21,
-      persentase: 95,
-      onTime: 18,
-      late: 2,
-      absen: 1,
-    ),
-    '11-2026': const _MonthData(
-      totalHariKerja: 19,
-      persentase: 78,
-      onTime: 10,
-      late: 5,
-      absen: 4,
-    ),
-  };
-
-  _MonthData get _currentData {
-    final key = '$_month-$_year';
-    return _mockData[key] ??
-        _MonthData(
-          totalHariKerja: 20,
-          persentase: 0,
-          onTime: 0,
-          late: 0,
-          absen: 0,
-        );
-  }
 
   @override
   void initState() {
@@ -93,48 +36,63 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
   }
 
   @override
+  void didUpdateWidget(covariant StatistikTendikCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.bulanIndex != oldWidget.bulanIndex) {
+      _slideLeft = widget.bulanIndex < oldWidget.bulanIndex;
+      _animController.forward(from: 0);
+    }
+  }
+
+  @override
   void dispose() {
     _animController.dispose();
     super.dispose();
   }
 
-  void _changeMonth(bool toPrev) {
-    _slideLeft = toPrev;
+  bool _canGoNext() {
+    return widget.bulanIndex < widget.dataBulan.length - 1;
+  }
 
-    setState(() {
-      if (toPrev) {
-        _month--;
-        if (_month < 1) {
-          _month = 12;
-          _year--;
-        }
-      } else {
-        _month++;
-        if (_month > 12) {
-          _month = 1;
-          _year++;
-        }
-      }
-    });
-
-    // Jalankan micro-animation
-    _animController.forward(from: 0);
+  bool _canGoPrev() {
+    return widget.bulanIndex > 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    final data = _currentData;
-    final monthLabel = '${_monthNames[_month - 1]} $_year';
+    final bulanAktif = widget.dataBulan.isNotEmpty &&
+            widget.bulanIndex >= 0 &&
+            widget.bulanIndex < widget.dataBulan.length
+        ? widget.dataBulan[widget.bulanIndex]
+        : const RekapBulanDataModel(
+            labelBulan: 'Oktober 2026',
+            month: 10,
+            year: 2026,
+            totalHariKerja: 0,
+            persentase: 0,
+            onTime: 0,
+            late: 0,
+            absen: 0,
+            totalTransport: '0',
+            totalJam: '00:00',
+            logs: [],
+          );
+
+    final bool canGoNext = _canGoNext();
+    final bool canGoPrev = _canGoPrev();
 
     return GestureDetector(
-      // ---- Evaluasi saat drag selesai ----
+      behavior: HitTestBehavior.translucent,
       onHorizontalDragEnd: (details) {
         final dx = details.velocity.pixelsPerSecond.dx;
-        // Prioritaskan velocity; fallback ke posisi delta
         if (dx < -300) {
-          _changeMonth(false); // swipe kiri → bulan berikutnya
+          if (canGoNext) {
+            widget.onBulanChanged(widget.bulanIndex + 1);
+          }
         } else if (dx > 300) {
-          _changeMonth(true); // swipe kanan → bulan sebelumnya
+          if (canGoPrev) {
+            widget.onBulanChanged(widget.bulanIndex - 1);
+          }
         }
       },
       child: AnimatedBuilder(
@@ -163,7 +121,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // ---- Judul ----
-              Text(
+              const Text(
                 'Statistik Tendik',
                 style: TextStyle(
                   color: Color(0xFFF6F7F7),
@@ -183,39 +141,51 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
                   IconButton(
                     icon: const Icon(
                       Icons.chevron_left,
-                      color: Colors.white,
                       size: 28,
                     ),
-                    onPressed: () => _changeMonth(true),
+                    color: canGoPrev
+                        ? Colors.white
+                        : const Color(0x66FFFFFF),
+                    onPressed: canGoPrev
+                        ? () => widget.onBulanChanged(widget.bulanIndex - 1)
+                        : null,
                   ),
 
                   // Label bulan dengan animasi slide
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 280),
-                    transitionBuilder: (child, animation) {
-                      final offset = _slideLeft
-                          ? const Offset(-0.4, 0)
-                          : const Offset(0.4, 0);
-                      return SlideTransition(
-                        position: Tween<Offset>(begin: offset, end: Offset.zero)
-                            .animate(
-                              CurvedAnimation(
-                                parent: animation,
-                                curve: Curves.easeOutCubic,
-                              ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 36,
+                      child: Center(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 280),
+                          transitionBuilder: (child, animation) {
+                            final offset = _slideLeft
+                                ? const Offset(-0.4, 0)
+                                : const Offset(0.4, 0);
+                            return SlideTransition(
+                              position: Tween<Offset>(begin: offset, end: Offset.zero)
+                                  .animate(
+                                    CurvedAnimation(
+                                      parent: animation,
+                                      curve: Curves.easeOutCubic,
+                                    ),
+                                  ),
+                              child: FadeTransition(opacity: animation, child: child),
+                            );
+                          },
+                          child: Text(
+                            bulanAktif.labelBulan,
+                            key: ValueKey(bulanAktif.labelBulan),
+                            style: const TextStyle(
+                              color: Color(0xFFF6F7F7),
+                              fontSize: 22,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.46,
                             ),
-                        child: FadeTransition(opacity: animation, child: child),
-                      );
-                    },
-                    child: Text(
-                      monthLabel,
-                      key: ValueKey(monthLabel),
-                      style: const TextStyle(
-                        color: Color(0xFFF6F7F7),
-                        fontSize: 23,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.46,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -224,17 +194,21 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
                   IconButton(
                     icon: const Icon(
                       Icons.chevron_right,
-                      color: Colors.white,
                       size: 28,
                     ),
-                    onPressed: () => _changeMonth(false),
+                    color: canGoNext
+                        ? Colors.white
+                        : const Color(0x66FFFFFF),
+                    onPressed: canGoNext
+                        ? () => widget.onBulanChanged(widget.bulanIndex + 1)
+                        : null,
                   ),
                 ],
               ),
               const SizedBox(height: 4),
 
               // ---- Hint swipe ----
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.info_outline, color: Color(0xFFF6F7F7), size: 14),
@@ -255,7 +229,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
               // ---- Statistik utama ----
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 280),
-                child: _buildStats(data, key: ValueKey('$_month-$_year')),
+                child: _buildStats(bulanAktif, key: ValueKey(bulanAktif.labelBulan)),
               ),
             ],
           ),
@@ -264,7 +238,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
     );
   }
 
-  Widget _buildStats(_MonthData data, {Key? key}) {
+  Widget _buildStats(RekapBulanDataModel data, {Key? key}) {
     final total = data.onTime + data.late + data.absen;
 
     return Column(
@@ -276,7 +250,7 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Total hari kerja',
                   style: TextStyle(
                     color: Colors.white,
@@ -392,21 +366,4 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
       ],
     );
   }
-}
-
-// ---- Model data per bulan ----
-class _MonthData {
-  final int totalHariKerja;
-  final int persentase;
-  final int onTime;
-  final int late;
-  final int absen;
-
-  const _MonthData({
-    required this.totalHariKerja,
-    required this.persentase,
-    required this.onTime,
-    required this.late,
-    required this.absen,
-  });
 }

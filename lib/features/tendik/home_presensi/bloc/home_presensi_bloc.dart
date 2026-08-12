@@ -73,9 +73,6 @@ class HomePresensiBloc extends Bloc<HomePresensiEvent, HomePresensiState> {
 
       switch (currentState.presensiState) {
         case PresensiState.belumPresensi:
-          nextState = PresensiState.shift1Selesai;
-          break;
-        case PresensiState.shift1Selesai:
           nextState = PresensiState.pulang;
           break;
         case PresensiState.pulang:

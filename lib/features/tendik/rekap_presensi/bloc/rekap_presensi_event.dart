@@ -16,3 +16,13 @@ class FetchRekapPresensiEvent extends RekapPresensiEvent {
 class RefreshRekapPresensiEvent extends RekapPresensiEvent {
   const RefreshRekapPresensiEvent();
 }
+
+/// Event untuk mengganti bulan/tahun rekap presensi yang dipilih
+class ChangeBulanRekapPresensiEvent extends RekapPresensiEvent {
+  final int index;
+
+  const ChangeBulanRekapPresensiEvent(this.index);
+
+  @override
+  List<Object?> get props => [index];
+}

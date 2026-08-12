@@ -40,18 +40,33 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
     }
   }
 
+  bool _canGoNext() {
+    if (widget.activeYearIndex >= widget.years.length - 1) return false;
+    final String nextYearStr = widget.years[widget.activeYearIndex + 1];
+    final int? nextYear = int.tryParse(nextYearStr);
+    if (nextYear != null && nextYear > DateTime.now().year) return false;
+    return true;
+  }
+
+  bool _canGoPrev() {
+    return widget.activeYearIndex > 0;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool canGoNext = _canGoNext();
+    final bool canGoPrev = _canGoPrev();
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onHorizontalDragEnd: (details) {
         final dx = details.velocity.pixelsPerSecond.dx;
         if (dx < -300) {
-          if (widget.activeYearIndex < widget.years.length - 1) {
+          if (canGoNext) {
             widget.onYearChanged(widget.activeYearIndex + 1);
           }
         } else if (dx > 300) {
-          if (widget.activeYearIndex > 0) {
+          if (canGoPrev) {
             widget.onYearChanged(widget.activeYearIndex - 1);
           }
         }
@@ -208,12 +223,14 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.chevron_left_rounded,
-                    color: Color(0xFF293241),
+                    color: canGoPrev
+                        ? const Color(0xFF293241)
+                        : const Color(0xFFCCCED1),
                     size: 24,
                   ),
-                  onPressed: widget.activeYearIndex > 0
+                  onPressed: canGoPrev
                       ? () => widget.onYearChanged(widget.activeYearIndex - 1)
                       : null,
                 ),
@@ -262,16 +279,18 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                // Panah Kanan
+                // Panah Kanan (di-hide / disabled jika canGoNext == false)
                 IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.chevron_right_rounded,
-                    color: Color(0xFF293241),
+                    color: canGoNext
+                        ? const Color(0xFF293241)
+                        : const Color(0xFFCCCED1),
                     size: 24,
                   ),
-                  onPressed: widget.activeYearIndex < widget.years.length - 1
+                  onPressed: canGoNext
                       ? () => widget.onYearChanged(widget.activeYearIndex + 1)
                       : null,
                 ),

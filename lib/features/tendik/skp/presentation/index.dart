@@ -169,9 +169,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                                 indicators: yearData.aikIndicators,
                                 totalScore: yearData.aikScore,
                                 summaryTitle: 'SKOR Pengamalan AIK',
-                                themeColor: const Color(0xFF2B86C3),
-                                bannerBgColor: const Color(0x192B86C3),
-                                summaryBorderColor: const Color(0xFF0067AD),
+                                categoryIndex: 0,
                               ),
                               const SizedBox(height: 14),
 
@@ -184,9 +182,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                                 indicators: yearData.tugasUmumIndicators,
                                 totalScore: yearData.tugasUmumScore,
                                 summaryTitle: 'SKOR Tugas Utama',
-                                themeColor: const Color(0xFF4AAF57),
-                                bannerBgColor: const Color(0x194AAF57),
-                                summaryBorderColor: const Color(0xF54AAF57),
+                                categoryIndex: 1,
                               ),
                               const SizedBox(height: 14),
 
@@ -199,9 +195,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                                 indicators: yearData.penunjangIndicators,
                                 totalScore: yearData.penunjangScore,
                                 summaryTitle: 'SKOR Penunjang',
-                                themeColor: const Color(0xFFFFAC2F),
-                                bannerBgColor: const Color(0x19FFAC2F),
-                                summaryBorderColor: const Color(0x19FFAC2F),
+                                categoryIndex: 2,
                               ),
                               const SizedBox(height: 14),
 

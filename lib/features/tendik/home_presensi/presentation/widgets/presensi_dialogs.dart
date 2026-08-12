@@ -464,3 +464,160 @@ class DialogPresensiBerhasil extends StatelessWidget {
     );
   }
 }
+
+// ============================================================
+// DIALOG: PRESENSI MASUK BERHASIL
+// ============================================================
+class DialogPresensiMasukBerhasil extends StatelessWidget {
+  final VoidCallback? onConfirmed;
+  const DialogPresensiMasukBerhasil({super.key, this.onConfirmed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 296,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              spacing: 16,
+              children: [
+                Container(
+                  width: 260,
+                  height: 173,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/(presensi)_presensi_masuk_berhasil.png',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          spacing: 9,
+                          children: [
+                            const SizedBox(
+                              width: 280,
+                              child: Text(
+                                'Presensi Masuk Berhasil!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.50,
+                                  letterSpacing: -0.18,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 234,
+                              child: Text(
+                                'Semangat bekerja hari ini, Semoga aktivitasmu berjalan lancar dan produktif.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.33,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    onConfirmed?.call();
+                  },
+                  child: Container(
+                    width: 235,
+                    height: 48,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 9,
+                      children: [
+                        Container(
+                          width: 224,
+                          height: 48,
+                          padding: const EdgeInsets.all(6),
+                          decoration: ShapeDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment(0.50, 1.00),
+                              end: Alignment(0.50, 0.00),
+                              colors: [Color(0xFF4AAF57), Color(0xFF49C95A)],
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 10,
+                            children: [
+                              SizedBox(
+                                width: 212,
+                                child: Text(
+                                  'Ok',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.44,
+                                    letterSpacing: -0.25,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

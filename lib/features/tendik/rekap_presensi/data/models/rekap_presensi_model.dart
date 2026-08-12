@@ -97,27 +97,51 @@ class PresensiLogModel extends Equatable {
 }
 
 // ============================================================
-// DATA MODEL: REKAP PRESENSI RESPONSE MODEL
+// DATA MODEL: REKAP BULAN DATA MODEL
 // ============================================================
-class RekapPresensiResponseModel extends Equatable {
-  final String status;
-  final String message;
+class RekapBulanDataModel extends Equatable {
+  final String labelBulan;
+  final int month;
+  final int year;
+  final int totalHariKerja;
+  final int persentase;
+  final int onTime;
+  final int late;
+  final int absen;
   final String totalTransport;
   final String totalJam;
   final List<PresensiLogModel> logs;
 
-  const RekapPresensiResponseModel({
-    required this.status,
-    required this.message,
+  const RekapBulanDataModel({
+    required this.labelBulan,
+    required this.month,
+    required this.year,
+    required this.totalHariKerja,
+    required this.persentase,
+    required this.onTime,
+    required this.late,
+    required this.absen,
     required this.totalTransport,
     required this.totalJam,
     required this.logs,
   });
 
-  factory RekapPresensiResponseModel.fromJson(Map<String, dynamic> json) {
-    return RekapPresensiResponseModel(
-      status: json['status'] as String? ?? '',
-      message: json['message'] as String? ?? '',
+  bool isAfterDate(DateTime date) {
+    if (year > date.year) return true;
+    if (year == date.year && month > date.month) return true;
+    return false;
+  }
+
+  factory RekapBulanDataModel.fromJson(Map<String, dynamic> json) {
+    return RekapBulanDataModel(
+      labelBulan: json['label_bulan'] as String? ?? '',
+      month: (json['month'] as num?)?.toInt() ?? 10,
+      year: (json['year'] as num?)?.toInt() ?? 2026,
+      totalHariKerja: (json['total_hari_kerja'] as num?)?.toInt() ?? 20,
+      persentase: (json['persentase'] as num?)?.toInt() ?? 90,
+      onTime: (json['on_time'] as num?)?.toInt() ?? 12,
+      late: (json['late'] as num?)?.toInt() ?? 3,
+      absen: (json['absen'] as num?)?.toInt() ?? 2,
       totalTransport: json['total_transport'] as String? ?? '0',
       totalJam: json['total_jam'] as String? ?? '00:00',
       logs: (json['logs'] as List<dynamic>?)
@@ -129,8 +153,14 @@ class RekapPresensiResponseModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'status': status,
-      'message': message,
+      'label_bulan': labelBulan,
+      'month': month,
+      'year': year,
+      'total_hari_kerja': totalHariKerja,
+      'persentase': persentase,
+      'on_time': onTime,
+      'late': late,
+      'absen': absen,
       'total_transport': totalTransport,
       'total_jam': totalJam,
       'logs': logs.map((e) => e.toJson()).toList(),
@@ -138,5 +168,78 @@ class RekapPresensiResponseModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, message, totalTransport, totalJam, logs];
+  List<Object?> get props => [
+        labelBulan,
+        month,
+        year,
+        totalHariKerja,
+        persentase,
+        onTime,
+        late,
+        absen,
+        totalTransport,
+        totalJam,
+        logs,
+      ];
+}
+
+// ============================================================
+// DATA MODEL: REKAP PRESENSI RESPONSE MODEL
+// ============================================================
+class RekapPresensiResponseModel extends Equatable {
+  final String status;
+  final String message;
+  final List<RekapBulanDataModel> dataBulan;
+
+  const RekapPresensiResponseModel({
+    required this.status,
+    required this.message,
+    required this.dataBulan,
+  });
+
+  factory RekapPresensiResponseModel.fromJson(Map<String, dynamic> json) {
+    List<RekapBulanDataModel> parsedBulan = [];
+    if (json.containsKey('data_bulan') && json['data_bulan'] is List) {
+      parsedBulan = (json['data_bulan'] as List<dynamic>)
+          .map((e) => RekapBulanDataModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } else {
+      final logs = (json['logs'] as List<dynamic>?)
+              ?.map((e) => PresensiLogModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [];
+      parsedBulan = [
+        RekapBulanDataModel(
+          labelBulan: 'Oktober 2026',
+          month: 10,
+          year: 2026,
+          totalHariKerja: 20,
+          persentase: 90,
+          onTime: 12,
+          late: 3,
+          absen: 2,
+          totalTransport: json['total_transport'] as String? ?? '450.000',
+          totalJam: json['total_jam'] as String? ?? '150:00',
+          logs: logs,
+        ),
+      ];
+    }
+
+    return RekapPresensiResponseModel(
+      status: json['status'] as String? ?? '',
+      message: json['message'] as String? ?? '',
+      dataBulan: parsedBulan,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'message': message,
+      'data_bulan': dataBulan.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  @override
+  List<Object?> get props => [status, message, dataBulan];
 }

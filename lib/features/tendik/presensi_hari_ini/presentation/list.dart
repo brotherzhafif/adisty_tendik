@@ -291,9 +291,7 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
   }
 
   bool _canGoNext() {
-    if (_currentIndex >= _daftarBulanDummy.length - 1) return false;
-    final nextBulan = _daftarBulanDummy[_currentIndex + 1];
-    return !nextBulan.isAfterDate(DateTime.now());
+    return _currentIndex < _daftarBulanDummy.length - 1;
   }
 
   @override
@@ -446,24 +444,20 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
                         ),
                       ),
 
-                      // Panah Kanan (Sembunyi jika melebihi bulan/tahun saat ini)
-                      Visibility(
-                        visible: canGoNext,
-                        maintainSize: true,
-                        maintainAnimation: true,
-                        maintainState: true,
-                        child: IconButton(
-                          icon: const Icon(Icons.chevron_right_rounded, size: 24),
-                          color: const Color(0xFF293241),
-                          onPressed: canGoNext
-                              ? () {
-                                  setState(() {
-                                    _slideLeft = true;
-                                    _currentIndex++;
-                                  });
-                                }
-                              : null,
-                        ),
+                      // Panah Kanan (Disabled jika di bulan terakhir)
+                      IconButton(
+                        icon: const Icon(Icons.chevron_right_rounded, size: 24),
+                        color: canGoNext
+                            ? const Color(0xFF293241)
+                            : const Color(0xFFCCCED1),
+                        onPressed: canGoNext
+                            ? () {
+                                setState(() {
+                                  _slideLeft = true;
+                                  _currentIndex++;
+                                });
+                              }
+                            : null,
                       ),
                     ],
                   ),

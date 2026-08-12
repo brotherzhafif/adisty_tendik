@@ -46,7 +46,7 @@ class LayananAdistySection extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 16,
+              spacing: 12,
               children: [
                 // Card Agenda → navigasi ke Rekap Presensi
                 LayananCard(
@@ -174,7 +174,7 @@ class LayananCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
           color: Colors.white,
@@ -184,12 +184,12 @@ class LayananCard extends StatelessWidget {
           shadows: _cardShadows,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Gambar utama (kiri)
             Container(
-              width: 99,
-              height: 95,
+              width: 78,
+              height: 78,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(imagePath),
@@ -197,7 +197,7 @@ class LayananCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             // Teks: judul, deskripsi & tombol (kanan)
             Expanded(
               child: Column(
@@ -208,28 +208,29 @@ class LayananCard extends StatelessWidget {
                     title,
                     style: AppTextStyle.buttonLg.copyWith(
                       color: const Color(0xFF293241),
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Text(
                     description,
                     style: AppTextStyle.inputHint.copyWith(
                       color: const Color(0xFF5F6570),
+                      fontSize: 12,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: onTap,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                          horizontal: 12,
+                          vertical: 6,
                         ),
                         decoration: ShapeDecoration(
                           color: const Color(0xFF2B86C3),
@@ -240,7 +241,10 @@ class LayananCard extends StatelessWidget {
                         child: Text(
                           'Selengkapnya',
                           textAlign: TextAlign.center,
-                          style: AppTextStyle.bodyMd.copyWith(color: Colors.white),
+                          style: AppTextStyle.bodySm.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),

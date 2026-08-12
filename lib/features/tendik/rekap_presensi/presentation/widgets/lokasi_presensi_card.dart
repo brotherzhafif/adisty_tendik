@@ -31,9 +31,7 @@ class LokasiPresensiCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x087281DF),
@@ -76,21 +74,18 @@ class LokasiPresensiCard extends StatelessWidget {
             width: double.infinity,
             height: 169,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: FlutterMap(
               options: MapOptions(
                 initialCenter: locationPoint,
                 initialZoom: 16.0,
                 interactionOptions: const InteractionOptions(
-                  flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                  flags: InteractiveFlag.none,
                 ),
               ),
               children: [
                 TileLayer(
-                  urlTemplate:
-                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'com.uad.adisty_tendik',
                 ),
                 MarkerLayer(
@@ -133,10 +128,7 @@ class LokasiPresensiCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             decoration: const BoxDecoration(
               border: Border(
-                bottom: BorderSide(
-                  width: 0.50,
-                  color: Color(0xFFE0E0E0),
-                ),
+                bottom: BorderSide(width: 0.50, color: Color(0xFFE0E0E0)),
               ),
             ),
             child: Row(

@@ -29,8 +29,6 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
     switch (widget.state) {
       case PresensiState.belumPresensi:
         return 'Masuk';
-      case PresensiState.shift1Selesai:
-        return 'Lanjut Shift';
       case PresensiState.pulang:
         return 'Pulang';
     }
@@ -40,8 +38,6 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
     switch (widget.state) {
       case PresensiState.belumPresensi:
         return const [Color(0xFF4AAF57), Color(0xFF49C95A)];
-      case PresensiState.shift1Selesai:
-        return const [Color(0xFF0067AD), Color(0xFF4497D0)];
       case PresensiState.pulang:
         return const [Color(0xFFFFAC2F), Color(0xFFFFC268)];
     }
@@ -83,7 +79,14 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
           ),
         );
       } else {
-        widget.onAdvanceState?.call();
+        showDialog(
+          context: context,
+          builder: (context) => DialogPresensiMasukBerhasil(
+            onConfirmed: () {
+              widget.onAdvanceState?.call();
+            },
+          ),
+        );
       }
     } finally {
       if (mounted) setState(() => _isValidating = false);

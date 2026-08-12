@@ -296,9 +296,7 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
   }
 
   bool _canGoNext() {
-    if (widget.bulanIndex >= widget.dataBulan.length - 1) return false;
-    final nextBulan = widget.dataBulan[widget.bulanIndex + 1];
-    return !nextBulan.isAfterDate(DateTime.now());
+    return widget.bulanIndex < widget.dataBulan.length - 1;
   }
 
   @override
@@ -433,19 +431,15 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                   ),
                 ),
 
-                // Panah Kanan (Sembunyi jika bulan/tahun berikutnya melebihi bulan/tahun saat ini)
-                Visibility(
-                  visible: canGoNext,
-                  maintainSize: true,
-                  maintainAnimation: true,
-                  maintainState: true,
-                  child: IconButton(
-                    icon: const Icon(Icons.chevron_right_rounded, size: 24),
-                    color: const Color(0xFF293241),
-                    onPressed: canGoNext
-                        ? () => widget.onBulanChanged(widget.bulanIndex + 1)
-                        : null,
-                  ),
+                // Panah Kanan (Disabled jika di bulan terakhir)
+                IconButton(
+                  icon: const Icon(Icons.chevron_right_rounded, size: 24),
+                  color: canGoNext
+                      ? const Color(0xFF293241)
+                      : const Color(0xFFCCCED1),
+                  onPressed: canGoNext
+                      ? () => widget.onBulanChanged(widget.bulanIndex + 1)
+                      : null,
                 ),
               ],
             ),

@@ -846,22 +846,29 @@ class RiwayatKoreksiDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _AppColors.primary,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const Padding(
+      body: Column(
+        children: [
+          SafeArea(
+            bottom: false,
+            child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: _KoreksiAppBar(title: 'Detail Pengajuan Koreksi'),
             ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: _AppColors.background,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(34),
-                    topRight: Radius.circular(34),
-                  ),
+          ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: _AppColors.background,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
                 ),
                 child: ListView(
                   padding: const EdgeInsets.all(22),
@@ -887,8 +894,8 @@ class RiwayatKoreksiDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

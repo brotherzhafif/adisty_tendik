@@ -36,32 +36,63 @@ class RekapPresensiDetailPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text('Detail Presensi', style: AppTextStyle.headingXl),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const ShapeDecoration(
-                  color: Color(0xFFF6F7F9),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(34),
-                      topRight: Radius.circular(34),
+      body: Column(
+        children: [
+          // --- Header Biru (AppBar Statis Menyatu dengan Blue Background) ---
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2B86C3),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.of(context).maybePop(),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
                     ),
+                    Expanded(
+                      child: Text(
+                        'Detail Presensi',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.headingXl,
+                      ),
+                    ),
+                    const SizedBox(width: 40),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // --- Konten Utama (Rounded Top Container + ClipRRect) ---
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: const ShapeDecoration(
+                color: Color(0xFFF6F7F9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(34),
+                    topRight: Radius.circular(34),
                   ),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
                 ),
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
@@ -349,8 +380,8 @@ class RekapPresensiDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
