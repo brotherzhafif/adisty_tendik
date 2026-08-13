@@ -303,218 +303,269 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Riwayat Pengajuan',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color(0xFFF6F7F9),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(34),
-            topRight: Radius.circular(34),
-          ),
-        ),
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onHorizontalDragEnd: (details) {
-            final dx = details.velocity.pixelsPerSecond.dx;
-            if (dx < -300) {
-              if (canGoNext) {
-                setState(() {
-                  _slideLeft = true;
-                  _currentIndex++;
-                });
-              }
-            } else if (dx > 300) {
-              if (_currentIndex > 0) {
-                setState(() {
-                  _slideLeft = false;
-                  _currentIndex--;
-                });
-              }
-            }
-          },
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // --- Card Selector Bulan & Tahun ---
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2B86C3),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.of(context).maybePop(),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
                     ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x087281DF),
-                        blurRadius: 4.11,
-                        offset: Offset(0, 0.52),
+                    const Expanded(
+                      child: Text(
+                        'Riwayat Pengajuan',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                      BoxShadow(
-                        color: Color(0x0C7281DF),
-                        blurRadius: 6.99,
-                        offset: Offset(0, 1.78),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Panah Kiri
-                      IconButton(
-                        icon: const Icon(Icons.chevron_left_rounded, size: 24),
-                        color: _currentIndex > 0
-                            ? const Color(0xFF293241)
-                            : const Color(0xFFCCCED1),
-                        onPressed: _currentIndex > 0
-                            ? () {
-                                setState(() {
-                                  _slideLeft = false;
-                                  _currentIndex--;
-                                });
-                              }
-                            : null,
-                      ),
+                    ),
+                    const SizedBox(width: 40),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF6F7F9),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
+                ),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onHorizontalDragEnd: (details) {
+                    final dx = details.velocity.pixelsPerSecond.dx;
+                    if (dx < -300) {
+                      if (canGoNext) {
+                        setState(() {
+                          _slideLeft = true;
+                          _currentIndex++;
+                        });
+                      }
+                    } else if (dx > 300) {
+                      if (_currentIndex > 0) {
+                        setState(() {
+                          _slideLeft = false;
+                          _currentIndex--;
+                        });
+                      }
+                    }
+                  },
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 24,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // --- Card Selector Bulan & Tahun ---
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x087281DF),
+                                blurRadius: 4.11,
+                                offset: Offset(0, 0.52),
+                              ),
+                              BoxShadow(
+                                color: Color(0x0C7281DF),
+                                blurRadius: 6.99,
+                                offset: Offset(0, 1.78),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Panah Kiri
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.chevron_left_rounded,
+                                  size: 24,
+                                ),
+                                color: _currentIndex > 0
+                                    ? const Color(0xFF293241)
+                                    : const Color(0xFFCCCED1),
+                                onPressed: _currentIndex > 0
+                                    ? () {
+                                        setState(() {
+                                          _slideLeft = false;
+                                          _currentIndex--;
+                                        });
+                                      }
+                                    : null,
+                              ),
 
-                      // Teks Bulan & Tahun (AnimatedSwitcher & Search Picker Modal)
-                      Expanded(
-                        child: InkWell(
-                          onTap: () async {
-                            final listBulanLabels = _daftarBulanDummy
-                                .map((b) => b.labelBulan)
-                                .toList();
-                            final selectedIndex =
-                                await SearchablePickerModal.show(
-                                  context,
-                                  items: listBulanLabels,
-                                  selectedItem: bulanAktif.labelBulan,
-                                  title: 'Pilih Bulan',
-                                  hintText: 'Cari bulan...',
-                                );
-                            if (selectedIndex != null && selectedIndex != -1) {
-                              setState(() {
-                                _slideLeft = selectedIndex < _currentIndex;
-                                _currentIndex = selectedIndex;
-                              });
-                            }
-                          },
-                          borderRadius: BorderRadius.circular(8),
-                          child: SizedBox(
-                            height: 36,
-                            child: Center(
-                              child: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 280),
-                                transitionBuilder: (child, animation) {
-                                  final offset = _slideLeft
-                                      ? const Offset(-0.4, 0)
-                                      : const Offset(0.4, 0);
-                                  return SlideTransition(
-                                    position:
-                                        Tween<Offset>(
-                                          begin: offset,
-                                          end: Offset.zero,
-                                        ).animate(
-                                          CurvedAnimation(
-                                            parent: animation,
-                                            curve: Curves.easeOutCubic,
+                              // Teks Bulan & Tahun (AnimatedSwitcher & Search Picker Modal)
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () async {
+                                    final listBulanLabels = _daftarBulanDummy
+                                        .map((b) => b.labelBulan)
+                                        .toList();
+                                    final selectedIndex =
+                                        await SearchablePickerModal.show(
+                                          context,
+                                          items: listBulanLabels,
+                                          selectedItem: bulanAktif.labelBulan,
+                                          title: 'Pilih Bulan',
+                                          hintText: 'Cari bulan...',
+                                        );
+                                    if (selectedIndex != null &&
+                                        selectedIndex != -1) {
+                                      setState(() {
+                                        _slideLeft =
+                                            selectedIndex < _currentIndex;
+                                        _currentIndex = selectedIndex;
+                                      });
+                                    }
+                                  },
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: SizedBox(
+                                    height: 36,
+                                    child: Center(
+                                      child: AnimatedSwitcher(
+                                        duration: const Duration(
+                                          milliseconds: 280,
+                                        ),
+                                        transitionBuilder: (child, animation) {
+                                          final offset = _slideLeft
+                                              ? const Offset(-0.4, 0)
+                                              : const Offset(0.4, 0);
+                                          return SlideTransition(
+                                            position:
+                                                Tween<Offset>(
+                                                  begin: offset,
+                                                  end: Offset.zero,
+                                                ).animate(
+                                                  CurvedAnimation(
+                                                    parent: animation,
+                                                    curve: Curves.easeOutCubic,
+                                                  ),
+                                                ),
+                                            child: FadeTransition(
+                                              opacity: animation,
+                                              child: child,
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          bulanAktif.labelBulan,
+                                          key: ValueKey(bulanAktif.labelBulan),
+                                          style: const TextStyle(
+                                            color: Color(0xFF293241),
+                                            fontSize: 15,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.4,
                                           ),
                                         ),
-                                    child: FadeTransition(
-                                      opacity: animation,
-                                      child: child,
+                                      ),
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  bulanAktif.labelBulan,
-                                  key: ValueKey(bulanAktif.labelBulan),
-                                  style: const TextStyle(
-                                    color: Color(0xFF293241),
-                                    fontSize: 15,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.4,
                                   ),
                                 ),
                               ),
-                            ),
+
+                              // Panah Kanan (Disabled jika di bulan terakhir)
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.chevron_right_rounded,
+                                  size: 24,
+                                ),
+                                color: canGoNext
+                                    ? const Color(0xFF293241)
+                                    : const Color(0xFFCCCED1),
+                                onPressed: canGoNext
+                                    ? () {
+                                        setState(() {
+                                          _slideLeft = true;
+                                          _currentIndex++;
+                                        });
+                                      }
+                                    : null,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
 
-                      // Panah Kanan (Disabled jika di bulan terakhir)
-                      IconButton(
-                        icon: const Icon(Icons.chevron_right_rounded, size: 24),
-                        color: canGoNext
-                            ? const Color(0xFF293241)
-                            : const Color(0xFFCCCED1),
-                        onPressed: canGoNext
-                            ? () {
-                                setState(() {
-                                  _slideLeft = true;
-                                  _currentIndex++;
-                                });
-                              }
-                            : null,
-                      ),
-                    ],
+                        const SizedBox(height: 20),
+
+                        // --- Daftar Item Pengajuan untuk Bulan Terpilih ---
+                        if (bulanAktif.items.isEmpty)
+                          _buildEmptyState()
+                        else
+                          ...bulanAktif.items.map((item) {
+                            return RiwayatPengajuanItem(
+                              status: item.status,
+                              date: item.date,
+                              type: item.type,
+                              diajukan: item.diajukan,
+                              perubahanLabel: item.perubahanLabel,
+                              oldValue: item.oldValue,
+                              newValue: item.newValue,
+                              onDetailTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        RiwayatKoreksiDetailPage.demo(),
+                                  ),
+                                );
+                              },
+                            );
+                          }),
+                      ],
+                    ),
                   ),
                 ),
-
-                const SizedBox(height: 20),
-
-                // --- Daftar Item Pengajuan untuk Bulan Terpilih ---
-                if (bulanAktif.items.isEmpty)
-                  _buildEmptyState()
-                else
-                  ...bulanAktif.items.map((item) {
-                    return RiwayatPengajuanItem(
-                      status: item.status,
-                      date: item.date,
-                      type: item.type,
-                      diajukan: item.diajukan,
-                      perubahanLabel: item.perubahanLabel,
-                      oldValue: item.oldValue,
-                      newValue: item.newValue,
-                      onDetailTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                RiwayatKoreksiDetailPage.demo(),
-                          ),
-                        );
-                      },
-                    );
-                  }),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

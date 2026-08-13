@@ -45,160 +45,207 @@ class LandingPresensiHariIniView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Detail Presensi',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'Nunito',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color(0xFFF6F7F9),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(34),
-            topRight: Radius.circular(34),
-          ),
-        ),
-        child: BlocBuilder<PresensiHariIniBloc, PresensiHariIniState>(
-          builder: (context, state) {
-            if (state is PresensiHariIniLoading ||
-                state is PresensiHariIniInitial) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF2B86C3)),
-              );
-            }
-
-            if (state is PresensiHariIniError) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        color: Colors.redAccent,
-                        size: 48,
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            color: const Color(0xFF2B86C3),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.of(context).maybePop(),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      Text(
-                        state.message,
+                    ),
+                    const Expanded(
+                      child: Text(
+                        'Detail Presensi',
                         textAlign: TextAlign.center,
-                        style: AppTextStyle.bodyMd.copyWith(
-                          color: Colors.redAccent,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      ElevatedButton.icon(
-                        onPressed: () {
+                    ),
+                    const SizedBox(width: 40),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFFF6F7F9),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34),
+                ),
+                child: BlocBuilder<PresensiHariIniBloc, PresensiHariIniState>(
+                  builder: (context, state) {
+                    if (state is PresensiHariIniLoading ||
+                        state is PresensiHariIniInitial) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF2B86C3),
+                        ),
+                      );
+                    }
+
+                    if (state is PresensiHariIniError) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.redAccent,
+                                size: 48,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                state.message,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.bodyMd.copyWith(
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  context.read<PresensiHariIniBloc>().add(
+                                    const FetchPresensiHariIniEvent(),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                ),
+                                label: Text(
+                                  'Coba Lagi',
+                                  style: AppTextStyle.bodyMd.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF2B86C3),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (state is PresensiHariIniLoaded) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
                           context.read<PresensiHariIniBloc>().add(
-                            const FetchPresensiHariIniEvent(),
+                            const RefreshPresensiHariIniEvent(),
                           );
                         },
-                        icon: const Icon(Icons.refresh, color: Colors.white),
-                        label: Text(
-                          'Coba Lagi',
-                          style: AppTextStyle.bodyMd.copyWith(
-                            color: Colors.white,
+                        color: const Color(0xFF2B86C3),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 32,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Text(
+                                  state.detail.date.isNotEmpty
+                                      ? state.detail.date
+                                      : 'Jumat, 13 Oktober 2023',
+                                  style: const TextStyle(
+                                    color: Color(0xFF8B9098),
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.50,
+                                    letterSpacing: -0.18,
+                                  ),
+                                ),
+                              ),
+                              InfoPresensiCard(detail: state.detail),
+                              const SizedBox(height: 24),
+                              LokasiPresensiCard(
+                                namaLokasi: state.detail.location.isNotEmpty
+                                    ? state.detail.location
+                                    : 'Kampus 4 - Universitas Ahmad Dahlan',
+                              ),
+                              const SizedBox(height: 24),
+                              BatasKoreksiInfo(
+                                maxHari: state.detail.maxHariKoreksi,
+                              ),
+                              const SizedBox(height: 24),
+                              AjukanKoreksiCard(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FormKoreksiPage(),
+                                    ),
+                                  );
+                                },
+                                onRiwayatTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RiwayatKoreksiPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2B86C3),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
+                      );
+                    }
 
-            if (state is PresensiHariIniLoaded) {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context.read<PresensiHariIniBloc>().add(
-                    const RefreshPresensiHariIniEvent(),
-                  );
-                },
-                color: const Color(0xFF2B86C3),
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 32,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Text(
-                          state.detail.date.isNotEmpty
-                              ? state.detail.date
-                              : 'Jumat, 13 Oktober 2023',
-                          style: const TextStyle(
-                            color: Color(0xFF8B9098),
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                            height: 1.50,
-                            letterSpacing: -0.18,
-                          ),
-                        ),
-                      ),
-                      InfoPresensiCard(detail: state.detail),
-                      const SizedBox(height: 24),
-                      LokasiPresensiCard(
-                        namaLokasi: state.detail.location.isNotEmpty
-                            ? state.detail.location
-                            : 'Kampus 4 - Universitas Ahmad Dahlan',
-                      ),
-                      const SizedBox(height: 24),
-                      BatasKoreksiInfo(maxHari: state.detail.maxHariKoreksi),
-                      const SizedBox(height: 24),
-                      AjukanKoreksiCard(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const FormKoreksiPage(),
-                            ),
-                          );
-                        },
-                        onRiwayatTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RiwayatKoreksiPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                    return const SizedBox.shrink();
+                  },
                 ),
-              );
-            }
-
-            return const SizedBox.shrink();
-          },
-        ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
