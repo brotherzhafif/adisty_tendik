@@ -10,7 +10,6 @@ import '../domain/usecases/get_skp_usecase.dart';
 import 'widgets/skp_app_bar.dart';
 import 'widgets/skp_profile_card.dart';
 import 'widgets/skp_category_card.dart';
-import 'widgets/skp_total_score_card.dart';
 
 // ============================================================
 // HALAMAN: SKP Pegawai Dashboard (CLEAN ARCHITECTURE + BLOC WRAPPER)
@@ -157,6 +156,11 @@ class SkpDashboardSkpView extends StatelessWidget {
                                     ChangeYearSkpEvent(index),
                                   );
                                 },
+                                hasData: yearData.hasData,
+                                score: yearData.totalSkpScore,
+                                jumlahKategori: 3,
+                                dinilaiOlehNama: yearData.dinilaiOlehNama,
+                                dinilaiOlehPosisi: yearData.dinilaiOlehPosisi,
                               ),
                               const SizedBox(height: 14),
 
@@ -199,14 +203,7 @@ class SkpDashboardSkpView extends StatelessWidget {
                               ),
                               const SizedBox(height: 14),
 
-                              // --- Total Skor SKP Card ---
-                              SkpTotalScoreCard(
-                                score: yearData.totalSkpScore,
-                                jumlahKategori: 3,
-                                dinilaiOlehNama: yearData.dinilaiOlehNama,
-                                dinilaiOlehPosisi: yearData.dinilaiOlehPosisi,
-                              ),
-
+                              // --- Total Skor SKP Card dipindahkan ke dalam SkpProfileCard ---
                               const SizedBox(height: 30),
                             ],
                           ),

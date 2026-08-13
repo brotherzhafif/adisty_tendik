@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import 'package:adisty_tendik_module/core/widgets/searchable_picker_modal.dart';
+import 'skp_total_score_card.dart';
 
 // ============================================================
 // WIDGET: Card Profil SKP
@@ -15,6 +16,12 @@ class SkpProfileCard extends StatefulWidget {
   final int activeYearIndex;
   final ValueChanged<int> onYearChanged;
 
+  final bool hasData;
+  final double score;
+  final int jumlahKategori;
+  final String? dinilaiOlehNama;
+  final String? dinilaiOlehPosisi;
+
   const SkpProfileCard({
     super.key,
     required this.name,
@@ -24,6 +31,11 @@ class SkpProfileCard extends StatefulWidget {
     required this.years,
     required this.activeYearIndex,
     required this.onYearChanged,
+    required this.hasData,
+    required this.score,
+    required this.jumlahKategori,
+    this.dinilaiOlehNama,
+    this.dinilaiOlehPosisi,
   });
 
   @override
@@ -312,6 +324,17 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                 ),
               ],
             ),
+
+            // --- Stats (Total Skor & Dinilai Oleh) ---
+            if (widget.hasData) ...[
+              const SizedBox(height: 12),
+              SkpTotalScoreCard(
+                score: widget.score,
+                jumlahKategori: widget.jumlahKategori,
+                dinilaiOlehNama: widget.dinilaiOlehNama,
+                dinilaiOlehPosisi: widget.dinilaiOlehPosisi,
+              ),
+            ],
           ],
         ),
       ),

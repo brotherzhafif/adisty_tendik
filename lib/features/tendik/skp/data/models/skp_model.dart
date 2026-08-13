@@ -40,6 +40,14 @@ class SkpYearDataModel extends Equatable {
   double get totalSkpScore =>
       (aikScore * 0.35) + (tugasUmumScore * 0.40) + (penunjangScore * 0.25);
 
+  bool get hasData =>
+      aikScore > 0 ||
+      tugasUmumScore > 0 ||
+      penunjangScore > 0 ||
+      aikIndicators.isNotEmpty ||
+      tugasUmumIndicators.isNotEmpty ||
+      penunjangIndicators.isNotEmpty;
+
   const SkpYearDataModel({
     required this.aikScore,
     required this.tugasUmumScore,

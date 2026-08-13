@@ -23,187 +23,175 @@ class LogbookMonthStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      decoration: const ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: Color(0xFFFAFAFA)),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // KOTAK KIRI: Total Skor
-          Expanded(
-            child: Container(
-              height: 73,
-              decoration: const ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 1, color: Color(0xFFFAFAFA)),
+      decoration: const ShapeDecoration(shape: RoundedRectangleBorder()),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // KOTAK KIRI: Total Skor
+            Expanded(
+              flex: 45,
+              child: Container(
+                decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(),
                 ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 2,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Total Skor',
-                          style: TextStyle(
-                            color: Color(0xFF8E8E8E),
-                            fontSize: 10,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w500,
-                            height: 1.60,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 2,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          child: Text(
-                            '$totalSkor',
-                            style: const TextStyle(
-                              color: Color(0xFF2B86C3),
-                              fontSize: 20,
-                              fontFamily: 'Poppins',
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Total Skor',
+                            style: TextStyle(
+                              color: Color(0xFF8E8E8E),
+                              fontSize: 10,
+                              fontFamily: 'Nunito',
                               fontWeight: FontWeight.w500,
-                              height: 1.40,
-                              letterSpacing: -0.34,
+                              height: 1.60,
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 2,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: 'Diperoleh dari ',
-                                style: TextStyle(
-                                  color: Color(0xFF8E8E8E),
-                                  fontSize: 10,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.60,
-                                ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 2,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            child: Text(
+                              '$totalSkor',
+                              style: const TextStyle(
+                                color: Color(0xFF2B86C3),
+                                fontSize: 20,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                height: 1.40,
+                                letterSpacing: -0.34,
                               ),
-                              TextSpan(
-                                text: '$jumlahAktivitas',
-                                style: const TextStyle(
-                                  color: Color(0xFF2B86C3),
-                                  fontSize: 10,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.60,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: ' Aktivitas',
-                                style: TextStyle(
-                                  color: Color(0xFF8E8E8E),
-                                  fontSize: 10,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.60,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // KOTAK KANAN: Dinilai Oleh
-          Expanded(
-            child: Container(
-              height: 73,
-              decoration: const ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 1, color: Color(0xFFFAFAFA)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 2,
+                      ),
+                      child: Text.rich(
+                        textAlign: TextAlign.center,
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Diperoleh dari ',
+                              style: TextStyle(
+                                color: Color(0xFF8E8E8E),
+                                fontSize: 10,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 1.60,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '$jumlahAktivitas',
+                              style: const TextStyle(
+                                color: Color(0xFF2B86C3),
+                                fontSize: 10,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 1.60,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: ' Aktivitas',
+                              style: TextStyle(
+                                color: Color(0xFF8E8E8E),
+                                fontSize: 10,
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                                height: 1.60,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 2,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Dinilai Oleh',
-                          style: TextStyle(
-                            color: Color(0xFF8E8E8E),
-                            fontSize: 10,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w500,
-                            height: 1.60,
+            ),
+
+            // KOTAK KANAN: Dinilai Oleh
+            Expanded(
+              flex: 55,
+              child: Container(
+                decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Dinilai Oleh',
+                            style: TextStyle(
+                              color: Color(0xFF8E8E8E),
+                              fontSize: 10,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w500,
+                              height: 1.60,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Space placeholder for avatar if needed
-                        // Container(width: 29, height: 29, child: Stack()),
-                        Expanded(
-                          child: Text.rich(
-                            TextSpan(
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.account_circle,
+                            color: Color(0xFFCCCED1),
+                            size: 32,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                TextSpan(
-                                  text: '${dinilaiOlehNama ?? '-'}\n',
+                                Text(
+                                  dinilaiOlehNama ?? '-',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     color: Color(0xFF2B86C3),
                                     fontSize: 12,
@@ -212,9 +200,10 @@ class LogbookMonthStats extends StatelessWidget {
                                     height: 1.33,
                                   ),
                                 ),
-                                TextSpan(
-                                  text:
-                                      dinilaiOlehPosisi ?? 'Pejabat penilaian',
+                                Text(
+                                  dinilaiOlehPosisi ?? 'Pejabat penilaian',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     color: Color(0xFF8E8E8E),
                                     fontSize: 10,
@@ -226,15 +215,15 @@ class LogbookMonthStats extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

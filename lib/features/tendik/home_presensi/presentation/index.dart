@@ -118,7 +118,7 @@ class HomePageView extends StatelessWidget {
                       // --- Header Profil (Dinamis dari BLoC State) ---
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
+                          horizontal: 24,
                           vertical: 16,
                         ),
                         child: ProfileHeader(profile: state.profile),
