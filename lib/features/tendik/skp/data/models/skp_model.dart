@@ -34,6 +34,8 @@ class SkpYearDataModel extends Equatable {
   final List<SkpIndicatorModel> aikIndicators;
   final List<SkpIndicatorModel> tugasUmumIndicators;
   final List<SkpIndicatorModel> penunjangIndicators;
+  final String? dinilaiOlehNama;
+  final String? dinilaiOlehPosisi;
 
   double get totalSkpScore =>
       (aikScore * 0.35) + (tugasUmumScore * 0.40) + (penunjangScore * 0.25);
@@ -45,6 +47,8 @@ class SkpYearDataModel extends Equatable {
     required this.aikIndicators,
     required this.tugasUmumIndicators,
     required this.penunjangIndicators,
+    this.dinilaiOlehNama,
+    this.dinilaiOlehPosisi,
   });
 
   const SkpYearDataModel.empty()
@@ -53,13 +57,21 @@ class SkpYearDataModel extends Equatable {
       penunjangScore = 0.0,
       aikIndicators = const [],
       tugasUmumIndicators = const [],
-      penunjangIndicators = const [];
+      penunjangIndicators = const [],
+      dinilaiOlehNama = null,
+      dinilaiOlehPosisi = null;
 
   factory SkpYearDataModel.fromJson(Map<String, dynamic> json) {
     return SkpYearDataModel(
       aikScore: (json['aik_score'] as num?)?.toDouble() ?? 0.0,
       tugasUmumScore: (json['tugas_umum_score'] as num?)?.toDouble() ?? 0.0,
       penunjangScore: (json['penunjang_score'] as num?)?.toDouble() ?? 0.0,
+      dinilaiOlehNama: json['dinilai_oleh'] != null
+          ? json['dinilai_oleh']['nama'] as String?
+          : null,
+      dinilaiOlehPosisi: json['dinilai_oleh'] != null
+          ? json['dinilai_oleh']['posisi'] as String?
+          : null,
       aikIndicators:
           (json['aik_indicators'] as List<dynamic>?)
               ?.map(
@@ -89,6 +101,8 @@ class SkpYearDataModel extends Equatable {
       'aik_score': aikScore,
       'tugas_umum_score': tugasUmumScore,
       'penunjang_score': penunjangScore,
+      if (dinilaiOlehNama != null || dinilaiOlehPosisi != null)
+        'dinilai_oleh': {'nama': dinilaiOlehNama, 'posisi': dinilaiOlehPosisi},
       'aik_indicators': aikIndicators.map((e) => e.toJson()).toList(),
       'tugas_umum_indicators': tugasUmumIndicators
           .map((e) => e.toJson())
@@ -107,6 +121,8 @@ class SkpYearDataModel extends Equatable {
     aikIndicators,
     tugasUmumIndicators,
     penunjangIndicators,
+    dinilaiOlehNama,
+    dinilaiOlehPosisi,
   ];
 }
 

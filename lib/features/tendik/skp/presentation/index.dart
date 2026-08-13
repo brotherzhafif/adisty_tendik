@@ -200,7 +200,12 @@ class SkpDashboardSkpView extends StatelessWidget {
                               const SizedBox(height: 14),
 
                               // --- Total Skor SKP Card ---
-                              SkpTotalScoreCard(score: yearData.totalSkpScore),
+                              SkpTotalScoreCard(
+                                score: yearData.totalSkpScore,
+                                jumlahKategori: 3,
+                                dinilaiOlehNama: yearData.dinilaiOlehNama,
+                                dinilaiOlehPosisi: yearData.dinilaiOlehPosisi,
+                              ),
 
                               const SizedBox(height: 30),
                             ],

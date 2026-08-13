@@ -67,11 +67,7 @@ class LogbookActivityModel extends Equatable {
       return subAktivitas;
     }
     return [
-      LogbookSubActivityModel(
-        id: id,
-        judul: judul,
-        deskripsi: deskripsi,
-      ),
+      LogbookSubActivityModel(id: id, judul: judul, deskripsi: deskripsi),
     ];
   }
 
@@ -83,9 +79,12 @@ class LogbookActivityModel extends Equatable {
       hariNama: json['hari_nama'] as String? ?? '',
       judul: json['judul'] as String? ?? '',
       deskripsi: json['deskripsi'] as String? ?? '',
-      subAktivitas: (json['sub_aktivitas'] as List<dynamic>?)
-              ?.map((e) =>
-                  LogbookSubActivityModel.fromJson(e as Map<String, dynamic>))
+      subAktivitas:
+          (json['sub_aktivitas'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    LogbookSubActivityModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
     );
@@ -104,8 +103,15 @@ class LogbookActivityModel extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [id, tanggal, bulan, hariNama, judul, deskripsi, subAktivitas];
+  List<Object?> get props => [
+    id,
+    tanggal,
+    bulan,
+    hariNama,
+    judul,
+    deskripsi,
+    subAktivitas,
+  ];
 }
 
 // ============================================================
@@ -116,6 +122,8 @@ class LogbookBulanDataModel extends Equatable {
   final List<LogbookActivityModel> aktivitas;
   final int? totalSkor;
   final int maxSkor;
+  final String? dinilaiOlehNama;
+  final String? dinilaiOlehPosisi;
   final String? _kategoriRaw;
 
   const LogbookBulanDataModel({
@@ -123,6 +131,8 @@ class LogbookBulanDataModel extends Equatable {
     required this.aktivitas,
     this.totalSkor,
     this.maxSkor = 100,
+    this.dinilaiOlehNama,
+    this.dinilaiOlehPosisi,
     String? kategori,
   }) : _kategoriRaw = kategori;
 
@@ -227,10 +237,18 @@ class LogbookBulanDataModel extends Equatable {
       labelBulan: json['label_bulan'] as String? ?? '',
       totalSkor: json['total_skor'] as int?,
       maxSkor: json['max_skor'] as int? ?? 100,
+      dinilaiOlehNama: json['dinilai_oleh'] != null
+          ? json['dinilai_oleh']['nama'] as String?
+          : null,
+      dinilaiOlehPosisi: json['dinilai_oleh'] != null
+          ? json['dinilai_oleh']['posisi'] as String?
+          : null,
       kategori: json['kategori'] as String?,
-      aktivitas: (json['aktivitas'] as List<dynamic>?)
-              ?.map((e) =>
-                  LogbookActivityModel.fromJson(e as Map<String, dynamic>))
+      aktivitas:
+          (json['aktivitas'] as List<dynamic>?)
+              ?.map(
+                (e) => LogbookActivityModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
     );
@@ -241,6 +259,8 @@ class LogbookBulanDataModel extends Equatable {
       'label_bulan': labelBulan,
       'total_skor': totalSkor,
       'max_skor': maxSkor,
+      if (dinilaiOlehNama != null || dinilaiOlehPosisi != null)
+        'dinilai_oleh': {'nama': dinilaiOlehNama, 'posisi': dinilaiOlehPosisi},
       'kategori': _kategoriRaw,
       'aktivitas': aktivitas.map((e) => e.toJson()).toList(),
     };
@@ -248,12 +268,14 @@ class LogbookBulanDataModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        labelBulan,
-        aktivitas,
-        totalSkor,
-        maxSkor,
-        _kategoriRaw,
-      ];
+    labelBulan,
+    aktivitas,
+    totalSkor,
+    maxSkor,
+    dinilaiOlehNama,
+    dinilaiOlehPosisi,
+    _kategoriRaw,
+  ];
 }
 
 // ============================================================
@@ -275,11 +297,11 @@ class LogbookProfileModel extends Equatable {
   });
 
   const LogbookProfileModel.empty()
-      : namaLengkap = '',
-        unitKerja = '',
-        jabatan = '',
-        subUnit = '',
-        photoUrl = '';
+    : namaLengkap = '',
+      unitKerja = '',
+      jabatan = '',
+      subUnit = '',
+      photoUrl = '';
 
   factory LogbookProfileModel.fromJson(Map<String, dynamic> json) {
     return LogbookProfileModel(
@@ -303,12 +325,12 @@ class LogbookProfileModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        namaLengkap,
-        unitKerja,
-        jabatan,
-        subUnit,
-        photoUrl,
-      ];
+    namaLengkap,
+    unitKerja,
+    jabatan,
+    subUnit,
+    photoUrl,
+  ];
 }
 
 // ============================================================
@@ -333,11 +355,15 @@ class LogbookResponseModel extends Equatable {
       message: json['message'] as String? ?? '',
       profile: json['profile'] != null
           ? LogbookProfileModel.fromJson(
-              json['profile'] as Map<String, dynamic>)
+              json['profile'] as Map<String, dynamic>,
+            )
           : const LogbookProfileModel.empty(),
-      dataBulan: (json['data_bulan'] as List<dynamic>?)
-              ?.map((e) =>
-                  LogbookBulanDataModel.fromJson(e as Map<String, dynamic>))
+      dataBulan:
+          (json['data_bulan'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    LogbookBulanDataModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
     );

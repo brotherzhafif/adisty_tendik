@@ -35,9 +35,9 @@ class LogbookPage extends StatelessWidget {
     final useCase = GetLogbookUseCase(repository: repository);
 
     return BlocProvider(
-      create: (context) => LogbookBloc(
-        getLogbookUseCase: useCase,
-      )..add(const FetchLogbookEvent()),
+      create: (context) =>
+          LogbookBloc(getLogbookUseCase: useCase)
+            ..add(const FetchLogbookEvent()),
       child: const LogbookPageView(),
     );
   }
@@ -169,8 +169,8 @@ class LogbookPageView extends StatelessWidget {
                                   ElevatedButton.icon(
                                     onPressed: () {
                                       context.read<LogbookBloc>().add(
-                                            const FetchLogbookEvent(),
-                                          );
+                                        const FetchLogbookEvent(),
+                                      );
                                     },
                                     icon: const Icon(
                                       Icons.refresh,
@@ -188,7 +188,7 @@ class LogbookPageView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -200,9 +200,9 @@ class LogbookPageView extends StatelessWidget {
 
                           return RefreshIndicator(
                             onRefresh: () async {
-                              context
-                                  .read<LogbookBloc>()
-                                  .add(const RefreshLogbookEvent());
+                              context.read<LogbookBloc>().add(
+                                const RefreshLogbookEvent(),
+                              );
                             },
                             color: const Color(0xFF2B86C3),
                             child: SingleChildScrollView(
@@ -222,9 +222,9 @@ class LogbookPageView extends StatelessWidget {
                                     dataBulan: state.dataBulan,
                                     bulanIndex: state.bulanIndex,
                                     onBulanChanged: (index) {
-                                      context
-                                          .read<LogbookBloc>()
-                                          .add(ChangeBulanLogbookEvent(index));
+                                      context.read<LogbookBloc>().add(
+                                        ChangeBulanLogbookEvent(index),
+                                      );
                                     },
                                   ),
 
@@ -302,7 +302,8 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
 
   @override
   Widget build(BuildContext context) {
-    final bulanAktif = widget.dataBulan.isNotEmpty &&
+    final bulanAktif =
+        widget.dataBulan.isNotEmpty &&
             widget.bulanIndex >= 0 &&
             widget.bulanIndex < widget.dataBulan.length
         ? widget.dataBulan[widget.bulanIndex]
@@ -415,15 +416,16 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                                 ? const Offset(-0.4, 0)
                                 : const Offset(0.4, 0);
                             return SlideTransition(
-                              position: Tween<Offset>(
-                                begin: offset,
-                                end: Offset.zero,
-                              ).animate(
-                                CurvedAnimation(
-                                  parent: animation,
-                                  curve: Curves.easeOutCubic,
-                                ),
-                              ),
+                              position:
+                                  Tween<Offset>(
+                                    begin: offset,
+                                    end: Offset.zero,
+                                  ).animate(
+                                    CurvedAnimation(
+                                      parent: animation,
+                                      curve: Curves.easeOutCubic,
+                                    ),
+                                  ),
                               child: FadeTransition(
                                 opacity: animation,
                                 child: child,
@@ -466,7 +468,9 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
               const SizedBox(height: 12),
               LogbookMonthStats(
                 totalSkor: bulanAktif.totalSkor!,
-                maxSkor: bulanAktif.maxSkor,
+                jumlahAktivitas: bulanAktif.aktivitas.length,
+                dinilaiOlehNama: bulanAktif.dinilaiOlehNama,
+                dinilaiOlehPosisi: bulanAktif.dinilaiOlehPosisi,
               ),
             ],
           ],

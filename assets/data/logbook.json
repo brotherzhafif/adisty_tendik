@@ -13,6 +13,10 @@
       "label_bulan": "Mei 2026",
       "total_skor": 90,
       "max_skor": 100,
+      "dinilai_oleh": {
+        "nama": "Budi santoso, S.T",
+        "posisi": "Pejabat penilaian"
+      },
       "aktivitas": [
         {
           "id": "1",
@@ -55,6 +59,10 @@
       "label_bulan": "Juni 2026",
       "total_skor": 85,
       "max_skor": 100,
+      "dinilai_oleh": {
+        "nama": "Budi santoso, S.T",
+        "posisi": "Pejabat penilaian"
+      },
       "aktivitas": [
         {
           "id": "3",

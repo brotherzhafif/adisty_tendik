@@ -17,6 +17,10 @@
       "aik_score": 84.50,
       "tugas_umum_score": 85.00,
       "penunjang_score": 88.00,
+      "dinilai_oleh": {
+        "nama": "Budi santoso, S.T",
+        "posisi": "Pejabat penilaian"
+      },
       "aik_indicators": [
         {
           "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
@@ -88,6 +92,10 @@
       "aik_score": 88.80,
       "tugas_umum_score": 90.00,
       "penunjang_score": 90.00,
+      "dinilai_oleh": {
+        "nama": "Budi santoso, S.T",
+        "posisi": "Pejabat penilaian"
+      },
       "aik_indicators": [
         {
           "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
@@ -159,6 +167,10 @@
       "aik_score": 92.50,
       "tugas_umum_score": 95.00,
       "penunjang_score": 92.00,
+      "dinilai_oleh": {
+        "nama": "Budi santoso, S.T",
+        "posisi": "Pejabat penilaian"
+      },
       "aik_indicators": [
         {
           "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
