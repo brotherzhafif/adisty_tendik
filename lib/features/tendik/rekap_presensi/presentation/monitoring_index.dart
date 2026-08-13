@@ -1,13 +1,16 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/monitoring_presensi_bloc.dart';
 import '../bloc/monitoring_presensi_event.dart';
 import '../bloc/monitoring_presensi_state.dart';
+import '../data/models/monitoring_presensi_model.dart';
 import '../data/providers/monitoring_presensi_provider.dart';
 import '../data/repositories/monitoring_presensi_repository.dart';
 import '../domain/usecases/get_monitoring_presensi_usecase.dart';
 import 'monitoring_detail.dart';
-import 'widgets/bulan_picker_modal.dart';
+// import 'widgets/bulan_picker_modal.dart'; // diganti native date picker
 
 // ============================================================
 // HALAMAN UTAMA: MONITORING PRESENSI (BLoC & Clean Architecture)
@@ -129,9 +132,6 @@ class _MonitoringPresensiView extends StatelessWidget {
 
                     if (state is MonitoringPresensiLoaded) {
                       final currentTanggal = state.currentTanggal;
-                      final listLabels = state.listTanggal
-                          .map((e) => e.labelTanggal)
-                          .toList();
 
                       return GestureDetector(
                         onHorizontalDragEnd: (details) {
@@ -165,13 +165,14 @@ class _MonitoringPresensiView extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              // --- Date Info Card (Clickable to open picker) ---
+                              // --- Date Info Card (Clickable to open native date picker) ---
                               InkWell(
                                 onTap: () async {
-                                  final newIndex = await BulanPickerModal.show(
+                                  final newIndex =
+                                      await _showDatePickerPlatform(
                                     context,
-                                    listBulan: listLabels,
-                                    selectedBulan: currentTanggal.labelTanggal,
+                                    listTanggal: state.listTanggal,
+                                    currentTanggal: currentTanggal,
                                   );
                                   if (newIndex != null && context.mounted) {
                                     context.read<MonitoringPresensiBloc>().add(
@@ -251,7 +252,7 @@ class _MonitoringPresensiView extends StatelessWidget {
                                         ),
                                       ),
                                       const Icon(
-                                        Icons.unfold_more_rounded,
+                                        Icons.calendar_month_rounded,
                                         color: Color(0xFF8B9098),
                                         size: 20,
                                       ),
@@ -262,115 +263,29 @@ class _MonitoringPresensiView extends StatelessWidget {
 
                               const SizedBox(height: 12),
 
-                              // --- Date Selector Card (With Left/Right Arrow Navigation) ---
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                decoration: ShapeDecoration(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  shadows: const [
-                                    BoxShadow(
-                                      color: Color(0x087281DF),
-                                      blurRadius: 4.11,
-                                      offset: Offset(0, 0.52),
-                                    ),
-                                    BoxShadow(
-                                      color: Color(0x0C7281DF),
-                                      blurRadius: 6.99,
-                                      offset: Offset(0, 1.78),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.chevron_left_rounded,
-                                        color: state.selectedIndex > 0
-                                            ? const Color(0xFF293241)
-                                            : const Color(0xFFCCCCCC),
-                                        size: 24,
-                                      ),
-                                      onPressed: state.selectedIndex > 0
-                                          ? () {
-                                              context
-                                                  .read<
-                                                      MonitoringPresensiBloc>()
-                                                  .add(
-                                                    ChangeIndexMonitoringEvent(
-                                                      state.selectedIndex - 1,
-                                                    ),
-                                                  );
-                                            }
-                                          : null,
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        final newIndex =
-                                            await BulanPickerModal.show(
-                                          context,
-                                          listBulan: listLabels,
-                                          selectedBulan:
-                                              currentTanggal.labelTanggal,
-                                        );
-                                        if (newIndex != null &&
-                                            context.mounted) {
-                                          context
-                                              .read<MonitoringPresensiBloc>()
-                                              .add(
-                                                ChangeIndexMonitoringEvent(
-                                                  newIndex,
-                                                ),
-                                              );
-                                        }
-                                      },
-                                      child: Text(
-                                        currentTanggal.tanggalLengkap,
-                                        style: const TextStyle(
-                                          color: Color(0xFF293241),
-                                          fontSize: 16,
-                                          fontFamily: 'Nunito',
-                                          fontWeight: FontWeight.w600,
-                                          letterSpacing: -0.27,
-                                        ),
-                                      ),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: state.selectedIndex <
-                                                state.listTanggal.length - 1
-                                            ? const Color(0xFF293241)
-                                            : const Color(0xFFCCCCCC),
-                                        size: 24,
-                                      ),
-                                      onPressed: state.selectedIndex <
-                                              state.listTanggal.length - 1
-                                          ? () {
-                                              context
-                                                  .read<
-                                                      MonitoringPresensiBloc>()
-                                                  .add(
-                                                    ChangeIndexMonitoringEvent(
-                                                      state.selectedIndex + 1,
-                                                    ),
-                                                  );
-                                            }
-                                          : null,
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              const SizedBox(height: 12),
+                              // --- Date Selector Card (Left/Right Arrow Navigation) ---
+                              // Disembunyikan, navigasi tanggal kini via native date picker
+                              // Container(
+                              //   width: double.infinity,
+                              //   padding: const EdgeInsets.symmetric(
+                              //     horizontal: 16,
+                              //     vertical: 12,
+                              //   ),
+                              //   decoration: ShapeDecoration(
+                              //     color: Colors.white,
+                              //     shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(20),
+                              //     ),
+                              //   ),
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //     children: [
+                              //       IconButton(icon: Icon(Icons.chevron_left_rounded), onPressed: null),
+                              //       Text(currentTanggal.tanggalLengkap),
+                              //       IconButton(icon: Icon(Icons.chevron_right_rounded), onPressed: null),
+                              //     ],
+                              //   ),
+                              // ),
 
                               // --- List Items Monitoring Presensi Pegawai ---
                               ListView.separated(
@@ -390,10 +305,11 @@ class _MonitoringPresensiView extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              DetailPresensiKoreksi.fromModel(
-                                            pegawai: pegawai,
-                                            tanggal:
-                                                currentTanggal.labelTanggal,
+                                              DetailPresensiKoreksi(
+                                            listTanggal: state.listTanggal,
+                                            initialTanggalIndex:
+                                                state.selectedIndex,
+                                            pegawaiId: pegawai.id,
                                           ),
                                         ),
                                       );
@@ -598,4 +514,134 @@ class _MonitoringPresensiView extends StatelessWidget {
       ),
     );
   }
+}
+
+// ============================================================
+// HELPER: Native platform date picker
+// Mengembalikan index dari listTanggal yang cocok dengan tanggal dipilih
+// ============================================================
+Future<int?> _showDatePickerPlatform(
+  BuildContext context, {
+  required List<MonitoringTanggalModel> listTanggal,
+  required MonitoringTanggalModel currentTanggal,
+}) async {
+  // Konversi semua label ke DateTime untuk batas picker
+  final dates = listTanggal
+      .map((t) => _parseTanggalIndonesia(t.tanggalLengkap))
+      .whereType<DateTime>()
+      .toList();
+
+  if (dates.isEmpty) return null;
+
+  final initialDate =
+      _parseTanggalIndonesia(currentTanggal.tanggalLengkap) ?? dates.first;
+  final firstDate = dates.reduce((a, b) => a.isBefore(b) ? a : b);
+  final lastDate = dates.reduce((a, b) => a.isAfter(b) ? a : b);
+
+  DateTime? picked;
+
+  if (Platform.isIOS) {
+    // ── Cupertino (iOS) ──────────────────────────────────────
+    picked = await showCupertinoModalPopup<DateTime>(
+      context: context,
+      builder: (ctx) {
+        DateTime temp = initialDate;
+        return Container(
+          height: 320,
+          color: CupertinoColors.systemBackground.resolveFrom(ctx),
+          child: Column(
+            children: [
+              // Toolbar
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                    child: const Text('Batal'),
+                    onPressed: () => Navigator.of(ctx).pop(null),
+                  ),
+                  CupertinoButton(
+                    child: const Text(
+                      'Pilih',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    onPressed: () => Navigator.of(ctx).pop(temp),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: initialDate,
+                  minimumDate: firstDate,
+                  maximumDate: lastDate,
+                  onDateTimeChanged: (dt) => temp = dt,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  } else {
+    // ── Material (Android & lainnya) ────────────────────────
+    picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+      locale: const Locale('id', 'ID'),
+      builder: (context, child) => Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: const ColorScheme.light(
+            primary: Color(0xFF2B86C3),
+            onPrimary: Colors.white,
+            surface: Colors.white,
+            onSurface: Color(0xFF293241),
+          ),
+        ),
+        child: child!,
+      ),
+    );
+  }
+
+  if (picked == null) return null;
+
+  // Cari index yang paling mendekati tanggal yang dipilih
+  for (int i = 0; i < listTanggal.length; i++) {
+    final d = _parseTanggalIndonesia(listTanggal[i].tanggalLengkap);
+    if (d != null &&
+        d.year == picked.year &&
+        d.month == picked.month &&
+        d.day == picked.day) {
+      return i;
+    }
+  }
+  return null;
+}
+
+/// Parse format tanggal Indonesia: "9 September 2026" → DateTime
+DateTime? _parseTanggalIndonesia(String label) {
+  const bulanMap = {
+    'Januari': 1,
+    'Februari': 2,
+    'Maret': 3,
+    'April': 4,
+    'Mei': 5,
+    'Juni': 6,
+    'Juli': 7,
+    'Agustus': 8,
+    'September': 9,
+    'Oktober': 10,
+    'November': 11,
+    'Desember': 12,
+  };
+  // Hapus nama hari di depan jika ada, contoh: "Rabu, 9 September 2026"
+  final cleaned = label.contains(',') ? label.split(',').last.trim() : label.trim();
+  final parts = cleaned.split(' ');
+  if (parts.length < 3) return null;
+  final day = int.tryParse(parts[0]);
+  final month = bulanMap[parts[1]];
+  final year = int.tryParse(parts[2]);
+  if (day == null || month == null || year == null) return null;
+  return DateTime(year, month, day);
 }

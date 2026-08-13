@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adisty_tendik_module/features/tendik/home_presensi/presentation/index.dart';
 import 'package:adisty_tendik_module/core/widgets/internet_guard.dart';
 
@@ -20,6 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Adisty Tendik',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('id', 'ID'), Locale('en', 'US')],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2B86C3)),
       ),
