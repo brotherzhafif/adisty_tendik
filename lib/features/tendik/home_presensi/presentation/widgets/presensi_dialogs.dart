@@ -27,11 +27,7 @@ class DialogPilihanPulang extends StatelessWidget {
   final VoidCallback? onPulang;
   final VoidCallback? onLanjutShift;
 
-  const DialogPilihanPulang({
-    super.key,
-    this.onPulang,
-    this.onLanjutShift,
-  });
+  const DialogPilihanPulang({super.key, this.onPulang, this.onLanjutShift});
 
   @override
   Widget build(BuildContext context) {
@@ -143,9 +139,8 @@ class DialogPilihanPulang extends StatelessWidget {
                       Navigator.of(context).pop();
                       showDialog(
                         context: context,
-                        builder: (context) => DialogPresensiBerhasil(
-                          onConfirmed: onPulang,
-                        ),
+                        builder: (context) =>
+                            DialogPresensiBerhasil(onConfirmed: onPulang),
                       );
                     },
                     borderRadius: BorderRadius.circular(8),

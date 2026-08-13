@@ -54,12 +54,12 @@ class HomePresensiLoaded extends HomePresensiState {
 
   @override
   List<Object?> get props => [
-        profile,
-        presensiToday,
-        presensiState,
-        deviceContext,
-        deviceContextError,
-      ];
+    profile,
+    presensiToday,
+    presensiState,
+    deviceContext,
+    deviceContextError,
+  ];
 }
 
 /// State ketika terjadi error saat memuat data utama

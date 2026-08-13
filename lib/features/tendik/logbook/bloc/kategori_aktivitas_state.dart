@@ -44,11 +44,11 @@ class KategoriAktivitasLoaded extends KategoriAktivitasState {
 
   @override
   List<Object?> get props => [
-        listKategori,
-        filteredKategori,
-        selectedKategori,
-        searchQuery,
-      ];
+    listKategori,
+    filteredKategori,
+    selectedKategori,
+    searchQuery,
+  ];
 }
 
 class KategoriAktivitasError extends KategoriAktivitasState {

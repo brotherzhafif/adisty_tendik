@@ -6,7 +6,8 @@ import 'logbook_state.dart';
 class LogbookBloc extends Bloc<LogbookEvent, LogbookState> {
   final GetLogbookUseCase getLogbookUseCase;
 
-  LogbookBloc({required this.getLogbookUseCase}) : super(const LogbookInitial()) {
+  LogbookBloc({required this.getLogbookUseCase})
+    : super(const LogbookInitial()) {
     on<FetchLogbookEvent>(_onFetchLogbook);
     on<RefreshLogbookEvent>(_onRefreshLogbook);
     on<ChangeBulanLogbookEvent>(_onChangeBulan);
@@ -49,8 +50,9 @@ class LogbookBloc extends Bloc<LogbookEvent, LogbookState> {
   ) async {
     try {
       final response = await getLogbookUseCase.execute();
-      final currentIndex =
-          state is LogbookLoaded ? (state as LogbookLoaded).bulanIndex : 2;
+      final currentIndex = state is LogbookLoaded
+          ? (state as LogbookLoaded).bulanIndex
+          : 2;
       emit(
         LogbookLoaded(
           profile: response.profile,

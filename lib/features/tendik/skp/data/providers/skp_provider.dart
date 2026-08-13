@@ -10,9 +10,7 @@ abstract class ISkpProvider {
 class SkpProvider implements ISkpProvider {
   final String assetPath;
 
-  const SkpProvider({
-    this.assetPath = 'assets/data/skp.json',
-  });
+  const SkpProvider({this.assetPath = 'assets/data/skp.json'});
 
   @override
   Future<SkpResponseModel> fetchSkpData() async {

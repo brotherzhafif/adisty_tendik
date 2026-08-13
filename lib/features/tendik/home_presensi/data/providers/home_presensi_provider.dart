@@ -26,7 +26,8 @@ class HomePresensiProvider implements IHomePresensiProvider {
       return HomePresensiResponseModel.fromJson(jsonMap);
     } catch (e) {
       throw HomePresensiException(
-          'Gagal membaca data home presensi: ${e.toString()}');
+        'Gagal membaca data home presensi: ${e.toString()}',
+      );
     }
   }
 }

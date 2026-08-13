@@ -7,7 +7,7 @@ class RekapPresensiBloc extends Bloc<RekapPresensiEvent, RekapPresensiState> {
   final GetRekapPresensiUseCase getRekapPresensiUseCase;
 
   RekapPresensiBloc({required this.getRekapPresensiUseCase})
-      : super(const RekapPresensiInitial()) {
+    : super(const RekapPresensiInitial()) {
     on<FetchRekapPresensiEvent>(_onFetchRekapPresensi);
     on<RefreshRekapPresensiEvent>(_onRefreshRekapPresensi);
     on<ChangeBulanRekapPresensiEvent>(_onChangeBulan);
@@ -22,12 +22,7 @@ class RekapPresensiBloc extends Bloc<RekapPresensiEvent, RekapPresensiState> {
       final response = await getRekapPresensiUseCase.execute();
       final dataBulan = response.dataBulan;
       final initialIndex = dataBulan.isNotEmpty ? dataBulan.length - 1 : 0;
-      emit(
-        RekapPresensiLoaded(
-          dataBulan: dataBulan,
-          bulanIndex: initialIndex,
-        ),
-      );
+      emit(RekapPresensiLoaded(dataBulan: dataBulan, bulanIndex: initialIndex));
     } catch (e) {
       emit(RekapPresensiError(e.toString()));
     }
@@ -49,12 +44,7 @@ class RekapPresensiBloc extends Bloc<RekapPresensiEvent, RekapPresensiState> {
       if (currentIndex >= dataBulan.length) {
         currentIndex = dataBulan.length - 1;
       }
-      emit(
-        RekapPresensiLoaded(
-          dataBulan: dataBulan,
-          bulanIndex: currentIndex,
-        ),
-      );
+      emit(RekapPresensiLoaded(dataBulan: dataBulan, bulanIndex: currentIndex));
     } catch (e) {
       emit(RekapPresensiError(e.toString()));
     }

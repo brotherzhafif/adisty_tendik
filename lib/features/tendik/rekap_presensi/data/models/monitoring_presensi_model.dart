@@ -60,7 +60,8 @@ class MonitoringTanggalModel {
       hariNama: json['hari_nama'] ?? '',
       tanggalLengkap: json['tanggal_lengkap'] ?? '',
       labelTanggal: json['label_tanggal'] ?? '',
-      pegawai: (json['pegawai'] as List<dynamic>?)
+      pegawai:
+          (json['pegawai'] as List<dynamic>?)
               ?.map((e) => MonitoringPegawaiModel.fromJson(e))
               .toList() ??
           [],

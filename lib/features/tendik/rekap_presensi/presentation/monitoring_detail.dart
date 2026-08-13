@@ -106,8 +106,7 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
         .toList();
     if (dates.isEmpty) return;
 
-    final currentTanggal =
-        widget.listTanggal[_tanggalIndex];
+    final currentTanggal = widget.listTanggal[_tanggalIndex];
     final initialDate =
         _parseTanggalIndonesia(currentTanggal.tanggalLengkap) ?? dates.first;
     final firstDate = dates.reduce((a, b) => a.isBefore(b) ? a : b);
@@ -179,8 +178,7 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
     if (picked == null || !mounted) return;
 
     for (int i = 0; i < widget.listTanggal.length; i++) {
-      final d = _parseTanggalIndonesia(
-          widget.listTanggal[i].tanggalLengkap);
+      final d = _parseTanggalIndonesia(widget.listTanggal[i].tanggalLengkap);
       if (d != null &&
           d.year == picked.year &&
           d.month == picked.month &&
@@ -318,13 +316,15 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
       padding: const EdgeInsets.all(24),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       child: Column(
         children: [
-          const Icon(Icons.event_busy_rounded,
-              color: Color(0xFFAEB1B7), size: 48),
+          const Icon(
+            Icons.event_busy_rounded,
+            color: Color(0xFFAEB1B7),
+            size: 48,
+          ),
           const SizedBox(height: 12),
           const Text(
             'Data tidak tersedia',
@@ -356,7 +356,8 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
   static String _resolveAlamat(String lokasiNama) {
     final lower = lokasiNama.toLowerCase();
     if (lower.contains('kampus 1')) return 'Jl. Kapas 9, Semaki, Umbulharjo';
-    if (lower.contains('kampus 2')) return 'Jl. Pramuka 42, Sidikan, Umbulharjo';
+    if (lower.contains('kampus 2'))
+      return 'Jl. Pramuka 42, Sidikan, Umbulharjo';
     if (lower.contains('kampus 3')) return 'Jl. Prof. Dr. Soepomo, Janturan';
     if (lower.contains('kampus 5')) return 'Jl. Ki Ageng Pemanahan 19';
     // default → kampus 4
@@ -369,12 +370,22 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
 // ============================================================
 DateTime? _parseTanggalIndonesia(String label) {
   const bulanMap = {
-    'Januari': 1, 'Februari': 2, 'Maret': 3, 'April': 4,
-    'Mei': 5, 'Juni': 6, 'Juli': 7, 'Agustus': 8,
-    'September': 9, 'Oktober': 10, 'November': 11, 'Desember': 12,
+    'Januari': 1,
+    'Februari': 2,
+    'Maret': 3,
+    'April': 4,
+    'Mei': 5,
+    'Juni': 6,
+    'Juli': 7,
+    'Agustus': 8,
+    'September': 9,
+    'Oktober': 10,
+    'November': 11,
+    'Desember': 12,
   };
-  final cleaned =
-      label.contains(',') ? label.split(',').last.trim() : label.trim();
+  final cleaned = label.contains(',')
+      ? label.split(',').last.trim()
+      : label.trim();
   final parts = cleaned.split(' ');
   if (parts.length < 3) return null;
   final day = int.tryParse(parts[0]);
@@ -401,12 +412,12 @@ class _DateHeaderCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Container(
         width: double.infinity,
-        padding:
-            const EdgeInsets.symmetric(horizontal: 19, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 14),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20)),
+            borderRadius: BorderRadius.circular(20),
+          ),
           shadows: const [
             BoxShadow(
               color: Color(0x087281DF),
@@ -488,21 +499,23 @@ class _ProfileCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
-              color: Color(0x087281DF),
-              blurRadius: 4.11,
-              offset: Offset(0, 0.52)),
+            color: Color(0x087281DF),
+            blurRadius: 4.11,
+            offset: Offset(0, 0.52),
+          ),
           BoxShadow(
-              color: Color(0x0C7281DF),
-              blurRadius: 6.99,
-              offset: Offset(0, 1.78)),
+            color: Color(0x0C7281DF),
+            blurRadius: 6.99,
+            offset: Offset(0, 1.78),
+          ),
           BoxShadow(
-              color: Color(0x0F7281DF),
-              blurRadius: 10.20,
-              offset: Offset(0, 4.11)),
+            color: Color(0x0F7281DF),
+            blurRadius: 10.20,
+            offset: Offset(0, 4.11),
+          ),
         ],
       ),
       child: Row(
@@ -522,8 +535,7 @@ class _ProfileCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Color(0xFF2B86C3),
                 ),
-                child: const Icon(Icons.person,
-                    color: Colors.white, size: 32),
+                child: const Icon(Icons.person, color: Colors.white, size: 32),
               ),
             ),
           ),
@@ -568,11 +580,14 @@ class _ProfileCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 3),
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: ShapeDecoration(
                     color: statusBgColor,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4)),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                   ),
                   child: Text(
                     status,
@@ -620,7 +635,8 @@ class _InfoPresensiCard extends StatelessWidget {
           decoration: ShapeDecoration(
             color: iconBgColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40)),
+              borderRadius: BorderRadius.circular(40),
+            ),
           ),
           child: Icon(icon, color: iconColor, size: 20),
         ),
@@ -660,21 +676,23 @@ class _InfoPresensiCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
-              color: Color(0x087281DF),
-              blurRadius: 4.11,
-              offset: Offset(0, 0.52)),
+            color: Color(0x087281DF),
+            blurRadius: 4.11,
+            offset: Offset(0, 0.52),
+          ),
           BoxShadow(
-              color: Color(0x0C7281DF),
-              blurRadius: 6.99,
-              offset: Offset(0, 1.78)),
+            color: Color(0x0C7281DF),
+            blurRadius: 6.99,
+            offset: Offset(0, 1.78),
+          ),
           BoxShadow(
-              color: Color(0x0F7281DF),
-              blurRadius: 10.20,
-              offset: Offset(0, 4.11)),
+            color: Color(0x0F7281DF),
+            blurRadius: 10.20,
+            offset: Offset(0, 4.11),
+          ),
         ],
       ),
       child: Column(
@@ -731,17 +749,18 @@ class _AlasanKoreksiCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
-              color: Color(0x087281DF),
-              blurRadius: 4.11,
-              offset: Offset(0, 0.52)),
+            color: Color(0x087281DF),
+            blurRadius: 4.11,
+            offset: Offset(0, 0.52),
+          ),
           BoxShadow(
-              color: Color(0x0C7281DF),
-              blurRadius: 6.99,
-              offset: Offset(0, 1.78)),
+            color: Color(0x0C7281DF),
+            blurRadius: 6.99,
+            offset: Offset(0, 1.78),
+          ),
         ],
       ),
       child: Column(
@@ -755,10 +774,14 @@ class _AlasanKoreksiCard extends StatelessWidget {
                 decoration: ShapeDecoration(
                   color: const Color(0x1EFFAC2F),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(36)),
+                    borderRadius: BorderRadius.circular(36),
+                  ),
                 ),
-                child: const Icon(Icons.edit_note_rounded,
-                    color: Color(0xFFFFAC2F), size: 20),
+                child: const Icon(
+                  Icons.edit_note_rounded,
+                  color: Color(0xFFFFAC2F),
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 10),
               const Text(

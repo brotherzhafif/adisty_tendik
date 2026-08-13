@@ -17,10 +17,10 @@ class HomeProfileModel extends Equatable {
   });
 
   const HomeProfileModel.empty()
-      : name = 'Hi User',
-        greeting = 'Selamat datang di Adisty',
-        avatarUrl = '',
-        unreadNotificationCount = 0;
+    : name = 'Hi User',
+      greeting = 'Selamat datang di Adisty',
+      avatarUrl = '',
+      unreadNotificationCount = 0;
 
   factory HomeProfileModel.fromJson(Map<String, dynamic> json) {
     return HomeProfileModel(
@@ -42,11 +42,11 @@ class HomeProfileModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        greeting,
-        avatarUrl,
-        unreadNotificationCount,
-      ];
+    name,
+    greeting,
+    avatarUrl,
+    unreadNotificationCount,
+  ];
 }
 
 // ============================================================
@@ -74,14 +74,14 @@ class HomePresensiTodayModel extends Equatable {
   });
 
   const HomePresensiTodayModel.empty()
-      : date = '',
-        status = 'belum_presensi',
-        presensiCount = 0,
-        statusLabel = 'On Time',
-        lokasi = 'Kampus 4',
-        transport = 'Rp 20.000',
-        masuk = '-',
-        pulang = '-';
+    : date = '',
+      status = 'belum_presensi',
+      presensiCount = 0,
+      statusLabel = 'On Time',
+      lokasi = 'Kampus 4',
+      transport = 'Rp 20.000',
+      masuk = '-',
+      pulang = '-';
 
   factory HomePresensiTodayModel.fromJson(Map<String, dynamic> json) {
     return HomePresensiTodayModel(
@@ -111,15 +111,15 @@ class HomePresensiTodayModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        date,
-        status,
-        presensiCount,
-        statusLabel,
-        lokasi,
-        transport,
-        masuk,
-        pulang,
-      ];
+    date,
+    status,
+    presensiCount,
+    statusLabel,
+    lokasi,
+    transport,
+    masuk,
+    pulang,
+  ];
 }
 
 // ============================================================
@@ -147,7 +147,8 @@ class HomePresensiResponseModel extends Equatable {
           : const HomeProfileModel.empty(),
       presensiToday: json['presensi_today'] != null
           ? HomePresensiTodayModel.fromJson(
-              json['presensi_today'] as Map<String, dynamic>)
+              json['presensi_today'] as Map<String, dynamic>,
+            )
           : const HomePresensiTodayModel.empty(),
     );
   }

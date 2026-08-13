@@ -87,11 +87,14 @@ class _LogbookDetailPageState extends State<LogbookDetailPage> {
                         status: 'Tersimpan',
                         totalKategori: subAktivitasList.length,
                         currentKategoriIndex: _currentIndex + 1,
-                        currentKategoriNama: subAktivitasList.isNotEmpty &&
+                        currentKategoriNama:
+                            subAktivitasList.isNotEmpty &&
                                 _currentIndex < subAktivitasList.length
                             ? subAktivitasList[_currentIndex].judul
                             : '',
-                        listKategori: subAktivitasList.map((e) => e.judul).toList(),
+                        listKategori: subAktivitasList
+                            .map((e) => e.judul)
+                            .toList(),
                         onKategoriChanged: (newIndex) {
                           final targetPage = newIndex - 1;
                           _pageController.animateToPage(

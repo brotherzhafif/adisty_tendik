@@ -219,7 +219,12 @@ class _PresensiBox extends StatelessWidget {
         children: [
           // Label (Masuk / Pulang / Shift)
           Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 4),
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: 4,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -238,7 +243,12 @@ class _PresensiBox extends StatelessWidget {
 
           // Jam
           Padding(
-            padding: const EdgeInsets.only(top: 4, left: 10, right: 10, bottom: 10),
+            padding: const EdgeInsets.only(
+              top: 4,
+              left: 10,
+              right: 10,
+              bottom: 10,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

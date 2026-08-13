@@ -25,7 +25,9 @@ class _InternetGuardState extends State<InternetGuard> {
   void initState() {
     super.initState();
     _checkInitialConnectivity();
-    ValidationService.instance.connectivityStream.listen(_onConnectivityChanged);
+    ValidationService.instance.connectivityStream.listen(
+      _onConnectivityChanged,
+    );
   }
 
   Future<void> _checkInitialConnectivity() async {

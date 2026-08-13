@@ -12,10 +12,7 @@ class SkpBloc extends Bloc<SkpEvent, SkpState> {
     on<ChangeYearSkpEvent>(_onChangeYear);
   }
 
-  Future<void> _onFetchSkp(
-    FetchSkpEvent event,
-    Emitter<SkpState> emit,
-  ) async {
+  Future<void> _onFetchSkp(FetchSkpEvent event, Emitter<SkpState> emit) async {
     emit(const SkpLoading());
     try {
       final response = await getSkpUseCase.execute();
@@ -42,14 +39,16 @@ class SkpBloc extends Bloc<SkpEvent, SkpState> {
   ) async {
     try {
       final response = await getSkpUseCase.execute();
-      final currentIndex =
-          state is SkpLoaded ? (state as SkpLoaded).activeYearIndex : 1;
+      final currentIndex = state is SkpLoaded
+          ? (state as SkpLoaded).activeYearIndex
+          : 1;
       emit(
         SkpLoaded(
           profile: response.profile,
           years: response.years,
-          activeYearIndex:
-              currentIndex < response.years.length ? currentIndex : 0,
+          activeYearIndex: currentIndex < response.years.length
+              ? currentIndex
+              : 0,
           skpData: response.skpData,
         ),
       );
@@ -58,10 +57,7 @@ class SkpBloc extends Bloc<SkpEvent, SkpState> {
     }
   }
 
-  void _onChangeYear(
-    ChangeYearSkpEvent event,
-    Emitter<SkpState> emit,
-  ) {
+  void _onChangeYear(ChangeYearSkpEvent event, Emitter<SkpState> emit) {
     if (state is SkpLoaded) {
       final currentState = state as SkpLoaded;
       emit(currentState.copyWith(activeYearIndex: event.activeYearIndex));

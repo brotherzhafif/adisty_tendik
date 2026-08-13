@@ -26,7 +26,8 @@ class PresensiHariIniProvider implements IPresensiHariIniProvider {
       return PresensiHariIniResponseModel.fromJson(jsonMap);
     } catch (e) {
       throw PresensiHariIniException(
-          'Gagal membaca data presensi hari ini: ${e.toString()}');
+        'Gagal membaca data presensi hari ini: ${e.toString()}',
+      );
     }
   }
 }

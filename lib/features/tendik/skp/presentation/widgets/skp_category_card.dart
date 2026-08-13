@@ -140,7 +140,9 @@ class SkpCategoryCard extends StatelessWidget {
                       ),
                       Text(
                         weight,
-                        style: AppTextStyle.bodySm.copyWith(color: effectiveThemeColor),
+                        style: AppTextStyle.bodySm.copyWith(
+                          color: effectiveThemeColor,
+                        ),
                       ),
                     ],
                   ),

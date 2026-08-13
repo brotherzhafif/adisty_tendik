@@ -8,7 +8,7 @@ class PresensiHariIniBloc
   final GetPresensiHariIniUseCase getPresensiHariIniUseCase;
 
   PresensiHariIniBloc({required this.getPresensiHariIniUseCase})
-      : super(const PresensiHariIniInitial()) {
+    : super(const PresensiHariIniInitial()) {
     on<FetchPresensiHariIniEvent>(_onFetchPresensiHariIni);
     on<RefreshPresensiHariIniEvent>(_onRefreshPresensiHariIni);
   }

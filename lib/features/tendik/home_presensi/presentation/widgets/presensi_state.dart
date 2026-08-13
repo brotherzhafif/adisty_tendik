@@ -1,4 +1,1 @@
-enum PresensiState {
-  belumPresensi,
-  pulang,
-}
+enum PresensiState { belumPresensi, pulang }

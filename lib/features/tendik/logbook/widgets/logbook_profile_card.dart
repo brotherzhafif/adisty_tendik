@@ -66,7 +66,8 @@ class _ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool hasValidUrl = photoUrl != null &&
+    final bool hasValidUrl =
+        photoUrl != null &&
         photoUrl!.isNotEmpty &&
         !photoUrl!.contains('placehold.co');
 
@@ -104,11 +105,7 @@ class _DefaultAvatarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Icon(
-        Icons.person_rounded,
-        color: Colors.white,
-        size: 38,
-      ),
+      child: Icon(Icons.person_rounded, color: Colors.white, size: 38),
     );
   }
 }

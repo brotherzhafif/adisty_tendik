@@ -32,9 +32,7 @@ class InfoPresensiCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
             color: Color(0x087281DF),
@@ -126,10 +124,7 @@ class InfoPresensiCard extends StatelessWidget {
         border: isLast
             ? null
             : const Border(
-                bottom: BorderSide(
-                  width: 0.50,
-                  color: Color(0xFFE0E0E0),
-                ),
+                bottom: BorderSide(width: 0.50, color: Color(0xFFE0E0E0)),
               ),
       ),
       child: Row(
@@ -146,13 +141,7 @@ class InfoPresensiCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(40),
               ),
             ),
-            child: Center(
-              child: Icon(
-                icon,
-                color: iconColor,
-                size: 20,
-              ),
-            ),
+            child: Center(child: Icon(icon, color: iconColor, size: 20)),
           ),
           const SizedBox(width: 16),
           Column(

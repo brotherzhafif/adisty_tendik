@@ -1,53 +1,61 @@
 import 'package:flutter/material.dart';
 
 // ============================================================
-// WIDGET REUSABLE: Modal Picker Bulan Rekap Presensi (Searchable)
-// Modal bottom sheet dengan search bar + daftar bulan & tahun
+// WIDGET REUSABLE: Modal Picker Searchable
+// Modal bottom sheet dengan search bar + daftar item (misal: bulan, tahun)
 // ============================================================
-class BulanPickerModal extends StatefulWidget {
-  final List<String> listBulan;
-  final String selectedBulan;
+class SearchablePickerModal extends StatefulWidget {
+  final List<String> items;
+  final String selectedItem;
+  final String title;
+  final String hintText;
 
-  const BulanPickerModal({
+  const SearchablePickerModal({
     super.key,
-    required this.listBulan,
-    required this.selectedBulan,
+    required this.items,
+    required this.selectedItem,
+    required this.title,
+    required this.hintText,
   });
 
   /// Helper static untuk menampilkan modal bottom sheet
   static Future<int?> show(
     BuildContext context, {
-    required List<String> listBulan,
-    required String selectedBulan,
+    required List<String> items,
+    required String selectedItem,
+    required String title,
+    required String hintText,
   }) async {
     final result = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => BulanPickerModal(
-        listBulan: listBulan,
-        selectedBulan: selectedBulan,
+      builder: (context) => SearchablePickerModal(
+        items: items,
+        selectedItem: selectedItem,
+        title: title,
+        hintText: hintText,
       ),
     );
     if (result != null) {
-      final index = listBulan.indexOf(result);
+      final index = items.indexOf(result);
       return index != -1 ? index : null;
     }
     return null;
   }
 
   @override
-  State<BulanPickerModal> createState() => _BulanPickerModalState();
+  State<SearchablePickerModal> createState() => _SearchablePickerModalState();
 }
 
-class _BulanPickerModalState extends State<BulanPickerModal> {
+class _SearchablePickerModalState extends State<SearchablePickerModal> {
   late List<String> _filtered;
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _filtered = List.from(widget.listBulan);
+    _filtered = List.from(widget.items);
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -55,9 +63,9 @@ class _BulanPickerModalState extends State<BulanPickerModal> {
     final query = _searchController.text.toLowerCase().trim();
     setState(() {
       if (query.isEmpty) {
-        _filtered = List.from(widget.listBulan);
+        _filtered = List.from(widget.items);
       } else {
-        _filtered = widget.listBulan
+        _filtered = widget.items
             .where((b) => b.toLowerCase().contains(query))
             .toList();
       }
@@ -107,10 +115,10 @@ class _BulanPickerModalState extends State<BulanPickerModal> {
                 ),
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Pilih Bulan Rekap Presensi',
-                        style: TextStyle(
+                        widget.title,
+                        style: const TextStyle(
                           color: Color(0xFF293241),
                           fontSize: 16,
                           fontFamily: 'Poppins',
@@ -145,7 +153,7 @@ class _BulanPickerModalState extends State<BulanPickerModal> {
                     fontWeight: FontWeight.w500,
                   ),
                   decoration: InputDecoration(
-                    hintText: 'Cari bulan dan tahun...',
+                    hintText: widget.hintText,
                     hintStyle: const TextStyle(
                       color: Color(0xFFAEB1B7),
                       fontSize: 13,
@@ -182,12 +190,12 @@ class _BulanPickerModalState extends State<BulanPickerModal> {
 
               const Divider(height: 1, color: Color(0xFFEEEFF1)),
 
-              // --- Daftar Bulan & Tahun ---
+              // --- Daftar Item ---
               Expanded(
                 child: _filtered.isEmpty
                     ? const Center(
                         child: Text(
-                          'Bulan tidak ditemukan',
+                          'Item tidak ditemukan',
                           style: TextStyle(
                             color: Color(0xFFAEB1B7),
                             fontSize: 13,
@@ -206,10 +214,10 @@ class _BulanPickerModalState extends State<BulanPickerModal> {
                           color: Color(0xFFF1F2F4),
                         ),
                         itemBuilder: (context, index) {
-                          final bulanLabel = _filtered[index];
-                          final isSelected = bulanLabel == widget.selectedBulan;
+                          final itemLabel = _filtered[index];
+                          final isSelected = itemLabel == widget.selectedItem;
                           return InkWell(
-                            onTap: () => Navigator.of(context).pop(bulanLabel),
+                            onTap: () => Navigator.of(context).pop(itemLabel),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -219,7 +227,7 @@ class _BulanPickerModalState extends State<BulanPickerModal> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      bulanLabel,
+                                      itemLabel,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Nunito',

@@ -12,8 +12,8 @@ class HomePresensiBloc extends Bloc<HomePresensiEvent, HomePresensiState> {
   HomePresensiBloc({
     required this.getHomePresensiUseCase,
     DeviceContextService? deviceContextService,
-  })  : deviceContextService = deviceContextService ?? DeviceContextService(),
-        super(const HomePresensiInitial()) {
+  }) : deviceContextService = deviceContextService ?? DeviceContextService(),
+       super(const HomePresensiInitial()) {
     on<FetchHomePresensiEvent>(_onFetchHomePresensi);
     on<RefreshHomePresensiEvent>(_onRefreshHomePresensi);
     on<AdvancePresensiStateEvent>(_onAdvancePresensiState);
@@ -53,7 +53,8 @@ class HomePresensiBloc extends Bloc<HomePresensiEvent, HomePresensiState> {
         HomePresensiLoaded(
           profile: response.profile,
           presensiToday: response.presensiToday,
-          presensiState: currentState?.presensiState ?? PresensiState.belumPresensi,
+          presensiState:
+              currentState?.presensiState ?? PresensiState.belumPresensi,
           deviceContext: currentState?.deviceContext,
           deviceContextError: currentState?.deviceContextError,
         ),
@@ -101,14 +102,14 @@ class HomePresensiBloc extends Bloc<HomePresensiEvent, HomePresensiState> {
       final currentState = state as HomePresensiLoaded;
       try {
         final deviceContext = await deviceContextService.getDeviceContext();
-        emit(currentState.copyWith(
-          deviceContext: deviceContext,
-          deviceContextError: null,
-        ));
+        emit(
+          currentState.copyWith(
+            deviceContext: deviceContext,
+            deviceContextError: null,
+          ),
+        );
       } catch (e) {
-        emit(currentState.copyWith(
-          deviceContextError: e.toString(),
-        ));
+        emit(currentState.copyWith(deviceContextError: e.toString()));
       }
     }
   }

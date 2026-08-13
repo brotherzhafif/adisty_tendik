@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 // ============================================================
 // ENUM: TIPE DIALOG APLIKASI
@@ -73,10 +73,7 @@ class _AppDialog extends StatelessWidget {
             // Ilustrasi kucing
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 160),
-              child: Image.asset(
-                config.imagePath,
-                fit: BoxFit.contain,
-              ),
+              child: Image.asset(config.imagePath, fit: BoxFit.contain),
             ),
             const SizedBox(height: 20),
 
@@ -134,7 +131,10 @@ class _AppDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
               ),
               child: Text(
                 buttonLabel,

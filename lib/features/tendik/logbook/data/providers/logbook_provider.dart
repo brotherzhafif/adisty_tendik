@@ -10,9 +10,7 @@ abstract class ILogbookProvider {
 class LogbookProvider implements ILogbookProvider {
   final String assetPath;
 
-  const LogbookProvider({
-    this.assetPath = 'assets/data/logbook.json',
-  });
+  const LogbookProvider({this.assetPath = 'assets/data/logbook.json'});
 
   @override
   Future<LogbookResponseModel> fetchLogbookData() async {

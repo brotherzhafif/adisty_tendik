@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 import '../../data/models/rekap_presensi_model.dart';
-
-import 'bulan_picker_modal.dart';
+import 'package:adisty_tendik_module/core/widgets/searchable_picker_modal.dart';
 
 // ============================================================
 // KOMPONEN: CARD STATISTIK TENDIK (dengan swipe & tombol ganti bulan)
@@ -62,7 +61,8 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
 
   @override
   Widget build(BuildContext context) {
-    final bulanAktif = widget.dataBulan.isNotEmpty &&
+    final bulanAktif =
+        widget.dataBulan.isNotEmpty &&
             widget.bulanIndex >= 0 &&
             widget.bulanIndex < widget.dataBulan.length
         ? widget.dataBulan[widget.bulanIndex]
@@ -141,13 +141,8 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
                 children: [
                   // Tombol kiri
                   IconButton(
-                    icon: const Icon(
-                      Icons.chevron_left,
-                      size: 28,
-                    ),
-                    color: canGoPrev
-                        ? Colors.white
-                        : const Color(0x66FFFFFF),
+                    icon: const Icon(Icons.chevron_left, size: 28),
+                    color: canGoPrev ? Colors.white : const Color(0x66FFFFFF),
                     onPressed: canGoPrev
                         ? () => widget.onBulanChanged(widget.bulanIndex - 1)
                         : null,
@@ -160,10 +155,12 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
                         final listBulanLabels = widget.dataBulan
                             .map((b) => b.labelBulan)
                             .toList();
-                        final selectedIndex = await BulanPickerModal.show(
+                        final selectedIndex = await SearchablePickerModal.show(
                           context,
-                          listBulan: listBulanLabels,
-                          selectedBulan: bulanAktif.labelBulan,
+                          items: listBulanLabels,
+                          selectedItem: bulanAktif.labelBulan,
+                          title: 'Pilih Bulan Rekap Presensi',
+                          hintText: 'Cari bulan dan tahun...',
                         );
                         if (selectedIndex != null && selectedIndex != -1) {
                           widget.onBulanChanged(selectedIndex);
@@ -180,15 +177,16 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
                                   ? const Offset(-0.4, 0)
                                   : const Offset(0.4, 0);
                               return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: offset,
-                                  end: Offset.zero,
-                                ).animate(
-                                  CurvedAnimation(
-                                    parent: animation,
-                                    curve: Curves.easeOutCubic,
-                                  ),
-                                ),
+                                position:
+                                    Tween<Offset>(
+                                      begin: offset,
+                                      end: Offset.zero,
+                                    ).animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeOutCubic,
+                                      ),
+                                    ),
                                 child: FadeTransition(
                                   opacity: animation,
                                   child: child,
@@ -215,13 +213,8 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
 
                   // Tombol kanan
                   IconButton(
-                    icon: const Icon(
-                      Icons.chevron_right,
-                      size: 28,
-                    ),
-                    color: canGoNext
-                        ? Colors.white
-                        : const Color(0x66FFFFFF),
+                    icon: const Icon(Icons.chevron_right, size: 28),
+                    color: canGoNext ? Colors.white : const Color(0x66FFFFFF),
                     onPressed: canGoNext
                         ? () => widget.onBulanChanged(widget.bulanIndex + 1)
                         : null,
@@ -252,7 +245,10 @@ class _StatistikTendikCardState extends State<StatistikTendikCard>
               // ---- Statistik utama ----
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 280),
-                child: _buildStats(bulanAktif, key: ValueKey(bulanAktif.labelBulan)),
+                child: _buildStats(
+                  bulanAktif,
+                  key: ValueKey(bulanAktif.labelBulan),
+                ),
               ),
             ],
           ),

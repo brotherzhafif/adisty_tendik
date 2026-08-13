@@ -34,7 +34,9 @@ class SkpLoaded extends SkpState {
 
   /// Getter penolong untuk mengambil data tahun yang sedang aktif dipiliih pengguna
   SkpYearDataModel get currentYearData {
-    if (years.isEmpty || activeYearIndex < 0 || activeYearIndex >= years.length) {
+    if (years.isEmpty ||
+        activeYearIndex < 0 ||
+        activeYearIndex >= years.length) {
       return const SkpYearDataModel.empty();
     }
     final year = years[activeYearIndex];

@@ -20,8 +20,9 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
   // State Inputs
   TimeOfDay _jamMasuk = const TimeOfDay(hour: 7, minute: 30);
   TimeOfDay _jamPulang = const TimeOfDay(hour: 16, minute: 0);
-  final TextEditingController _alasanController =
-      TextEditingController(text: 'Saya lupa melakukan presensi');
+  final TextEditingController _alasanController = TextEditingController(
+    text: 'Saya lupa melakukan presensi',
+  );
   final List<String> _uploadedFiles = [];
 
   // Helper format jam ke string HH:mm
@@ -370,15 +371,21 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: Color(0xFF99A1AF)),
+                            borderSide: const BorderSide(
+                              color: Color(0xFF99A1AF),
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: Color(0xFF99A1AF)),
+                            borderSide: const BorderSide(
+                              color: Color(0xFF99A1AF),
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: Color(0xFF2B86C3)),
+                            borderSide: const BorderSide(
+                              color: Color(0xFF2B86C3),
+                            ),
                           ),
                         ),
                         validator: (value) {
@@ -531,9 +538,13 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
               ),
               const Row(
                 children: [
-                  Expanded(child: Divider(height: 16, color: Color(0xFFD4E1EE))),
+                  Expanded(
+                    child: Divider(height: 16, color: Color(0xFFD4E1EE)),
+                  ),
                   SizedBox(width: 16),
-                  Expanded(child: Divider(height: 16, color: Color(0xFFD4E1EE))),
+                  Expanded(
+                    child: Divider(height: 16, color: Color(0xFFD4E1EE)),
+                  ),
                 ],
               ),
               Row(
@@ -776,5 +787,3 @@ class _InputFieldLabel extends StatelessWidget {
     );
   }
 }
-
-

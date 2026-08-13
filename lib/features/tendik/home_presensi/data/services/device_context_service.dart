@@ -27,11 +27,9 @@ class DeviceContextService {
   final DeviceInfoPlugin _deviceInfo;
   final NetworkInfo _networkInfo;
 
-  DeviceContextService({
-    DeviceInfoPlugin? deviceInfo,
-    NetworkInfo? networkInfo,
-  })  : _deviceInfo = deviceInfo ?? DeviceInfoPlugin(),
-        _networkInfo = networkInfo ?? NetworkInfo();
+  DeviceContextService({DeviceInfoPlugin? deviceInfo, NetworkInfo? networkInfo})
+    : _deviceInfo = deviceInfo ?? DeviceInfoPlugin(),
+      _networkInfo = networkInfo ?? NetworkInfo();
 
   // ---------------------------------------------------------------------------
   // Public API

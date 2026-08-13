@@ -179,10 +179,7 @@ class _ActivityContent extends StatelessWidget {
             if (jumlahSubAktivitas > 1) ...[
               const SizedBox(width: 6),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 6,
-                  vertical: 2,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: ShapeDecoration(
                   color: const Color(0x192B86C3),
                   shape: RoundedRectangleBorder(

@@ -27,15 +27,15 @@ class PresensiHariIniDetailModel extends Equatable {
   });
 
   const PresensiHariIniDetailModel.empty()
-      : date = '',
-        statusPresensi = '',
-        location = '',
-        latitude = -7.8331,
-        longitude = 110.3831,
-        transport = '',
-        jamMasuk = '',
-        jamPulang = '',
-        maxHariKoreksi = 3;
+    : date = '',
+      statusPresensi = '',
+      location = '',
+      latitude = -7.8331,
+      longitude = 110.3831,
+      transport = '',
+      jamMasuk = '',
+      jamPulang = '',
+      maxHariKoreksi = 3;
 
   factory PresensiHariIniDetailModel.fromJson(Map<String, dynamic> json) {
     return PresensiHariIniDetailModel(
@@ -67,16 +67,16 @@ class PresensiHariIniDetailModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        date,
-        statusPresensi,
-        location,
-        latitude,
-        longitude,
-        transport,
-        jamMasuk,
-        jamPulang,
-        maxHariKoreksi,
-      ];
+    date,
+    statusPresensi,
+    location,
+    latitude,
+    longitude,
+    transport,
+    jamMasuk,
+    jamPulang,
+    maxHariKoreksi,
+  ];
 }
 
 // ============================================================
@@ -139,17 +139,17 @@ class KoreksiPengajuanModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        status,
-        date,
-        type,
-        diajukan,
-        perubahanLabel,
-        oldValue,
-        newValue,
-        alasan,
-        catatanVerifikator,
-      ];
+    id,
+    status,
+    date,
+    type,
+    diajukan,
+    perubahanLabel,
+    oldValue,
+    newValue,
+    alasan,
+    catatanVerifikator,
+  ];
 }
 
 // ============================================================
@@ -174,11 +174,15 @@ class PresensiHariIniResponseModel extends Equatable {
       message: json['message'] as String? ?? '',
       detail: json['detail'] != null
           ? PresensiHariIniDetailModel.fromJson(
-              json['detail'] as Map<String, dynamic>)
+              json['detail'] as Map<String, dynamic>,
+            )
           : const PresensiHariIniDetailModel.empty(),
-      riwayatKoreksi: (json['riwayat_koreksi'] as List<dynamic>?)
-              ?.map((e) =>
-                  KoreksiPengajuanModel.fromJson(e as Map<String, dynamic>))
+      riwayatKoreksi:
+          (json['riwayat_koreksi'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    KoreksiPengajuanModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           const [],
     );

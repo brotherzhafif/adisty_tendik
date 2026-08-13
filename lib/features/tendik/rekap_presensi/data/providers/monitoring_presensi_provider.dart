@@ -4,8 +4,9 @@ import '../models/monitoring_presensi_model.dart';
 
 class MonitoringPresensiProvider {
   Future<List<MonitoringTanggalModel>> getMonitoringData() async {
-    final String response =
-        await rootBundle.loadString('assets/data/monitoring_presensi.json');
+    final String response = await rootBundle.loadString(
+      'assets/data/monitoring_presensi.json',
+    );
     final Map<String, dynamic> data = json.decode(response);
     final List<dynamic> listTanggal = data['data_tanggal'] ?? [];
     return listTanggal

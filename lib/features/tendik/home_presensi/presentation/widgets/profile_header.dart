@@ -11,8 +11,12 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nameText = profile?.name.isNotEmpty == true ? profile!.name : 'Hi Agung';
-    final greetingText = profile?.greeting.isNotEmpty == true ? profile!.greeting : 'Selamat datang di Adisty';
+    final nameText = profile?.name.isNotEmpty == true
+        ? profile!.name
+        : 'Hi Agung';
+    final greetingText = profile?.greeting.isNotEmpty == true
+        ? profile!.greeting
+        : 'Selamat datang di Adisty';
     final unreadCount = profile?.unreadNotificationCount ?? 3;
 
     return Row(
@@ -42,7 +46,8 @@ class ProfileHeader extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(64),
-                child: (profile?.avatarUrl != null &&
+                child:
+                    (profile?.avatarUrl != null &&
                         profile!.avatarUrl.isNotEmpty &&
                         !profile!.avatarUrl.contains('placehold.co'))
                     ? Image.network(
@@ -52,12 +57,12 @@ class ProfileHeader extends StatelessWidget {
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             const Center(
-                          child: Icon(
-                            Icons.person_rounded,
-                            color: Colors.white,
-                            size: 38,
-                          ),
-                        ),
+                              child: Icon(
+                                Icons.person_rounded,
+                                color: Colors.white,
+                                size: 38,
+                              ),
+                            ),
                       )
                     : const Center(
                         child: Icon(

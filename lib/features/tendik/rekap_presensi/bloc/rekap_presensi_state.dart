@@ -23,27 +23,24 @@ class RekapPresensiLoaded extends RekapPresensiState {
   final List<RekapBulanDataModel> dataBulan;
   final int bulanIndex;
 
-  const RekapPresensiLoaded({
-    required this.dataBulan,
-    this.bulanIndex = 0,
-  });
+  const RekapPresensiLoaded({required this.dataBulan, this.bulanIndex = 0});
 
   RekapBulanDataModel get currentBulanData =>
       dataBulan.isNotEmpty && bulanIndex >= 0 && bulanIndex < dataBulan.length
-          ? dataBulan[bulanIndex]
-          : const RekapBulanDataModel(
-              labelBulan: 'Oktober 2026',
-              month: 10,
-              year: 2026,
-              totalHariKerja: 0,
-              persentase: 0,
-              onTime: 0,
-              late: 0,
-              absen: 0,
-              totalTransport: '0',
-              totalJam: '00:00',
-              logs: [],
-            );
+      ? dataBulan[bulanIndex]
+      : const RekapBulanDataModel(
+          labelBulan: 'Oktober 2026',
+          month: 10,
+          year: 2026,
+          totalHariKerja: 0,
+          persentase: 0,
+          onTime: 0,
+          late: 0,
+          absen: 0,
+          totalTransport: '0',
+          totalJam: '00:00',
+          logs: [],
+        );
 
   RekapPresensiLoaded copyWith({
     List<RekapBulanDataModel>? dataBulan,

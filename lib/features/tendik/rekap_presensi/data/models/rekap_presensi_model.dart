@@ -43,7 +43,8 @@ class PresensiLogModel extends Equatable {
       dayName: json['day_name'] as String? ?? '',
       dayNum: json['day_num'] as String? ?? '',
       status: json['status'] as String? ?? '',
-      badges: (json['badges'] as List<dynamic>?)
+      badges:
+          (json['badges'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           const [],
@@ -79,21 +80,21 @@ class PresensiLogModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        date,
-        dayName,
-        dayNum,
-        status,
-        badges,
-        location,
-        latitude,
-        longitude,
-        transport,
-        masuk,
-        pulang,
-        durasi,
-        catatan,
-      ];
+    id,
+    date,
+    dayName,
+    dayNum,
+    status,
+    badges,
+    location,
+    latitude,
+    longitude,
+    transport,
+    masuk,
+    pulang,
+    durasi,
+    catatan,
+  ];
 }
 
 // ============================================================
@@ -144,7 +145,8 @@ class RekapBulanDataModel extends Equatable {
       absen: (json['absen'] as num?)?.toInt() ?? 2,
       totalTransport: json['total_transport'] as String? ?? '0',
       totalJam: json['total_jam'] as String? ?? '00:00',
-      logs: (json['logs'] as List<dynamic>?)
+      logs:
+          (json['logs'] as List<dynamic>?)
               ?.map((e) => PresensiLogModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
@@ -169,18 +171,18 @@ class RekapBulanDataModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        labelBulan,
-        month,
-        year,
-        totalHariKerja,
-        persentase,
-        onTime,
-        late,
-        absen,
-        totalTransport,
-        totalJam,
-        logs,
-      ];
+    labelBulan,
+    month,
+    year,
+    totalHariKerja,
+    persentase,
+    onTime,
+    late,
+    absen,
+    totalTransport,
+    totalJam,
+    logs,
+  ];
 }
 
 // ============================================================
@@ -204,7 +206,8 @@ class RekapPresensiResponseModel extends Equatable {
           .map((e) => RekapBulanDataModel.fromJson(e as Map<String, dynamic>))
           .toList();
     } else {
-      final logs = (json['logs'] as List<dynamic>?)
+      final logs =
+          (json['logs'] as List<dynamic>?)
               ?.map((e) => PresensiLogModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [];

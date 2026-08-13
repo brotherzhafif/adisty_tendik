@@ -15,7 +15,7 @@ import 'widgets/logbook_activity_item.dart';
 import 'widgets/logbook_month_stats.dart';
 import 'detail.dart';
 import 'form.dart';
-import '../rekap_presensi/presentation/widgets/bulan_picker_modal.dart';
+import 'package:adisty_tendik_module/core/widgets/searchable_picker_modal.dart';
 
 // ============================================================
 // TYPEDEF: Compatibility Alias untuk LogbookBulanDataModel
@@ -396,10 +396,12 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
                       final listBulanLabels = widget.dataBulan
                           .map((b) => b.labelBulan)
                           .toList();
-                      final selectedIndex = await BulanPickerModal.show(
+                      final selectedIndex = await SearchablePickerModal.show(
                         context,
-                        listBulan: listBulanLabels,
-                        selectedBulan: bulanAktif.labelBulan,
+                        items: listBulanLabels,
+                        selectedItem: bulanAktif.labelBulan,
+                        title: 'Pilih Bulan Logbook',
+                        hintText: 'Cari bulan...',
                       );
                       if (selectedIndex != null && selectedIndex != -1) {
                         widget.onBulanChanged(selectedIndex);

@@ -29,15 +29,15 @@ class LayananAdistySection extends StatelessWidget {
             decoration: const BoxDecoration(color: Color(0xFFEEF1F3)),
           ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Layanan Adisty',
-                style: AppTextStyle.headingXl.copyWith(
-                  color: const Color(0xFF293241),
-                ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'Layanan Adisty',
+              style: AppTextStyle.headingXl.copyWith(
+                color: const Color(0xFF293241),
               ),
             ),
+          ),
 
           // Daftar Card Layanan (vertikal, full-width)
           Padding(

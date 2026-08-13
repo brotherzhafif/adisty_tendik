@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 // ============================================================
 // TYPOGRAPHY SYSTEM — AppTextStyle
@@ -19,8 +19,8 @@ abstract class AppTextStyle {
   AppTextStyle._();
 
   // --- Font Families ---
-  static const String _poppins   = 'Poppins';
-  static const String _nunito    = 'Nunito';
+  static const String _poppins = 'Poppins';
+  static const String _nunito = 'Nunito';
   static const String _nunitoSans = 'Nunito Sans';
 
   // ==========================================================

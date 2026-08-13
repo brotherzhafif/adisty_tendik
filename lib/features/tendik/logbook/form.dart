@@ -259,7 +259,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
     'Pengujian Algoritma & Validasi Data Form - Utama Programmer',
     'Optimasi Performa Query & Database Refactoring - Utama Programmer',
     'Penyusunan Dokumentasi API & System Architecture - Utama Programmer',
-    'Melakukan Code Review dan Refactoring - Utama Programmer'
+    'Melakukan Code Review dan Refactoring - Utama Programmer',
   ];
 
   // Helper Kategori Aktivitas Picker (Modal Bottom Sheet dari Data Aktivitas Hari Terpilih)

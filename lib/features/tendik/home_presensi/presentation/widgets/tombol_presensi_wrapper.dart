@@ -121,9 +121,7 @@ class _TombolPresensiWrapperState extends State<TombolPresensiWrapper> {
                 SizedBox(width: 8),
                 Text(
                   'Memvalidasi kondisi...',
-                  style: AppTextStyle.bodySm.copyWith(
-                    color: Color(0xFF5F6570),
-                  ),
+                  style: AppTextStyle.bodySm.copyWith(color: Color(0xFF5F6570)),
                 ),
               ],
             ),

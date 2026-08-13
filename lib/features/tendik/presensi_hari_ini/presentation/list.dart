@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detail.dart';
 import 'widgets/riwayat_pengajuan_item.dart';
-import '../../rekap_presensi/presentation/widgets/bulan_picker_modal.dart';
+import 'package:adisty_tendik_module/core/widgets/searchable_picker_modal.dart';
 
 // ============================================================
 // DATA MODEL: RIWAYAT PENGAJUAN DATA ITEM & BULAN
@@ -30,10 +30,7 @@ class RiwayatBulanDataModel {
   final String labelBulan;
   final List<RiwayatPengajuanData> items;
 
-  const RiwayatBulanDataModel({
-    required this.labelBulan,
-    required this.items,
-  });
+  const RiwayatBulanDataModel({required this.labelBulan, required this.items});
 
   int get year {
     final parts = labelBulan.trim().split(' ');
@@ -281,9 +278,7 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
       (b) => b.year == now.year && b.month == now.month,
     );
     if (defaultIdx == -1) {
-      defaultIdx = _daftarBulanDummy.lastIndexWhere(
-        (b) => !b.isAfterDate(now),
-      );
+      defaultIdx = _daftarBulanDummy.lastIndexWhere((b) => !b.isAfterDate(now));
     }
     if (defaultIdx == -1) {
       defaultIdx = _daftarBulanDummy.isNotEmpty ? 0 : 0;
@@ -297,7 +292,8 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bulanAktif = _daftarBulanDummy.isNotEmpty &&
+    final bulanAktif =
+        _daftarBulanDummy.isNotEmpty &&
             _currentIndex >= 0 &&
             _currentIndex < _daftarBulanDummy.length
         ? _daftarBulanDummy[_currentIndex]
@@ -363,8 +359,10 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
                 // --- Card Selector Bulan & Tahun ---
                 Container(
                   width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -409,11 +407,14 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
                             final listBulanLabels = _daftarBulanDummy
                                 .map((b) => b.labelBulan)
                                 .toList();
-                            final selectedIndex = await BulanPickerModal.show(
-                              context,
-                              listBulan: listBulanLabels,
-                              selectedBulan: bulanAktif.labelBulan,
-                            );
+                            final selectedIndex =
+                                await SearchablePickerModal.show(
+                                  context,
+                                  items: listBulanLabels,
+                                  selectedItem: bulanAktif.labelBulan,
+                                  title: 'Pilih Bulan',
+                                  hintText: 'Cari bulan...',
+                                );
                             if (selectedIndex != null && selectedIndex != -1) {
                               setState(() {
                                 _slideLeft = selectedIndex < _currentIndex;
@@ -432,15 +433,16 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
                                       ? const Offset(-0.4, 0)
                                       : const Offset(0.4, 0);
                                   return SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: offset,
-                                      end: Offset.zero,
-                                    ).animate(
-                                      CurvedAnimation(
-                                        parent: animation,
-                                        curve: Curves.easeOutCubic,
-                                      ),
-                                    ),
+                                    position:
+                                        Tween<Offset>(
+                                          begin: offset,
+                                          end: Offset.zero,
+                                        ).animate(
+                                          CurvedAnimation(
+                                            parent: animation,
+                                            curve: Curves.easeOutCubic,
+                                          ),
+                                        ),
                                     child: FadeTransition(
                                       opacity: animation,
                                       child: child,
@@ -551,4 +553,3 @@ class _RiwayatKoreksiPageState extends State<RiwayatKoreksiPage> {
     );
   }
 }
-

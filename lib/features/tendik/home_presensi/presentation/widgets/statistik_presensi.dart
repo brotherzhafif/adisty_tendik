@@ -106,7 +106,9 @@ class StatistikBadge extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
                   label,
-                  style: AppTextStyle.bodySm.copyWith(color: const Color(0xFF293241)),
+                  style: AppTextStyle.bodySm.copyWith(
+                    color: const Color(0xFF293241),
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -114,9 +116,11 @@ class StatistikBadge extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
                   value,
-                  style: (value.length <= 2 ? AppTextStyle.headingXl : AppTextStyle.headingLg).copyWith(
-                    color: valueColor,
-                  ),
+                  style:
+                      (value.length <= 2
+                              ? AppTextStyle.headingXl
+                              : AppTextStyle.headingLg)
+                          .copyWith(color: valueColor),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

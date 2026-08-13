@@ -314,9 +314,7 @@ class _ElevatedCard extends StatelessWidget {
       padding: padding,
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: _AppColors.cardShadow,
       ),
       child: child,
@@ -406,7 +404,10 @@ class _StatusPresensiCard extends StatelessWidget {
                   Text(hari, style: _AppTextStyles.fieldLabel),
                   const SizedBox(height: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
                     decoration: ShapeDecoration(
                       color: _AppColors.statusYellowBg,
                       shape: RoundedRectangleBorder(
@@ -687,10 +688,7 @@ class _LampiranCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           for (int i = 0; i < attachments.length; i++) ...[
-            _AttachmentTile(
-              item: attachments[i],
-              onTap: null,
-            ),
+            _AttachmentTile(item: attachments[i], onTap: null),
             if (i != attachments.length - 1) const SizedBox(height: 12),
           ],
         ],
@@ -803,7 +801,6 @@ class _HistoryTile extends StatelessWidget {
 // =============================================================================
 
 class _KembaliButton extends StatelessWidget {
-
   const _KembaliButton();
 
   @override

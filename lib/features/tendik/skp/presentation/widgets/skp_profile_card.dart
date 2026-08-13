@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import 'package:adisty_tendik_module/core/widgets/searchable_picker_modal.dart';
 
 // ============================================================
 // WIDGET: Card Profil SKP
@@ -236,42 +237,57 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: SizedBox(
-                    height: 40,
-                    child: Center(
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 280),
-                        transitionBuilder: (child, animation) {
-                          final offset = _slideLeft
-                              ? const Offset(-0.4, 0)
-                              : const Offset(0.4, 0);
-                          return SlideTransition(
-                            position:
-                                Tween<Offset>(
-                                  begin: offset,
-                                  end: Offset.zero,
-                                ).animate(
-                                  CurvedAnimation(
-                                    parent: animation,
-                                    curve: Curves.easeOutCubic,
+                  child: InkWell(
+                    onTap: () async {
+                      final selectedIndex = await SearchablePickerModal.show(
+                        context,
+                        items: widget.years,
+                        selectedItem: widget.years[widget.activeYearIndex],
+                        title: 'Pilih Tahun SKP',
+                        hintText: 'Cari tahun...',
+                      );
+                      if (selectedIndex != null && selectedIndex != -1) {
+                        widget.onYearChanged(selectedIndex);
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: SizedBox(
+                      height: 40,
+                      child: Center(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 280),
+                          transitionBuilder: (child, animation) {
+                            final offset = _slideLeft
+                                ? const Offset(-0.4, 0)
+                                : const Offset(0.4, 0);
+                            return SlideTransition(
+                              position:
+                                  Tween<Offset>(
+                                    begin: offset,
+                                    end: Offset.zero,
+                                  ).animate(
+                                    CurvedAnimation(
+                                      parent: animation,
+                                      curve: Curves.easeOutCubic,
+                                    ),
                                   ),
-                                ),
-                            child: FadeTransition(
-                              opacity: animation,
-                              child: child,
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                            );
+                          },
+                          child: Text(
+                            widget.years[widget.activeYearIndex],
+                            key: ValueKey(widget.years[widget.activeYearIndex]),
+                            style: const TextStyle(
+                              color: Color(0xFF293241),
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600,
+                              height: 1.50,
+                              letterSpacing: -0.18,
                             ),
-                          );
-                        },
-                        child: Text(
-                          widget.years[widget.activeYearIndex],
-                          key: ValueKey(widget.years[widget.activeYearIndex]),
-                          style: const TextStyle(
-                            color: Color(0xFF293241),
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                            height: 1.50,
-                            letterSpacing: -0.18,
                           ),
                         ),
                       ),

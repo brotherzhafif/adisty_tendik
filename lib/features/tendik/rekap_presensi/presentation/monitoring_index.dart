@@ -26,9 +26,9 @@ class MonitoringPresensi extends StatelessWidget {
     final useCase = GetMonitoringPresensiUseCase(repository: repository);
 
     return BlocProvider(
-      create: (context) => MonitoringPresensiBloc(
-        getMonitoringPresensiUseCase: useCase,
-      )..add(FetchMonitoringPresensiEvent()),
+      create: (context) =>
+          MonitoringPresensiBloc(getMonitoringPresensiUseCase: useCase)
+            ..add(FetchMonitoringPresensiEvent()),
       child: const _MonitoringPresensiView(),
     );
   }
@@ -82,8 +82,7 @@ class _MonitoringPresensiView extends StatelessWidget {
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
                 ),
-                child: BlocBuilder<MonitoringPresensiBloc,
-                    MonitoringPresensiState>(
+                child: BlocBuilder<MonitoringPresensiBloc, MonitoringPresensiState>(
                   builder: (context, state) {
                     if (state is MonitoringPresensiLoading ||
                         state is MonitoringPresensiInitial) {
@@ -117,8 +116,8 @@ class _MonitoringPresensiView extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 context.read<MonitoringPresensiBloc>().add(
-                                      FetchMonitoringPresensiEvent(),
-                                    );
+                                  FetchMonitoringPresensiEvent(),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF2B86C3),
@@ -141,19 +140,19 @@ class _MonitoringPresensiView extends StatelessWidget {
                               if (state.selectedIndex <
                                   state.listTanggal.length - 1) {
                                 context.read<MonitoringPresensiBloc>().add(
-                                      ChangeIndexMonitoringEvent(
-                                        state.selectedIndex + 1,
-                                      ),
-                                    );
+                                  ChangeIndexMonitoringEvent(
+                                    state.selectedIndex + 1,
+                                  ),
+                                );
                               }
                             } else if (details.primaryVelocity! > 0) {
                               // Swipe kanan -> Tanggal sebelumnya
                               if (state.selectedIndex > 0) {
                                 context.read<MonitoringPresensiBloc>().add(
-                                      ChangeIndexMonitoringEvent(
-                                        state.selectedIndex - 1,
-                                      ),
-                                    );
+                                  ChangeIndexMonitoringEvent(
+                                    state.selectedIndex - 1,
+                                  ),
+                                );
                               }
                             }
                           }
@@ -170,14 +169,14 @@ class _MonitoringPresensiView extends StatelessWidget {
                                 onTap: () async {
                                   final newIndex =
                                       await _showDatePickerPlatform(
-                                    context,
-                                    listTanggal: state.listTanggal,
-                                    currentTanggal: currentTanggal,
-                                  );
+                                        context,
+                                        listTanggal: state.listTanggal,
+                                        currentTanggal: currentTanggal,
+                                      );
                                   if (newIndex != null && context.mounted) {
                                     context.read<MonitoringPresensiBloc>().add(
-                                          ChangeIndexMonitoringEvent(newIndex),
-                                        );
+                                      ChangeIndexMonitoringEvent(newIndex),
+                                    );
                                   }
                                 },
                                 borderRadius: BorderRadius.circular(20),
@@ -213,8 +212,9 @@ class _MonitoringPresensiView extends StatelessWidget {
                                         decoration: ShapeDecoration(
                                           color: const Color(0x1E0067AD),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
+                                            borderRadius: BorderRadius.circular(
+                                              40,
+                                            ),
                                           ),
                                         ),
                                         child: const Icon(
@@ -306,11 +306,11 @@ class _MonitoringPresensiView extends StatelessWidget {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               DetailPresensiKoreksi(
-                                            listTanggal: state.listTanggal,
-                                            initialTanggalIndex:
-                                                state.selectedIndex,
-                                            pegawaiId: pegawai.id,
-                                          ),
+                                                listTanggal: state.listTanggal,
+                                                initialTanggalIndex:
+                                                    state.selectedIndex,
+                                                pegawaiId: pegawai.id,
+                                              ),
                                         ),
                                       );
                                     },
@@ -321,8 +321,9 @@ class _MonitoringPresensiView extends StatelessWidget {
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
                                         ),
                                         shadows: const [
                                           BoxShadow(
@@ -341,25 +342,31 @@ class _MonitoringPresensiView extends StatelessWidget {
                                         children: [
                                           // Avatar
                                           ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(64),
+                                            borderRadius: BorderRadius.circular(
+                                              64,
+                                            ),
                                             child: Image.network(
                                               pegawai.photoUrl,
                                               width: 45,
                                               height: 45,
                                               fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  Container(
-                                                width: 45,
-                                                height: 45,
-                                                color: const Color(0xFF2B86C3),
-                                                child: const Icon(
-                                                  Icons.person,
-                                                  color: Colors.white,
-                                                  size: 24,
-                                                ),
-                                              ),
+                                              errorBuilder:
+                                                  (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) => Container(
+                                                    width: 45,
+                                                    height: 45,
+                                                    color: const Color(
+                                                      0xFF2B86C3,
+                                                    ),
+                                                    child: const Icon(
+                                                      Icons.person,
+                                                      color: Colors.white,
+                                                      size: 24,
+                                                    ),
+                                                  ),
                                             ),
                                           ),
                                           const SizedBox(width: 12),
@@ -396,20 +403,23 @@ class _MonitoringPresensiView extends StatelessWidget {
 
                                                 // Row Badges
                                                 Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 6,
-                                                    vertical: 3,
-                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 6,
+                                                        vertical: 3,
+                                                      ),
                                                   decoration: BoxDecoration(
                                                     color: isLate
                                                         ? const Color(
-                                                            0x19FFAC2F)
+                                                            0x19FFAC2F,
+                                                          )
                                                         : const Color(
-                                                            0x194AAF57),
+                                                            0x194AAF57,
+                                                          ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            6),
+                                                          6,
+                                                        ),
                                                   ),
                                                   child: Wrap(
                                                     crossAxisAlignment:
@@ -425,27 +435,31 @@ class _MonitoringPresensiView extends StatelessWidget {
                                                           Container(
                                                             width: 7,
                                                             height: 7,
-                                                            decoration:
-                                                                BoxDecoration(
+                                                            decoration: BoxDecoration(
                                                               color: isLate
                                                                   ? const Color(
-                                                                      0xFFFFAC2F)
+                                                                      0xFFFFAC2F,
+                                                                    )
                                                                   : const Color(
-                                                                      0xFF18C079),
+                                                                      0xFF18C079,
+                                                                    ),
                                                               shape: BoxShape
                                                                   .circle,
                                                             ),
                                                           ),
                                                           const SizedBox(
-                                                              width: 4),
+                                                            width: 4,
+                                                          ),
                                                           Text(
                                                             pegawai.status,
                                                             style: TextStyle(
                                                               color: isLate
                                                                   ? const Color(
-                                                                      0xFFFFAC2F)
+                                                                      0xFFFFAC2F,
+                                                                    )
                                                                   : const Color(
-                                                                      0xFF18C079),
+                                                                      0xFF18C079,
+                                                                    ),
                                                               fontSize: 10,
                                                               fontFamily:
                                                                   'Nunito',
@@ -461,9 +475,11 @@ class _MonitoringPresensiView extends StatelessWidget {
                                                         style: TextStyle(
                                                           color: isLate
                                                               ? const Color(
-                                                                  0xFFFFAC2F)
+                                                                  0xFFFFAC2F,
+                                                                )
                                                               : const Color(
-                                                                  0xFF18C079),
+                                                                  0xFF18C079,
+                                                                ),
                                                           fontSize: 10,
                                                           fontFamily: 'Nunito',
                                                           fontWeight:
@@ -473,8 +489,9 @@ class _MonitoringPresensiView extends StatelessWidget {
                                                       Text(
                                                         'Pulang : ${pegawai.pulang}',
                                                         style: const TextStyle(
-                                                          color:
-                                                              Color(0xFFFFAC2F),
+                                                          color: Color(
+                                                            0xFFFFAC2F,
+                                                          ),
                                                           fontSize: 10,
                                                           fontFamily: 'Nunito',
                                                           fontWeight:
@@ -636,7 +653,9 @@ DateTime? _parseTanggalIndonesia(String label) {
     'Desember': 12,
   };
   // Hapus nama hari di depan jika ada, contoh: "Rabu, 9 September 2026"
-  final cleaned = label.contains(',') ? label.split(',').last.trim() : label.trim();
+  final cleaned = label.contains(',')
+      ? label.split(',').last.trim()
+      : label.trim();
   final parts = cleaned.split(' ');
   if (parts.length < 3) return null;
   final day = int.tryParse(parts[0]);

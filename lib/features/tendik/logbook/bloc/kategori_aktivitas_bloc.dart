@@ -25,7 +25,8 @@ class KategoriAktivitasBloc
       final List<dynamic> rawList = data['data'] as List<dynamic>? ?? [];
       final listKategori = rawList.map((e) => e.toString()).toList();
 
-      final selected = (event.initialSelected != null &&
+      final selected =
+          (event.initialSelected != null &&
               event.initialSelected!.isNotEmpty &&
               listKategori.contains(event.initialSelected))
           ? event.initialSelected!
@@ -54,8 +55,8 @@ class KategoriAktivitasBloc
       final filtered = query.isEmpty
           ? currentState.listKategori
           : currentState.listKategori
-              .where((k) => k.toLowerCase().contains(query))
-              .toList();
+                .where((k) => k.toLowerCase().contains(query))
+                .toList();
 
       emit(
         currentState.copyWith(

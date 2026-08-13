@@ -159,7 +159,8 @@ class LogbookDetailHeaderCard extends StatelessWidget {
               const SizedBox(width: 8),
               InkWell(
                 onTap: () async {
-                  final categories = listKategori != null && listKategori!.isNotEmpty
+                  final categories =
+                      listKategori != null && listKategori!.isNotEmpty
                       ? listKategori!
                       : [currentKategoriNama ?? 'Aktivitas Utama'];
                   final result = await KategoriAktivitasPickerModal.show(
@@ -173,8 +174,10 @@ class LogbookDetailHeaderCard extends StatelessWidget {
                 },
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 4,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

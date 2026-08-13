@@ -8,7 +8,7 @@ class MonitoringPresensiBloc
   final GetMonitoringPresensiUseCase getMonitoringPresensiUseCase;
 
   MonitoringPresensiBloc({required this.getMonitoringPresensiUseCase})
-      : super(MonitoringPresensiInitial()) {
+    : super(MonitoringPresensiInitial()) {
     on<FetchMonitoringPresensiEvent>(_onFetchMonitoringPresensi);
     on<ChangeIndexMonitoringEvent>(_onChangeIndexMonitoring);
   }

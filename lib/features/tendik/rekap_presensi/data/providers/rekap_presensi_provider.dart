@@ -25,7 +25,9 @@ class RekapPresensiProvider implements IRekapPresensiProvider {
 
       return RekapPresensiResponseModel.fromJson(jsonMap);
     } catch (e) {
-      throw RekapPresensiException('Gagal membaca data presensi: ${e.toString()}');
+      throw RekapPresensiException(
+        'Gagal membaca data presensi: ${e.toString()}',
+      );
     }
   }
 }
