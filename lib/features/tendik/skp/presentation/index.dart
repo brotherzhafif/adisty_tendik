@@ -158,53 +158,33 @@ class SkpDashboardSkpView extends StatelessWidget {
                                 },
                                 hasData: yearData.hasData,
                                 score: yearData.totalSkpScore,
-                                jumlahKategori: 3,
+                                jumlahKategori: yearData.jumlahKategori,
                                 dinilaiOlehNama: yearData.dinilaiOlehNama,
                                 dinilaiOlehPosisi: yearData.dinilaiOlehPosisi,
                               ),
                               const SizedBox(height: 14),
 
-                              // --- Category 1: Pengamalan AIK ---
-                              SkpCategoryCard(
-                                title: 'Pengamalan AIK',
-                                weight: ' (35%)',
-                                subTitle:
-                                    'Pengamalan Al Islam dan Kemuhammadiyahan',
-                                indicators: yearData.aikIndicators,
-                                totalScore: yearData.aikScore,
-                                summaryTitle: 'SKOR Pengamalan AIK',
-                                categoryIndex: 0,
-                              ),
-                              const SizedBox(height: 14),
+                              // --- Dynamic Category Cards ---
+                              ...yearData.categories.asMap().entries.map((
+                                entry,
+                              ) {
+                                final index = entry.key;
+                                final category = entry.value;
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 14),
+                                  child: SkpCategoryCard(
+                                    title: category.title,
+                                    weight: category.weight,
+                                    subTitle: category.subTitle,
+                                    indicators: category.indicators,
+                                    totalScore: category.score,
+                                    summaryTitle: category.summaryTitle,
+                                    categoryIndex: index,
+                                  ),
+                                );
+                              }),
 
-                              // --- Category 2: Tugas Umum ---
-                              SkpCategoryCard(
-                                title: 'Tugas Umum',
-                                weight: ' (40%)',
-                                subTitle:
-                                    'Melaksanakan Tugas Utama Tenaga Kependidikan',
-                                indicators: yearData.tugasUmumIndicators,
-                                totalScore: yearData.tugasUmumScore,
-                                summaryTitle: 'SKOR Tugas Utama',
-                                categoryIndex: 1,
-                              ),
-                              const SizedBox(height: 14),
-
-                              // --- Category 3: Penunjang ---
-                              SkpCategoryCard(
-                                title: 'Penunjang',
-                                weight: ' (25%)',
-                                subTitle:
-                                    'Melaksanakan Aktivitas Penunjang Tenaga Kependidikan',
-                                indicators: yearData.penunjangIndicators,
-                                totalScore: yearData.penunjangScore,
-                                summaryTitle: 'SKOR Penunjang',
-                                categoryIndex: 2,
-                              ),
-                              const SizedBox(height: 14),
-
-                              // --- Total Skor SKP Card dipindahkan ke dalam SkpProfileCard ---
-                              const SizedBox(height: 30),
+                              const SizedBox(height: 16),
                             ],
                           ),
                         ),

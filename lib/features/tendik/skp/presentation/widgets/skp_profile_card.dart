@@ -54,11 +54,7 @@ class _SkpProfileCardState extends State<SkpProfileCard> {
   }
 
   bool _canGoNext() {
-    if (widget.activeYearIndex >= widget.years.length - 1) return false;
-    final String nextYearStr = widget.years[widget.activeYearIndex + 1];
-    final int? nextYear = int.tryParse(nextYearStr);
-    if (nextYear != null && nextYear > DateTime.now().year) return false;
-    return true;
+    return widget.activeYearIndex < widget.years.length - 1;
   }
 
   bool _canGoPrev() {

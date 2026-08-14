@@ -14,227 +14,377 @@
   ],
   "skp_data": {
     "2025": {
-      "aik_score": 84.50,
-      "tugas_umum_score": 85.00,
-      "penunjang_score": 88.00,
       "dinilai_oleh": {
         "nama": "Dr. Ir. H. Budi Santoso, M.T.",
         "posisi": "Kepala Sub Direktorat Pengembangan"
       },
-      "aik_indicators": [
+      "categories": [
         {
-          "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
-          "score": 85.00
+          "title": "Pengamalan AIK",
+          "weight": " (35%)",
+          "sub_title": "Pengamalan Al Islam dan Kemuhammadiyahan",
+          "score": 84.50,
+          "summary_title": "SKOR Pengamalan AIK",
+          "indicators": [
+            {
+              "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
+              "score": 85.00
+            },
+            {
+              "name": "Pengajian Tingkat Universitas",
+              "score": 80.00
+            },
+            {
+              "name": "Pengajian dan Tadarus di Unit Kerja",
+              "score": 90.00
+            },
+            {
+              "name": "Hafalan Surat Juz 30",
+              "score": 80.00
+            },
+            {
+              "name": "Keterlibatan Persyarikatan",
+              "score": 87.00
+            },
+            {
+              "name": "Partisipasi di Amal Usaha Muhammadiyah",
+              "score": 85.00
+            }
+          ]
         },
         {
-          "name": "Pengajian Tingkat Universitas",
-          "score": 80.00
+          "title": "Tugas Utama",
+          "weight": " (40%)",
+          "sub_title": "Melaksanakan Tugas Utama Tenaga Kependidikan",
+          "score": 85.00,
+          "summary_title": "SKOR Tugas Utama",
+          "indicators": [
+            {
+              "name": "Tugas Tambahan Pejabat Struktural",
+              "score": 85.00
+            },
+            {
+              "name": "Penilaian individu sesuai deskripsi pekerjaan",
+              "score": 85.00
+            },
+            {
+              "name": "Penilaian pejabat penilai kinerja",
+              "score": 85.00
+            },
+            {
+              "name": "Kehadiran dalam sebulan",
+              "score": 85.00
+            }
+          ]
         },
         {
-          "name": "Pengajian dan Tadarus di Unit Kerja",
-          "score": 90.00
-        },
-        {
-          "name": "Hafalan Surat Juz 30",
-          "score": 80.00
-        },
-        {
-          "name": "Keterlibatan Persyarikatan",
-          "score": 87.00
-        },
-        {
-          "name": "Partisipasi di Amal Usaha Muhammadiyah",
-          "score": 85.00
-        }
-      ],
-      "tugas_umum_indicators": [
-        {
-          "name": "Tugas Tambahan Pejabat Struktural",
-          "score": 85.00
-        },
-        {
-          "name": "Penilaian individu sesuai deskripsi pekerjaan",
-          "score": 85.00
-        },
-        {
-          "name": "Penilaian pejabat penilai kinerja",
-          "score": 85.00
-        },
-        {
-          "name": "Kehadiran dalam sebulan",
-          "score": 85.00
-        }
-      ],
-      "penunjang_indicators": [
-        {
-          "name": "Sertifikasi kompetensi",
-          "score": 88.00
-        },
-        {
-          "name": "Pelatihan",
-          "score": 88.00
-        },
-        {
-          "name": "Prestasi",
-          "score": 88.00
-        },
-        {
-          "name": "Keterlibatan Kepanitiaan",
-          "score": 88.00
-        },
-        {
-          "name": "Penghargaan Masa Kerja",
-          "score": 88.00
+          "title": "Penunjang",
+          "weight": " (25%)",
+          "sub_title": "Melaksanakan Aktivitas Penunjang Tenaga Kependidikan",
+          "score": 88.00,
+          "summary_title": "SKOR Penunjang",
+          "indicators": [
+            {
+              "name": "Sertifikasi kompetensi",
+              "score": 88.00
+            },
+            {
+              "name": "Pelatihan",
+              "score": 88.00
+            },
+            {
+              "name": "Prestasi",
+              "score": 88.00
+            },
+            {
+              "name": "Keterlibatan Kepanitiaan",
+              "score": 88.00
+            },
+            {
+              "name": "Penghargaan Masa Kerja",
+              "score": 88.00
+            }
+          ]
         }
       ]
     },
     "2026": {
-      "aik_score": 88.80,
-      "tugas_umum_score": 90.00,
-      "penunjang_score": 90.00,
       "dinilai_oleh": {
         "nama": "Prof. Dr. Hj. Siti Aminah, S.Kom., M.Cs.",
         "posisi": "Direktur Teknologi Informasi"
       },
-      "aik_indicators": [
+      "categories": [
         {
-          "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
-          "score": 90.00
+          "title": "Pengamalan AIK",
+          "weight": " (25%)",
+          "sub_title": "Pengamalan Al Islam dan Kemuhammadiyahan",
+          "score": 89.00,
+          "summary_title": "SKOR Pengamalan AIK",
+          "indicators": [
+            {
+              "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
+              "score": 90.00
+            },
+            {
+              "name": "Pengajian Tingkat Universitas",
+              "score": 85.00
+            },
+            {
+              "name": "Pengajian dan Tadarus di Unit Kerja",
+              "score": 95.00
+            },
+            {
+              "name": "Hafalan Surat Juz 30",
+              "score": 85.00
+            },
+            {
+              "name": "Keterlibatan Persyarikatan",
+              "score": 90.00
+            }
+          ]
         },
         {
-          "name": "Pengajian Tingkat Universitas",
-          "score": 80.00
+          "title": "Tugas Utama & Operasional",
+          "weight": " (30%)",
+          "sub_title": "Melaksanakan Operasional dan Pemeliharaan Sistem IT",
+          "score": 91.25,
+          "summary_title": "SKOR Tugas Utama & Operasional",
+          "indicators": [
+            {
+              "name": "Pemeliharaan Infrastruktur Sistem",
+              "score": 92.00
+            },
+            {
+              "name": "Penilaian Kinerja Layanan Pengguna",
+              "score": 88.00
+            },
+            {
+              "name": "Kehadiran & Ketepatan Waktu",
+              "score": 95.00
+            },
+            {
+              "name": "Penyelesaian SLA Helpdesk",
+              "score": 90.00
+            }
+          ]
         },
         {
-          "name": "Pengajian dan Tadarus di Unit Kerja",
-          "score": 95.00
+          "title": "Pengembangan Kompetensi",
+          "weight": " (15%)",
+          "sub_title": "Peningkatan Keterampilan & Keikutsertaan Sertifikasi",
+          "score": 90.67,
+          "summary_title": "SKOR Pengembangan Kompetensi",
+          "indicators": [
+            {
+              "name": "Sertifikasi Flutter Developer Expert",
+              "score": 94.00
+            },
+            {
+              "name": "Workshop Keamanan Siber & Data Privacy",
+              "score": 88.00
+            },
+            {
+              "name": "Pelatihan Manajemen Proyek Agile",
+              "score": 90.00
+            }
+          ]
         },
         {
-          "name": "Hafalan Surat Juz 30",
-          "score": 85.00
+          "title": "Inovasi & Transformasi Digital",
+          "weight": " (15%)",
+          "sub_title": "Inisiatif Pengembangan Fitur dan Otomatisasi Sistem",
+          "score": 92.67,
+          "summary_title": "SKOR Inovasi & Transformasi",
+          "indicators": [
+            {
+              "name": "Implementasi Modul Presensi Mobile Tendik",
+              "score": 96.00
+            },
+            {
+              "name": "Otomatisasi Rekap Laporan Bulanan",
+              "score": 92.00
+            },
+            {
+              "name": "Integrasi API SKP & Logbook",
+              "score": 90.00
+            }
+          ]
         },
         {
-          "name": "Keterlibatan Persyarikatan",
-          "score": 90.00
-        },
-        {
-          "name": "Partisipasi di Amal Usaha Muhammadiyah",
-          "score": 90.00
-        }
-      ],
-      "tugas_umum_indicators": [
-        {
-          "name": "Tugas Tambahan Pejabat Struktural",
-          "score": 90.00
-        },
-        {
-          "name": "Penilaian individu sesuai deskripsi pekerjaan",
-          "score": 90.00
-        },
-        {
-          "name": "Penilaian pejabat penilai kinerja",
-          "score": 90.00
-        },
-        {
-          "name": "Kehadiran dalam sebulan",
-          "score": 90.00
-        }
-      ],
-      "penunjang_indicators": [
-        {
-          "name": "Sertifikasi kompetensi",
-          "score": 90.00
-        },
-        {
-          "name": "Pelatihan",
-          "score": 90.00
-        },
-        {
-          "name": "Prestasi",
-          "score": 90.00
-        },
-        {
-          "name": "Keterlibatan Kepanitiaan",
-          "score": 90.00
-        },
-        {
-          "name": "Penghargaan Masa Kerja",
-          "score": 90.00
+          "title": "Pengabdian & Penunjang",
+          "weight": " (15%)",
+          "sub_title": "Kepanitiaan Universitas dan Pengabdian Unit Kerja",
+          "score": 90.00,
+          "summary_title": "SKOR Pengabdian & Penunjang",
+          "indicators": [
+            {
+              "name": "Panitia Penerimaan Mahasiswa Baru",
+              "score": 90.00
+            },
+            {
+              "name": "Pendampingan IT Wisuda Universitas",
+              "score": 92.00
+            },
+            {
+              "name": "Tim Gugus Kendali Mutu Unit",
+              "score": 88.00
+            }
+          ]
         }
       ]
     },
     "2027": {
-      "aik_score": 92.50,
-      "tugas_umum_score": 95.00,
-      "penunjang_score": 92.00,
       "dinilai_oleh": {
         "nama": "Dr. Eng. Wahyu Pratama, S.T., M.Sc.",
         "posisi": "Wakil Rektor Bidang Akademik"
       },
-      "aik_indicators": [
+      "categories": [
         {
-          "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
-          "score": 95.00
+          "title": "Pengamalan AIK",
+          "weight": " (20%)",
+          "sub_title": "Pengamalan Al Islam dan Kemuhammadiyahan",
+          "score": 93.00,
+          "summary_title": "SKOR Pengamalan AIK",
+          "indicators": [
+            {
+              "name": "Refreshing Al-Islam dan Kemuhammadiyahan",
+              "score": 95.00
+            },
+            {
+              "name": "Pengajian & Studi Al-Qur'an Tematik",
+              "score": 92.00
+            },
+            {
+              "name": "Hafalan Surat Pilihan Juz 30",
+              "score": 90.00
+            },
+            {
+              "name": "Keaktifan Ranting & Cabang Muhammadiyah",
+              "score": 95.00
+            }
+          ]
         },
         {
-          "name": "Pengajian Tingkat Universitas",
-          "score": 90.00
+          "title": "Pelaksanaan Tugas Utama",
+          "weight": " (25%)",
+          "sub_title": "Rekayasa Perangkat Lunak dan Arsitektur Sistem",
+          "score": 95.75,
+          "summary_title": "SKOR Pelaksanaan Tugas Utama",
+          "indicators": [
+            {
+              "name": "Arsitektur & Rekayasa Perangkat Lunak",
+              "score": 96.00
+            },
+            {
+              "name": "Optimalisasi Database & Server Uptime",
+              "score": 95.00
+            },
+            {
+              "name": "Penilaian Pejabat Penilai Kinerja",
+              "score": 94.00
+            },
+            {
+              "name": "Disiplin & Presensi Pegawai",
+              "score": 98.00
+            }
+          ]
         },
         {
-          "name": "Pengajian dan Tadarus di Unit Kerja",
-          "score": 98.00
+          "title": "Pengembangan & Riset",
+          "weight": " (15%)",
+          "sub_title": "Riset Terapan dan Publikasi Teknis IT",
+          "score": 92.00,
+          "summary_title": "SKOR Pengembangan & Riset",
+          "indicators": [
+            {
+              "name": "Publikasi Jurnal Terapan Sistem Informasi",
+              "score": 92.00
+            },
+            {
+              "name": "Riset AI untuk Otomatisasi Layanan Kampus",
+              "score": 90.00
+            },
+            {
+              "name": "Penyusunan Buku Panduan Teknis IT",
+              "score": 94.00
+            }
+          ]
         },
         {
-          "name": "Hafalan Surat Juz 30",
-          "score": 90.00
+          "title": "Inovasi & Proyek Strategis",
+          "weight": " (10%)",
+          "sub_title": "Pengembangan Inovasi Teknologi Skala Kampus",
+          "score": 96.00,
+          "summary_title": "SKOR Inovasi & Proyek Strategis",
+          "indicators": [
+            {
+              "name": "Modernisasi Portal Akademik Mahasiswa",
+              "score": 97.00
+            },
+            {
+              "name": "Implementasi Single Sign-On (SSO) Kampus",
+              "score": 95.00
+            }
+          ]
         },
         {
-          "name": "Keterlibatan Persyarikatan",
-          "score": 92.00
+          "title": "Kompetensi Profesi",
+          "weight": " (10%)",
+          "sub_title": "Sertifikasi Internasional & Kepemimpinan",
+          "score": 93.50,
+          "summary_title": "SKOR Kompetensi Profesi",
+          "indicators": [
+            {
+              "name": "Sertifikasi Cloud Solutions Architect",
+              "score": 95.00
+            },
+            {
+              "name": "Pelatihan Kepemimpinan Tendik Berkemajuan",
+              "score": 92.00
+            }
+          ]
         },
         {
-          "name": "Partisipasi di Amal Usaha Muhammadiyah",
-          "score": 90.00
-        }
-      ],
-      "tugas_umum_indicators": [
-        {
-          "name": "Tugas Tambahan Pejabat Struktural",
-          "score": 95.00
+          "title": "Tata Kelola & Mutu",
+          "weight": " (10%)",
+          "sub_title": "Standarisasi dan Audit Mutu Layanan Teknologi",
+          "score": 92.00,
+          "summary_title": "SKOR Tata Kelola & Mutu",
+          "indicators": [
+            {
+              "name": "Audit Sistem Keamanan Informasi ISO 27001",
+              "score": 90.00
+            },
+            {
+              "name": "Evaluasi Kepuasan Pengguna Internal",
+              "score": 92.00
+            },
+            {
+              "name": "Standarisasi Dokumentasi Teknis",
+              "score": 94.00
+            }
+          ]
         },
         {
-          "name": "Penilaian individu sesuai deskripsi pekerjaan",
-          "score": 95.00
-        },
-        {
-          "name": "Penilaian pejabat penilai kinerja",
-          "score": 95.00
-        },
-        {
-          "name": "Kehadiran dalam sebulan",
-          "score": 95.00
-        }
-      ],
-      "penunjang_indicators": [
-        {
-          "name": "Sertifikasi kompetensi",
-          "score": 92.00
-        },
-        {
-          "name": "Pelatihan",
-          "score": 92.00
-        },
-        {
-          "name": "Prestasi",
-          "score": 92.00
-        },
-        {
-          "name": "Keterlibatan Kepanitiaan",
-          "score": 92.00
-        },
-        {
-          "name": "Penghargaan Masa Kerja",
-          "score": 92.00
+          "title": "Pengabdian Masyarakat",
+          "weight": " (10%)",
+          "sub_title": "Kegiatan Sosial, Persyarikatan, dan Tanggap Darurat",
+          "score": 92.67,
+          "summary_title": "SKOR Pengabdian Masyarakat",
+          "indicators": [
+            {
+              "name": "Koordinator IT Muktamar Muhammadiyah",
+              "score": 96.00
+            },
+            {
+              "name": "Relawan Literasi Digital Sekolah Binaan",
+              "score": 90.00
+            },
+            {
+              "name": "Satgas Tanggap Bencana Kampus",
+              "score": 92.00
+            }
+          ]
         }
       ]
     }

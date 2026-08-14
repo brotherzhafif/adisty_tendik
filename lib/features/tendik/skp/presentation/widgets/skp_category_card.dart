@@ -8,7 +8,7 @@ import '../../data/models/skp_model.dart';
 typedef SkpIndicatorData = SkpIndicatorModel;
 
 // ============================================================
-// THEME PALETTE FOR SKP CATEGORIES (MODULUS BASED DYNAMIC COLORING)
+// THEME PALETTE FOR SKP CATEGORIES (DYNAMIC RANDOM GENERATOR)
 // ============================================================
 class SkpThemePalette {
   final Color themeColor;
@@ -20,12 +20,33 @@ class SkpThemePalette {
     required this.bannerBgColor,
     required this.summaryBorderColor,
   });
+
+  /// Men-generate warna secara dinamis/acak berdasarkan index & seed judul kategori.
+  /// Menggunakan golden angle distribution (137.508°) pada ruang HSL
+  /// untuk menghasilkan spektrum warna yang bervariasi acak, kontras, dan harmonis.
+  factory SkpThemePalette.fromIndex(int index, {String? seedString}) {
+    final int seed = seedString != null && seedString.isNotEmpty
+        ? (seedString.hashCode.abs() + index * 37)
+        : index.abs();
+
+    final double hue = ((seed * 137.508) + 210.0) % 360.0;
+    final HSLColor baseHsl = HSLColor.fromAHSL(1.0, hue, 0.70, 0.45);
+    final Color themeColor = baseHsl.toColor();
+    final Color bannerBgColor = themeColor.withValues(alpha: 0.10);
+    final Color summaryBorderColor = baseHsl.withLightness(0.38).toColor();
+
+    return SkpThemePalette(
+      themeColor: themeColor,
+      bannerBgColor: bannerBgColor,
+      summaryBorderColor: summaryBorderColor,
+    );
+  }
 }
 
 // ============================================================
-// WIDGET: Card Kategori SKP (AIK / Tugas Umum / Penunjang)
+// WIDGET: Card Kategori SKP (AIK / Tugas Umum / Penunjang dsb)
 // Menampilkan tabel indikator nilai dan ringkasan skor akhir.
-// Menggunakan logic modulus index untuk mewarnai card secara dinamis.
+// Warna di-generate secara dinamis & acak per kategori.
 // ============================================================
 class SkpCategoryCard extends StatelessWidget {
   final String title;
@@ -38,24 +59,6 @@ class SkpCategoryCard extends StatelessWidget {
   final Color? themeColor;
   final Color? bannerBgColor;
   final Color? summaryBorderColor;
-
-  static const List<SkpThemePalette> _palettes = [
-    SkpThemePalette(
-      themeColor: Color(0xFF2B86C3),
-      bannerBgColor: Color(0x192B86C3),
-      summaryBorderColor: Color(0xFF0067AD),
-    ),
-    SkpThemePalette(
-      themeColor: Color(0xFF4AAF57),
-      bannerBgColor: Color(0x194AAF57),
-      summaryBorderColor: Color(0xF54AAF57),
-    ),
-    SkpThemePalette(
-      themeColor: Color(0xFFFFAC2F),
-      bannerBgColor: Color(0x19FFAC2F),
-      summaryBorderColor: Color(0x19FFAC2F),
-    ),
-  ];
 
   const SkpCategoryCard({
     super.key,
@@ -73,8 +76,8 @@ class SkpCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dynamic palette selection via modulus
-    final palette = _palettes[categoryIndex.abs() % _palettes.length];
+    // Dynamic random color palette generation per category
+    final palette = SkpThemePalette.fromIndex(categoryIndex, seedString: title);
     final Color effectiveThemeColor = themeColor ?? palette.themeColor;
     final Color effectiveBannerBgColor = bannerBgColor ?? palette.bannerBgColor;
     final Color effectiveSummaryBorderColor =

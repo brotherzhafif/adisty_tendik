@@ -96,7 +96,7 @@ class SkpTotalScoreCard extends StatelessWidget {
                         vertical: 2,
                       ),
                       child: Text.rich(
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         TextSpan(
                           children: [
                             const TextSpan(
