@@ -271,7 +271,6 @@ class _Navbar extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 80,
-      clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -283,89 +282,111 @@ class _Navbar extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // --- Tab Beranda (aktif) ---
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
             children: [
-              SvgPicture.asset(
-                'assets/icons/(home_page)_home-icon.svg',
-                width: 30,
-                height: 30,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'Beranda',
-                style: AppTextStyle.bodySm.copyWith(
-                  color: const Color(0xFF016EB8),
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-
-          // --- Tab Presensi (tidak aktif) ---
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LandingPresensiHariIni(),
-                ),
-              );
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/(home_page)_presensi-icon.svg',
-                  width: 30,
-                  height: 30,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Presensi',
-                  style: AppTextStyle.bodySm.copyWith(
-                    color: const Color(0xFF5F6570),
-                    fontWeight: FontWeight.w500,
+              // --- Tab Beranda (aktif) ---
+              Expanded(
+                child: InkWell(
+                  onTap: () {},
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/(home_page)_home-icon.svg',
+                          width: 30,
+                          height: 30,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Beranda',
+                          style: AppTextStyle.bodySm.copyWith(
+                            color: const Color(0xFF016EB8),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
-          ),
-
-          // --- Tab Profil (tidak aktif) ---
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/(home_page)_profile-icon.svg',
-                width: 30,
-                height: 30,
               ),
-              const SizedBox(height: 4),
-              Text(
-                'Profil',
-                style: AppTextStyle.bodySm.copyWith(
-                  color: const Color(0xFF5F6570),
-                  fontWeight: FontWeight.w500,
+
+              // --- Tab Presensi (tidak aktif) ---
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LandingPresensiHariIni(),
+                      ),
+                    );
+                  },
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/(home_page)_presensi-icon.svg',
+                          width: 30,
+                          height: 30,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Presensi',
+                          style: AppTextStyle.bodySm.copyWith(
+                            color: const Color(0xFF5F6570),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                overflow: TextOverflow.ellipsis,
+              ),
+
+              // --- Tab Profil (tidak aktif) ---
+              Expanded(
+                child: InkWell(
+                  onTap: () {},
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/(home_page)_profile-icon.svg',
+                          width: 30,
+                          height: 30,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Profil',
+                          style: AppTextStyle.bodySm.copyWith(
+                            color: const Color(0xFF5F6570),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
