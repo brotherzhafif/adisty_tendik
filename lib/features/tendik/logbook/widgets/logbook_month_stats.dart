@@ -78,7 +78,7 @@ class LogbookMonthStats extends StatelessWidget {
                               '$totalSkor',
                               style: const TextStyle(
                                 color: Color(0xFF2B86C3),
-                                fontSize: 20,
+                                fontSize: 22,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                                 height: 1.40,
@@ -171,24 +171,25 @@ class LogbookMonthStats extends StatelessWidget {
                     ),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.account_circle,
-                            color: Color(0xFFCCCED1),
-                            size: 32,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.account_circle,
+                                color: Color(0xFFCCCED1),
+                                size: 32,
+                              ),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
                                   dinilaiOlehNama ?? '-',
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -200,19 +201,20 @@ class LogbookMonthStats extends StatelessWidget {
                                     height: 1.33,
                                   ),
                                 ),
-                                Text(
-                                  dinilaiOlehPosisi ?? 'Pejabat penilaian',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: Color(0xFF8E8E8E),
-                                    fontSize: 10,
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.60,
-                                  ),
-                                ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            dinilaiOlehPosisi ?? 'Pejabat penilaian',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Color(0xFF8E8E8E),
+                              fontSize: 10,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w500,
+                              height: 1.60,
                             ),
                           ),
                         ],
