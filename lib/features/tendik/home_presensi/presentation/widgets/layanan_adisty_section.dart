@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/features/tendik/logbook/index.dart';
-import 'package:adisty_tendik_module/features/tendik/rekap_presensi/presentation/index.dart';
 import 'package:adisty_tendik_module/features/tendik/tunjangan_beras/index.dart';
 import 'package:adisty_tendik_module/features/tendik/skp/presentation/index.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
@@ -48,19 +47,12 @@ class LayananAdistySection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
               children: [
-                // Card Agenda → navigasi ke Rekap Presensi
+                // Card Agenda (sementara tidak navigasi ke mana-mana)
                 LayananCard(
                   title: 'Agenda',
                   description: 'Tinjau informasi agenda anda',
                   imagePath: 'assets/images/(layanan)_agenda.png',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RekapPresensi(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                 ),
 
                 // Card Logbook → navigasi ke Logbook

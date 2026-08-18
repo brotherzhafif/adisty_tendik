@@ -466,7 +466,7 @@ class DialogPresensiMasukBerhasil extends StatelessWidget {
                     Navigator.of(context).pop();
                     onConfirmed?.call();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 235,
                     height: 48,
                     child: Column(

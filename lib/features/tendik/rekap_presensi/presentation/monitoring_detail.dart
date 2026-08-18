@@ -355,11 +355,18 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
   /// Mengembalikan baris alamat berdasarkan nama kampus
   static String _resolveAlamat(String lokasiNama) {
     final lower = lokasiNama.toLowerCase();
-    if (lower.contains('kampus 1')) return 'Jl. Kapas 9, Semaki, Umbulharjo';
-    if (lower.contains('kampus 2'))
+    if (lower.contains('kampus 1')) {
+      return 'Jl. Kapas 9, Semaki, Umbulharjo';
+    }
+    if (lower.contains('kampus 2')) {
       return 'Jl. Pramuka 42, Sidikan, Umbulharjo';
-    if (lower.contains('kampus 3')) return 'Jl. Prof. Dr. Soepomo, Janturan';
-    if (lower.contains('kampus 5')) return 'Jl. Ki Ageng Pemanahan 19';
+    }
+    if (lower.contains('kampus 3')) {
+      return 'Jl. Prof. Dr. Soepomo, Janturan';
+    }
+    if (lower.contains('kampus 5')) {
+      return 'Jl. Ki Ageng Pemanahan 19';
+    }
     // default → kampus 4
     return 'Jl. Ringroad Selatan, Tamanan, Banguntapan';
   }

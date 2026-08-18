@@ -12,8 +12,13 @@ import 'form.dart';
 // ============================================================
 class LogbookDetailPage extends StatefulWidget {
   final LogbookActivityData activity;
+  final bool isDinilai;
 
-  const LogbookDetailPage({super.key, required this.activity});
+  const LogbookDetailPage({
+    super.key,
+    required this.activity,
+    this.isDinilai = false,
+  });
 
   @override
   State<LogbookDetailPage> createState() => _LogbookDetailPageState();
@@ -84,7 +89,7 @@ class _LogbookDetailPageState extends State<LogbookDetailPage> {
                       LogbookDetailHeaderCard(
                         tanggalLengkap: tanggalLengkap,
                         waktuDibuat: waktuDibuat,
-                        status: 'Tersimpan',
+                        status: widget.isDinilai ? 'Dinilai' : 'Tersimpan',
                         totalKategori: subAktivitasList.length,
                         currentKategoriIndex: _currentIndex + 1,
                         currentKategoriNama:
@@ -147,88 +152,128 @@ class _LogbookDetailPageState extends State<LogbookDetailPage> {
 
                       const SizedBox(height: 16),
 
-                      // --- Info Catatan Koreksi ---
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFE8F1F9),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
+                      if (!widget.isDinilai) ...[
+                        // --- Info Catatan Koreksi ---
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
                           ),
-                        ),
-                        child: const Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.info_outline_rounded,
-                              color: Color(0xFF293241),
-                              size: 24,
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                'Jika terdapat kesalahan pada data logbook, Anda dapat mengajukan koreksi logbook maksimal 3 hari setelah tanggal pembuatan.',
-                                style: TextStyle(
-                                  color: Color(0xFF293241),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.33,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // --- Tombol Edit Logbook (Full Width) ---
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LogbookFormPage(
-                                  initialData: widget.activity,
-                                  initialSubData:
-                                      subAktivitasList[_currentIndex],
-                                ),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF2B86C3),
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFE8F1F9),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(18),
                             ),
                           ),
                           child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.edit_rounded, size: 16),
-                              SizedBox(width: 6),
-                              Text(
-                                'Edit Logbook',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Open Sans',
-                                  fontWeight: FontWeight.w600,
+                              Icon(
+                                Icons.info_outline_rounded,
+                                color: Color(0xFF293241),
+                                size: 24,
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  'Jika terdapat kesalahan pada data logbook, Anda dapat mengajukan koreksi logbook maksimal 3 hari setelah tanggal pembuatan.',
+                                  style: TextStyle(
+                                    color: Color(0xFF293241),
+                                    fontSize: 12,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.33,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
+
+                        const SizedBox(height: 24),
+
+                        // --- Tombol Edit Logbook (Full Width) ---
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LogbookFormPage(
+                                    initialData: widget.activity,
+                                    initialSubData:
+                                        subAktivitasList[_currentIndex],
+                                  ),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF2B86C3),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.edit_rounded, size: 16),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Edit Logbook',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ] else ...[
+                        // --- Info Logbook Sudah Dinilai ---
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFE8F1F9),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          child: const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.verified_outlined,
+                                color: Color(0xFF016EB8),
+                                size: 24,
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  'Logbook periode ini sudah dinilai oleh penilai dan tidak dapat diedit kembali.',
+                                  style: TextStyle(
+                                    color: Color(0xFF293241),
+                                    fontSize: 12,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.33,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

@@ -254,7 +254,7 @@ class _LogbookFormPageState extends State<LogbookFormPage> {
     }
   }
 
-  List<String> _listKategoriHari = [
+  final List<String> _listKategoriHari = const [
     'Membuat Algoritma Proses Fungsi-Fungsi Aplikasi - Utama Programmer',
     'Pengujian Algoritma & Validasi Data Form - Utama Programmer',
     'Optimasi Performa Query & Database Refactoring - Utama Programmer',

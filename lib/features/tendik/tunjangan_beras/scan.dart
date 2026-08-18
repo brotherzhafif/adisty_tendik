@@ -73,7 +73,7 @@ class TunjanganBerasScan extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          barrierColor: Colors.black.withOpacity(0.5),
+          barrierColor: const Color(0x80000000),
           builder: (_) => const ScanSuccessDialog(),
         );
       },

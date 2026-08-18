@@ -242,6 +242,7 @@ class LogbookPageView extends StatelessWidget {
                                   // --- Daftar Aktivitas ---
                                   _DaftarAktivitas(
                                     daftarAktivitas: currentBulan.aktivitas,
+                                    isDinilai: currentBulan.hasSkor,
                                   ),
                                 ],
                               ),
@@ -487,8 +488,12 @@ class _LogbookHeaderCardState extends State<_LogbookHeaderCard> {
 // ============================================================
 class _DaftarAktivitas extends StatelessWidget {
   final List<LogbookActivityModel> daftarAktivitas;
+  final bool isDinilai;
 
-  const _DaftarAktivitas({required this.daftarAktivitas});
+  const _DaftarAktivitas({
+    required this.daftarAktivitas,
+    this.isDinilai = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -506,8 +511,10 @@ class _DaftarAktivitas extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      LogbookDetailPage(activity: daftarAktivitas[index]),
+                  builder: (context) => LogbookDetailPage(
+                    activity: daftarAktivitas[index],
+                    isDinilai: isDinilai,
+                  ),
                 ),
               );
             },

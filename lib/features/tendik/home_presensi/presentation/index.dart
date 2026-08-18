@@ -13,7 +13,7 @@ import 'widgets/profile_header.dart';
 import 'widgets/layanan_adisty_section.dart';
 import 'widgets/presensi_card.dart';
 import 'widgets/statistik_presensi.dart';
-import '../../presensi_hari_ini/presentation/index.dart';
+import 'package:adisty_tendik_module/features/tendik/rekap_presensi/presentation/index.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
 
 // ============================================================
@@ -270,38 +270,36 @@ class _Navbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 80,
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 0,
-            offset: Offset(0.50, 0),
-            spreadRadius: 0.50,
+            color: Color(0x19000000),
+            blurRadius: 10,
+            offset: Offset(0, -2),
           ),
         ],
       ),
       child: SafeArea(
         top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              // --- Tab Beranda (aktif) ---
-              Expanded(
-                child: InkWell(
-                  onTap: () {},
-                  child: Center(
+        child: SizedBox(
+          height: 64,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                // --- Tab Beranda (aktif) ---
+                Expanded(
+                  child: InkWell(
+                    onTap: () {},
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           'assets/icons/(home_page)_home-icon.svg',
-                          width: 30,
-                          height: 30,
+                          width: 26,
+                          height: 32,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -316,29 +314,26 @@ class _Navbar extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
 
-              // --- Tab Presensi (tidak aktif) ---
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LandingPresensiHariIni(),
-                      ),
-                    );
-                  },
-                  child: Center(
+                // --- Tab Presensi (tidak aktif) ---
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RekapPresensi(),
+                        ),
+                      );
+                    },
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           'assets/icons/(home_page)_presensi-icon.svg',
-                          width: 30,
-                          height: 30,
+                          width: 26,
+                          height: 32,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -353,22 +348,19 @@ class _Navbar extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
 
-              // --- Tab Profil (tidak aktif) ---
-              Expanded(
-                child: InkWell(
-                  onTap: () {},
-                  child: Center(
+                // --- Tab Profil (tidak aktif) ---
+                Expanded(
+                  child: InkWell(
+                    onTap: () {},
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           'assets/icons/(home_page)_profile-icon.svg',
-                          width: 30,
-                          height: 30,
+                          width: 26,
+                          height: 32,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -383,8 +375,8 @@ class _Navbar extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -179,30 +179,17 @@ class LogbookMonthStats extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.account_circle,
-                                color: Color(0xFFCCCED1),
-                                size: 32,
-                              ),
-                              const SizedBox(width: 4),
-                              Expanded(
-                                child: Text(
-                                  dinilaiOlehNama ?? '-',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: Color(0xFF2B86C3),
-                                    fontSize: 12,
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.33,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          Text(
+                            dinilaiOlehNama ?? '-',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Color(0xFF2B86C3),
+                              fontSize: 12,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w600,
+                              height: 1.33,
+                            ),
                           ),
                           const SizedBox(height: 2),
                           Text(

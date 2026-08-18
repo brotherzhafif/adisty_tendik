@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
-import 'package:adisty_tendik_module/features/tendik/presensi_hari_ini/presentation/form.dart';
+import 'koreksi_form.dart';
+import 'koreksi_list.dart';
 import 'widgets/lokasi_presensi_card.dart';
 import 'widgets/presensi_log_model.dart';
 import 'widgets/detail_info_row.dart';
@@ -9,6 +10,7 @@ import 'widgets/shift_block.dart';
 
 // ============================================================
 // HALAMAN DETAIL: REKAP PRESENSI DETAIL
+// Mendukung single shift & double shift
 // ============================================================
 class RekapPresensiDetailPage extends StatelessWidget {
   final PresensiLog log;
@@ -34,11 +36,15 @@ class RekapPresensiDetailPage extends StatelessWidget {
         break;
     }
 
+    final bool isDoubleShift = log.badges.any(
+      (b) => b.toLowerCase().contains('double shift'),
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
       body: Column(
         children: [
-          // --- Header Biru (AppBar Statis Menyatu dengan Blue Background) ---
+          // --- Header Biru (AppBar Statis) ---
           Container(
             width: double.infinity,
             color: const Color(0xFF2B86C3),
@@ -79,7 +85,7 @@ class RekapPresensiDetailPage extends StatelessWidget {
             ),
           ),
 
-          // --- Konten Utama (Rounded Top Container + ClipRRect) ---
+          // --- Konten Utama (Rounded Top Container) ---
           Expanded(
             child: Container(
               width: double.infinity,
@@ -105,12 +111,13 @@ class RekapPresensiDetailPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ── Header: Tanggal + Status + Badges ──
+                      // ── 1. Header Card: Tanggal + Status + Badges ──
                       Container(
                         width: double.infinity,
+                        height: 72,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 19,
-                          vertical: 16,
+                          vertical: 8,
                         ),
                         decoration: ShapeDecoration(
                           color: Colors.white,
@@ -138,6 +145,7 @@ class RekapPresensiDetailPage extends StatelessWidget {
                             const SizedBox(width: 16),
                             Expanded(
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -147,9 +155,10 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                       fontSize: 16,
                                       fontFamily: 'Nunito',
                                       fontWeight: FontWeight.w600,
+                                      letterSpacing: -0.27,
                                     ),
                                   ),
-                                  const SizedBox(height: 6),
+                                  const SizedBox(height: 4),
                                   Row(
                                     children: [
                                       Container(
@@ -167,37 +176,39 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                         ),
                                         child: Text(
                                           log.status,
-                                          style: AppTextStyle.bodySm.copyWith(
+                                          style: TextStyle(
                                             color: statusColor,
+                                            fontSize: 12,
+                                            fontFamily: 'Nunito Sans',
                                             fontWeight: FontWeight.w700,
+                                            letterSpacing: 0.18,
                                           ),
                                         ),
                                       ),
-                                      if (log.badges.isNotEmpty)
-                                        ...log.badges.map(
-                                          (badge) => Container(
-                                            margin: const EdgeInsets.only(
-                                              left: 8,
+                                      if (isDoubleShift)
+                                        Container(
+                                          margin: const EdgeInsets.only(
+                                            left: 10,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 2,
+                                          ),
+                                          decoration: ShapeDecoration(
+                                            color: const Color(0xFFE8F1F9),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 2,
-                                            ),
-                                            decoration: ShapeDecoration(
-                                              color: const Color(0xFFE8F1F9),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                              ),
-                                            ),
-                                            child: Text(
-                                              badge,
-                                              style: const TextStyle(
-                                                color: Color(0xFF016EB8),
-                                                fontSize: 12,
-                                                fontFamily: 'Nunito Sans',
-                                                fontWeight: FontWeight.w700,
-                                              ),
+                                          ),
+                                          child: const Text(
+                                            'Double Shift',
+                                            style: TextStyle(
+                                              color: Color(0xFF016EB8),
+                                              fontSize: 12,
+                                              fontFamily: 'Nunito Sans',
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 0.18,
                                             ),
                                           ),
                                         ),
@@ -211,7 +222,7 @@ class RekapPresensiDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 14),
 
-                      // ── Card: Informasi Presensi ──
+                      // ── 2. Card: Informasi Presensi ──
                       _buildCard(
                         title: 'Informasi Presensi',
                         children: [
@@ -222,46 +233,51 @@ class RekapPresensiDetailPage extends StatelessWidget {
                             label: 'Lokasi',
                             value: log.location,
                           ),
+                          if (isDoubleShift) ...[
+                            const Divider(height: 24, color: Color(0xFFEEF2F3)),
+                            const DetailInfoRow(
+                              icon: Icons.schedule,
+                              iconBgColor: Color(0x1E2B86C3),
+                              iconColor: Color(0xFF2B86C3),
+                              label: 'Shift Hari Ini',
+                              value: 'Double Shift',
+                            ),
+                          ],
                           const Divider(height: 24, color: Color(0xFFEEF2F3)),
                           DetailInfoRow(
-                            icon: Icons.schedule,
+                            icon: Icons.directions_car_outlined,
                             iconBgColor: const Color(0x1E2B86C3),
                             iconColor: const Color(0xFF2B86C3),
-                            label: 'Shift Hari Ini',
-                            value: log.badges.contains('Double Shift')
-                                ? 'Double Shift'
-                                : 'Shift 1',
+                            label: 'Transport',
+                            value: 'Rp ${log.transport}',
                           ),
                         ],
                       ),
                       const SizedBox(height: 14),
 
-                      // ── Card: Lokasi Presensi (Interactive Map) ──
-                      LokasiPresensiCard(
-                        namaLokasi: log.location.isNotEmpty
-                            ? log.location
-                            : 'Kampus 4 - Universitas Ahmad Dahlan',
-                        latitude: log.latitude,
-                        longitude: log.longitude,
-                      ),
-                      const SizedBox(height: 14),
-
-                      // ── Card: Detail Shift ──
+                      // ── 3. Card: Detail Presensi / Detail Shift ──
                       _buildCard(
-                        title: 'Detail Shift',
+                        title: isDoubleShift
+                            ? 'Detail Shift'
+                            : 'Detail Presensi',
                         children: [
-                          ShiftBlock(
-                            shiftName: 'Shift 1',
-                            masuk: log.masuk,
-                            pulang: log.badges.contains('Double Shift')
-                                ? '14:00'
-                                : log.pulang,
-                            durasi: log.badges.contains('Double Shift')
-                                ? '7 Jam 15 Menit'
-                                : log.durasi,
-                          ),
-                          if (log.badges.contains('Double Shift')) ...[
-                            const Divider(height: 32, color: Color(0xFFEEF2F3)),
+                          if (!isDoubleShift) ...[
+                            ShiftBlock(
+                              shiftName: 'Tepat Waktu',
+                              tagBgColor: const Color(0x194AAF57),
+                              tagTextColor: const Color(0xF54AAF57),
+                              masuk: log.masuk,
+                              pulang: log.pulang,
+                              durasi: log.durasi,
+                            ),
+                          ] else ...[
+                            ShiftBlock(
+                              shiftName: 'Shift 1',
+                              masuk: log.masuk,
+                              pulang: '14:00',
+                              durasi: '7 Jam 15 Menit',
+                            ),
+                            const Divider(height: 24, color: Color(0xFFEEF2F3)),
                             ShiftBlock(
                               shiftName: 'Shift 2',
                               masuk: '14:00',
@@ -273,7 +289,7 @@ class RekapPresensiDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 14),
 
-                      // ── Card: Total Durasi Kerja ──
+                      // ── 4. Card: Total Durasi Kerja (Blue Box Container) ──
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(
@@ -289,15 +305,17 @@ class RekapPresensiDetailPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Total Durasi Kerja',
-                              style: AppTextStyle.bodyMd.copyWith(
+                              style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
                                 fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.17,
                               ),
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 4),
                             Text(
                               log.durasi,
                               style: const TextStyle(
@@ -305,10 +323,11 @@ class RekapPresensiDetailPage extends StatelessWidget {
                                 fontSize: 20,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w600,
+                                letterSpacing: -0.34,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
+                            const SizedBox(height: 2),
+                            const Text(
                               'Sudah termasuk istirahat',
                               style: TextStyle(
                                 color: Color(0xFF7A8089),
@@ -322,37 +341,24 @@ class RekapPresensiDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 14),
 
-                      // ── Card: Informasi Lainnya ──
-                      _buildCard(
-                        title: 'Informasi Lainnya',
-                        children: [
-                          DetailInfoRow(
-                            icon: Icons.directions_car_outlined,
-                            iconBgColor: const Color(0x1E2B86C3),
-                            iconColor: const Color(0xFF2B86C3),
-                            label: 'Transport',
-                            value: 'Rp ${log.transport}',
-                          ),
-                          const Divider(height: 24, color: Color(0xFFEEF2F3)),
-                          DetailInfoRow(
-                            icon: Icons.sticky_note_2_outlined,
-                            iconBgColor: const Color(0x1E2B86C3),
-                            iconColor: const Color(0xFF2B86C3),
-                            label: 'Catatan',
-                            value: log.catatan,
-                          ),
-                        ],
+                      // ── 5. Card: Lokasi Presensi (Interactive Map) ──
+                      LokasiPresensiCard(
+                        namaLokasi: log.location.isNotEmpty
+                            ? log.location
+                            : 'Kampus 4 - Universitas Ahmad Dahlan',
+                        latitude: log.latitude,
+                        longitude: log.longitude,
                       ),
                       const SizedBox(height: 14),
 
-                      // ── Disclaimer Koreksi ──
+                      // ── 6. Disclaimer Koreksi ──
                       const InfoDisclaimerBanner(
                         message:
                             'Jika terdapat kesalahan pada data presensi, Anda dapat mengajukan koreksi presensi maksimal 3 hari setelah tanggal presensi.',
                       ),
                       const SizedBox(height: 20),
 
-                      // ── Tombol Koreksi ──
+                      // ── 7. Tombol Aksi ──
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -374,6 +380,46 @@ class RekapPresensiDetailPage extends StatelessWidget {
                           'Ajukan Koreksi Presensi',
                           style: AppTextStyle.headingLg.copyWith(
                             color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const RiwayatKoreksiPage(),
+                            ),
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                width: 1.5,
+                                color: Color(0xFF0067AD),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Lihat Riwayat Pengajuan',
+                              style: TextStyle(
+                                color: Color(0xFF0067AD),
+                                fontSize: 16,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                height: 1.50,
+                                letterSpacing: -0.18,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -399,20 +445,35 @@ class RekapPresensiDetailPage extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadows: const [
           BoxShadow(
+            color: Color(0x087281DF),
+            blurRadius: 4.11,
+            offset: Offset(0, 0.52),
+          ),
+          BoxShadow(
+            color: Color(0x0C7281DF),
+            blurRadius: 6.99,
+            offset: Offset(0, 1.78),
+          ),
+          BoxShadow(
             color: Color(0x0F7281DF),
-            blurRadius: 10,
-            offset: Offset(0, 4),
+            blurRadius: 10.20,
+            offset: Offset(0, 4.11),
           ),
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: AppTextStyle.bodyLg.copyWith(
+            style: const TextStyle(
               color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'Nunito',
               fontWeight: FontWeight.w700,
+              height: 1.50,
+              letterSpacing: -0.27,
             ),
           ),
           const SizedBox(height: 16),

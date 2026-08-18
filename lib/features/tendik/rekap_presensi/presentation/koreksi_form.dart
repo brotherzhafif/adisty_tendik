@@ -233,279 +233,279 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
                   child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // --- Data Presensi Saat Ini ---
-                _buildDataPresensiSaatIni(),
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // --- Data Presensi Saat Ini ---
+                        _buildDataPresensiSaatIni(),
 
-                const SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
-                // --- Form Koreksi Putih ---
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        width: 1,
-                        color: Color(0x3DEBEBEB),
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x087281DF),
-                        blurRadius: 4.11,
-                        offset: Offset(0, 0.52),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Form Koreksi',
-                        style: TextStyle(
-                          color: Color(0xFF293241),
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // --- Input Jam Masuk Baru ---
-                      _InputFieldLabel(
-                        label: 'Jam Masuk Baru',
-                        isRequired: true,
-                      ),
-                      const SizedBox(height: 6),
-                      InkWell(
-                        onTap: () => _selectTime(context, true),
-                        child: Container(
+                        // --- Form Koreksi Putih ---
+                        Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFF99A1AF)),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _formatTime(_jamMasuk),
-                                style: const TextStyle(
-                                  color: Color(0xFF293241),
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const Icon(
-                                Icons.access_time_rounded,
-                                color: Color(0xFF7A8089),
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // --- Input Jam Pulang Baru ---
-                      _InputFieldLabel(
-                        label: 'Jam Pulang Baru',
-                        isRequired: true,
-                      ),
-                      const SizedBox(height: 6),
-                      InkWell(
-                        onTap: () => _selectTime(context, false),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFF99A1AF)),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _formatTime(_jamPulang),
-                                style: const TextStyle(
-                                  color: Color(0xFF293241),
-                                  fontSize: 14,
-                                  fontFamily: 'Nunito',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const Icon(
-                                Icons.access_time_rounded,
-                                color: Color(0xFF7A8089),
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // --- Input Teks Alasan Koreksi ---
-                      const _InputFieldLabel(
-                        label: 'Alasan Koreksi',
-                        isRequired: true,
-                      ),
-                      const SizedBox(height: 6),
-                      TextFormField(
-                        controller: _alasanController,
-                        maxLines: 3,
-                        style: const TextStyle(
-                          color: Color(0xFF293241),
-                          fontSize: 13,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w500,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Masukkan alasan koreksi...',
-                          hintStyle: const TextStyle(
-                            color: Color(0xFF99A1AF),
-                            fontSize: 13,
-                            fontFamily: 'Nunito',
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xFF99A1AF),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xFF99A1AF),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Color(0xFF2B86C3),
-                            ),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return 'Alasan koreksi tidak boleh kosong';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // --- Ketentuan Pengajuan ---
-                _buildKetentuanPengajuan(),
-
-                const SizedBox(height: 24),
-
-                // --- Form Action Button Row ---
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(
-                                width: 1.5,
-                                color: Color(0xFF0067AD),
+                                width: 1,
+                                color: Color(0x3DEBEBEB),
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Batal',
-                              style: TextStyle(
-                                color: Color(0xFF0067AD),
-                                fontSize: 15,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x087281DF),
+                                blurRadius: 4.11,
+                                offset: Offset(0, 0.52),
                               ),
-                            ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          showAppDialog(
-                            context,
-                            type: AppDialogType.success,
-                            title: 'Pengajuan Terkirim',
-                            message:
-                                'Pengajuan Koreksi Presensi Anda berhasil dikirim.',
-                            onClose: () => Navigator.pop(context),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF0067AD),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Kirim Pengajuan',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Form Koreksi',
+                                style: TextStyle(
+                                  color: Color(0xFF293241),
+                                  fontSize: 14,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
 
-                const SizedBox(height: 24),
-              ],
+                              const SizedBox(height: 16),
+
+                              // --- Input Jam Masuk Baru ---
+                              const _InputFieldLabel(
+                                label: 'Jam Masuk Baru',
+                                isRequired: true,
+                              ),
+                              const SizedBox(height: 6),
+                              InkWell(
+                                onTap: () => _selectTime(context, true),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: const Color(0xFF99A1AF)),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _formatTime(_jamMasuk),
+                                        style: const TextStyle(
+                                          color: Color(0xFF293241),
+                                          fontSize: 14,
+                                          fontFamily: 'Nunito',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.access_time_rounded,
+                                        color: Color(0xFF7A8089),
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              // --- Input Jam Pulang Baru ---
+                              const _InputFieldLabel(
+                                label: 'Jam Pulang Baru',
+                                isRequired: true,
+                              ),
+                              const SizedBox(height: 6),
+                              InkWell(
+                                onTap: () => _selectTime(context, false),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: const Color(0xFF99A1AF)),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _formatTime(_jamPulang),
+                                        style: const TextStyle(
+                                          color: Color(0xFF293241),
+                                          fontSize: 14,
+                                          fontFamily: 'Nunito',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.access_time_rounded,
+                                        color: Color(0xFF7A8089),
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              // --- Input Teks Alasan Koreksi ---
+                              const _InputFieldLabel(
+                                label: 'Alasan Koreksi',
+                                isRequired: true,
+                              ),
+                              const SizedBox(height: 6),
+                              TextFormField(
+                                controller: _alasanController,
+                                maxLines: 3,
+                                style: const TextStyle(
+                                  color: Color(0xFF293241),
+                                  fontSize: 13,
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: 'Masukkan alasan koreksi...',
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF99A1AF),
+                                    fontSize: 13,
+                                    fontFamily: 'Nunito',
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFF99A1AF),
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFF99A1AF),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFF2B86C3),
+                                    ),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Alasan koreksi tidak boleh kosong';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // --- Ketentuan Pengajuan ---
+                        _buildKetentuanPengajuan(),
+
+                        const SizedBox(height: 24),
+
+                        // --- Form Action Button Row ---
+                        Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => Navigator.pop(context),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                        width: 1.5,
+                                        color: Color(0xFF0067AD),
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'Batal',
+                                      style: TextStyle(
+                                        color: Color(0xFF0067AD),
+                                        fontSize: 15,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  showAppDialog(
+                                    context,
+                                    type: AppDialogType.success,
+                                    title: 'Pengajuan Terkirim',
+                                    message:
+                                        'Pengajuan Koreksi Presensi Anda berhasil dikirim.',
+                                    onClose: () => Navigator.pop(context),
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  decoration: ShapeDecoration(
+                                    color: const Color(0xFF0067AD),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'Kirim Pengajuan',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 24),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
-    ),
-  ),
-  ],
-  ),
-  );
+    );
   }
 
   // --- Widget: Data Presensi Saat Ini ---
@@ -523,7 +523,7 @@ class _FormKoreksiPageState extends State<FormKoreksiPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Data presensi saat ini',
             style: TextStyle(
               color: Color(0xFF293241),
@@ -733,7 +733,7 @@ class _InputFieldLabel extends StatelessWidget {
           ),
         ),
         if (isRequired)
-          Text(
+          const Text(
             ' *',
             style: TextStyle(
               color: Color(0xFFFB2C36),

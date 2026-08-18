@@ -8,6 +8,8 @@ class ShiftBlock extends StatelessWidget {
   final String masuk;
   final String pulang;
   final String durasi;
+  final Color? tagBgColor;
+  final Color? tagTextColor;
 
   const ShiftBlock({
     super.key,
@@ -15,6 +17,8 @@ class ShiftBlock extends StatelessWidget {
     required this.masuk,
     required this.pulang,
     required this.durasi,
+    this.tagBgColor,
+    this.tagTextColor,
   });
 
   @override
@@ -22,22 +26,23 @@ class ShiftBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Label Shift
+        // Label Shift / Tag Status
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: ShapeDecoration(
-            color: const Color(0xFFE8F1F9),
+            color: tagBgColor ?? const Color(0xFFE8F1F9),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
             ),
           ),
           child: Text(
             shiftName,
-            style: const TextStyle(
-              color: Color(0xFF016EB8),
+            style: TextStyle(
+              color: tagTextColor ?? const Color(0xFF016EB8),
               fontSize: 12,
               fontFamily: 'Nunito Sans',
               fontWeight: FontWeight.w700,
+              letterSpacing: 0.18,
             ),
           ),
         ),
@@ -63,31 +68,38 @@ class ShiftBlock extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Jam Masuk',
-                        style: TextStyle(
-                          color: Color(0xFF5F6570),
-                          fontSize: 12,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Jam Masuk',
+                          style: TextStyle(
+                            color: Color(0xFF5F6570),
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -0.08,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        masuk,
-                        style: const TextStyle(
-                          color: Color(0xFF293241),
-                          fontSize: 16,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
+                        const SizedBox(height: 2),
+                        Text(
+                          masuk,
+                          style: const TextStyle(
+                            color: Color(0xFF293241),
+                            fontSize: 16,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.27,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: 16),
             Expanded(
               child: Row(
                 children: [
@@ -105,42 +117,55 @@ class ShiftBlock extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Jam Pulang',
-                        style: TextStyle(
-                          color: Color(0xFF5F6570),
-                          fontSize: 12,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Jam Pulang',
+                          style: TextStyle(
+                            color: Color(0xFF5F6570),
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -0.08,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        pulang,
-                        style: const TextStyle(
-                          color: Color(0xFF293241),
-                          fontSize: 16,
-                          fontFamily: 'Nunito',
-                          fontWeight: FontWeight.w600,
+                        const SizedBox(height: 2),
+                        Text(
+                          pulang,
+                          style: const TextStyle(
+                            color: Color(0xFF293241),
+                            fontSize: 16,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.27,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
+        const Divider(height: 1, color: Color(0xFFE0E0E0)),
+        const SizedBox(height: 12),
 
         // Durasi Shift
         Row(
           children: [
-            const Icon(
-              Icons.timer_outlined,
-              color: Color(0xFF5F6570),
-              size: 20,
+            Container(
+              width: 24,
+              height: 24,
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.access_time_rounded,
+                color: Color(0xFF5F6570),
+                size: 20,
+              ),
             ),
             const SizedBox(width: 16),
             Column(
@@ -148,14 +173,18 @@ class ShiftBlock extends StatelessWidget {
               children: [
                 const Text(
                   'Durasi shift',
-                  style: TextStyle(color: Color(0xFF5F6570), fontSize: 12),
+                  style: TextStyle(
+                    color: Color(0xFF5F6570),
+                    fontSize: 12,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   durasi,
                   style: const TextStyle(
                     color: Color(0xFF293241),
-                    fontSize: 14,
+                    fontSize: 12,
                     fontFamily: 'Nunito',
                     fontWeight: FontWeight.w600,
                   ),

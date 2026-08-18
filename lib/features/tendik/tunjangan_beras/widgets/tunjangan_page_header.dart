@@ -32,7 +32,7 @@ class TunjanganPageHeader extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
+                color: const Color(0x26FFFFFF),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(
