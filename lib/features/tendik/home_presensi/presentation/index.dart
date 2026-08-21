@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:adisty_tendik_module/core/error/presentation/index.dart';
 import '../bloc/home_presensi_bloc.dart';
 import '../bloc/home_presensi_event.dart';
 import '../bloc/home_presensi_state.dart';
@@ -48,60 +49,36 @@ class HomePageView extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
-        child: BlocBuilder<HomePresensiBloc, HomePresensiState>(
-          builder: (context, state) {
-            if (state is HomePresensiLoading || state is HomePresensiInitial) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF2B86C3)),
-              );
-            }
-
+        child: BlocListener<HomePresensiBloc, HomePresensiState>(
+          listener: (context, state) {
             if (state is HomePresensiError) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        color: Colors.redAccent,
-                        size: 48,
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        state.message,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyle.bodyMd.copyWith(
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          context.read<HomePresensiBloc>().add(
-                            const FetchHomePresensiEvent(),
-                          );
-                        },
-                        icon: const Icon(Icons.refresh, color: Colors.white),
-                        label: Text(
-                          'Coba Lagi',
-                          style: AppTextStyle.bodyMd.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2B86C3),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ],
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AppErrorScreen.withMessage(
+                    errorMessage: state.message,
+                    onRetry: () {
+                      Navigator.pop(context);
+                      context.read<HomePresensiBloc>().add(
+                        const FetchHomePresensiEvent(),
+                      );
+                    },
                   ),
                 ),
               );
             }
+          },
+          child: BlocBuilder<HomePresensiBloc, HomePresensiState>(
+            builder: (context, state) {
+              if (state is HomePresensiLoading ||
+                  state is HomePresensiInitial ||
+                  state is HomePresensiError) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xFF2B86C3),
+                  ),
+                );
+              }
 
             if (state is HomePresensiLoaded) {
               return RefreshIndicator(
@@ -147,6 +124,7 @@ class HomePageView extends StatelessWidget {
             return const SizedBox.shrink();
           },
         ),
+      ),
       ),
       bottomNavigationBar: const _Navbar(),
     );

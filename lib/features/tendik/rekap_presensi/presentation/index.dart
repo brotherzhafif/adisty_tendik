@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import 'package:adisty_tendik_module/core/error/presentation/index.dart';
 import '../bloc/rekap_presensi_bloc.dart';
 import '../bloc/rekap_presensi_event.dart';
 import '../bloc/rekap_presensi_state.dart';
@@ -107,66 +108,38 @@ class RekapPresensiView extends StatelessWidget {
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
                 ),
-                child: BlocBuilder<RekapPresensiBloc, RekapPresensiState>(
-                  builder: (context, state) {
-                    if (state is RekapPresensiLoading ||
-                        state is RekapPresensiInitial) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFF2B86C3),
-                        ),
-                      );
-                    }
-
+                child: BlocListener<RekapPresensiBloc, RekapPresensiState>(
+                  listener: (context, state) {
                     if (state is RekapPresensiError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.error_outline,
-                                color: Colors.redAccent,
-                                size: 48,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                state.message,
-                                textAlign: TextAlign.center,
-                                style: AppTextStyle.bodyMd.copyWith(
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  context.read<RekapPresensiBloc>().add(
-                                    const FetchRekapPresensiEvent(),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.refresh,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Coba Lagi',
-                                  style: AppTextStyle.bodyMd.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF2B86C3),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                            ],
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AppErrorScreen.withMessage(
+                            errorMessage: state.message,
+                            onRetry: () {
+                              Navigator.pop(context);
+                              context.read<RekapPresensiBloc>().add(
+                                const FetchRekapPresensiEvent(),
+                              );
+                            },
                           ),
                         ),
                       );
                     }
+                  },
+                  child: BlocBuilder<RekapPresensiBloc, RekapPresensiState>(
+                    builder: (context, state) {
+                      if (state is RekapPresensiLoading ||
+                          state is RekapPresensiInitial ||
+                          state is RekapPresensiError) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF2B86C3),
+                          ),
+                        );
+                      }
+
+
 
                     if (state is RekapPresensiLoaded) {
                       final currentBulan = state.currentBulanData;
@@ -332,6 +305,7 @@ class RekapPresensiView extends StatelessWidget {
                     return const SizedBox.shrink();
                   },
                 ),
+              ),
               ),
             ),
           ),

@@ -2,13 +2,13 @@
   "status": "success",
   "message": "Berhasil mengambil data home presensi",
   "profile": {
-    "name": "Hi Agung",
+    "name": "Hi Ahmad Luthfi",
     "greeting": "Selamat datang di Adisty",
     "avatar_url": "https://placehold.co/64x64",
     "unread_notification_count": 3
   },
   "presensi_today": {
-    "date": "Selasa, 30 Desember 2025",
+    "date": "Rabu, 9 September 2026",
     "status": "belum_presensi",
     "presensi_count": 19,
     "status_label": "On Time",

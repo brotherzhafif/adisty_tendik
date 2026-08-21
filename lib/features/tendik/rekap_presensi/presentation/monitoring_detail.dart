@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../data/models/monitoring_presensi_model.dart';
 import 'widgets/lokasi_presensi_card.dart';
+import 'widgets/detail_info_row.dart';
+import 'widgets/shift_block.dart';
 
 // ============================================================
-// HALAMAN / KOMPONEN: DETAIL PRESENSI & KOREKSI MONITORING
+// HALAMAN / KOMPONEN: DETAIL PRESENSI MONITORING
+// Mendukung single shift & double shift
 // ============================================================
 class DetailPresensiKoreksi extends StatefulWidget {
   /// Semua tanggal yang tersedia (dari BLoC / JSON)
@@ -59,6 +62,7 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
   bool get _isAbsent =>
       (_pegawai?.status ?? '').toLowerCase() == 'absent' ||
       (_pegawai?.status ?? '').toLowerCase() == 'alpa';
+  bool get _isDoubleShift => _pegawai?.masuk2 != null;
 
   Color get _statusBgColor {
     if (_isLate) return const Color(0x19FFAC2F);
@@ -197,6 +201,7 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
   Widget build(BuildContext context) {
     final currentTanggal = widget.listTanggal[_tanggalIndex];
     final pegawai = _pegawai;
+    final isDoubleShift = _isDoubleShift;
 
     return Scaffold(
       backgroundColor: const Color(0xFF2B86C3),
@@ -212,7 +217,7 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
           onPressed: () => Navigator.of(context).maybePop(),
         ),
         title: const Text(
-          'Detail Presensi & Koreksi',
+          'Detail Presensi',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -247,19 +252,19 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
                     vertical: 20,
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ── Date Header Card (clickable → native date picker) ──
+                      // ── 1. Date Header Card (clickable → date picker) ──
                       _DateHeaderCard(
                         tanggal: currentTanggal.labelTanggal,
                         onTap: _openDatePicker,
                       ),
-
                       const SizedBox(height: 14),
 
                       if (pegawai == null)
                         _buildNotFoundCard(currentTanggal.tanggalLengkap)
                       else ...[
-                        // ── Profile & Status Card ────────────────────────
+                        // ── 2. Profile Card ────────────────────────────
                         _ProfileCard(
                           nama: pegawai.nama,
                           unit: pegawai.unit,
@@ -268,20 +273,94 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
                           photoUrl: pegawai.photoUrl,
                           statusBgColor: _statusBgColor,
                           statusTextColor: _statusTextColor,
+                          isDoubleShift: isDoubleShift,
                         ),
-
                         const SizedBox(height: 14),
 
-                        // ── Informasi Presensi Card ──────────────────────
-                        _InfoPresensiCard(
-                          lokasi: pegawai.lokasi,
-                          jamMasuk: pegawai.masuk,
-                          jamPulang: pegawai.pulang,
+                        // ── 3. Informasi Presensi Card ─────────────────
+                        _buildCard(
+                          title: 'Informasi Presensi',
+                          children: [
+                            DetailInfoRow(
+                              icon: Icons.location_on_outlined,
+                              iconBgColor: const Color(0x1EE65768),
+                              iconColor: const Color(0xFFE65768),
+                              label: 'Lokasi',
+                              value: pegawai.lokasi,
+                            ),
+                            if (isDoubleShift) ...[
+                              const Divider(
+                                height: 24,
+                                color: Color(0xFFEEF2F3),
+                              ),
+                              const DetailInfoRow(
+                                icon: Icons.schedule,
+                                iconBgColor: Color(0x1E2B86C3),
+                                iconColor: Color(0xFF2B86C3),
+                                label: 'Shift Hari Ini',
+                                value: 'Double Shift',
+                              ),
+                            ],
+                            const Divider(height: 24, color: Color(0xFFEEF2F3)),
+                            DetailInfoRow(
+                              icon: Icons.directions_car_outlined,
+                              iconBgColor: const Color(0x1E2B86C3),
+                              iconColor: const Color(0xFF2B86C3),
+                              label: 'Transport',
+                              value: pegawai.transport.startsWith('Rp')
+                                  ? pegawai.transport
+                                  : 'Rp ${pegawai.transport}',
+                            ),
+                          ],
                         ),
-
                         const SizedBox(height: 14),
 
-                        // ── Lokasi Presensi (FlutterMap / OSM) ───────────
+                        // ── 4. Detail Presensi / Detail Shift Card ─────
+                        _buildCard(
+                          title: isDoubleShift
+                              ? 'Detail Shift'
+                              : 'Detail Presensi',
+                          children: [
+                            if (!isDoubleShift) ...[
+                              ShiftBlock(
+                                shiftName: _statusLabel(pegawai.status),
+                                tagBgColor: _statusBgColor,
+                                tagTextColor: _statusTextColor,
+                                masuk: pegawai.masuk,
+                                pulang: pegawai.pulang,
+                                durasi: pegawai.durasi,
+                              ),
+                            ] else ...[
+                              ShiftBlock(
+                                shiftName: 'Shift 1',
+                                masuk: pegawai.masuk,
+                                pulang: pegawai.pulang,
+                                durasi: pegawai.durasi,
+                              ),
+                              const Divider(
+                                height: 24,
+                                color: Color(0xFFEEF2F3),
+                              ),
+                              ShiftBlock(
+                                shiftName: 'Shift 2',
+                                masuk: pegawai.masuk2!,
+                                pulang: pegawai.pulang2 ?? '-',
+                                durasi: pegawai.durasi2 ?? '-',
+                              ),
+                            ],
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+
+                        // ── 5. Total Durasi Kerja ──────────────────────
+                        _buildTotalDurasi(
+                          isDoubleShift: isDoubleShift,
+                          durasi: pegawai.durasi,
+                          durasi2: pegawai.durasi2,
+                        ),
+                        const SizedBox(height: 14),
+
+                        // ── 6. Lokasi Presensi (FlutterMap / OSM) ──────
                         LokasiPresensiCard(
                           namaLokasi: pegawai.lokasi,
                           alamatLine1: _resolveAlamat(pegawai.lokasi),
@@ -290,7 +369,7 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
                           longitude: _longitude,
                         ),
 
-                        // ── Alasan Koreksi (conditional) ─────────────────
+                        // ── 7. Alasan Koreksi (conditional) ───────────
                         if (pegawai.alasanKoreksi != null &&
                             pegawai.alasanKoreksi!.isNotEmpty) ...[
                           const SizedBox(height: 14),
@@ -308,6 +387,147 @@ class _DetailPresensiKoreksiState extends State<DetailPresensiKoreksi> {
         ],
       ),
     );
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────
+
+  /// Card section wrapper (sama persis seperti di detail.dart)
+  Widget _buildCard({
+    required String title,
+    required List<Widget> children,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x087281DF),
+            blurRadius: 4.11,
+            offset: Offset(0, 0.52),
+          ),
+          BoxShadow(
+            color: Color(0x0C7281DF),
+            blurRadius: 6.99,
+            offset: Offset(0, 1.78),
+          ),
+          BoxShadow(
+            color: Color(0x0F7281DF),
+            blurRadius: 10.20,
+            offset: Offset(0, 4.11),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w700,
+              height: 1.50,
+              letterSpacing: -0.27,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...children,
+        ],
+      ),
+    );
+  }
+
+  /// Total Durasi Kerja — blue box (0xFFE8F1F9)
+  Widget _buildTotalDurasi({
+    required bool isDoubleShift,
+    required String durasi,
+    String? durasi2,
+  }) {
+    final totalLabel = isDoubleShift && durasi2 != null
+        ? _addDurasi(durasi, durasi2)
+        : durasi;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      decoration: ShapeDecoration(
+        color: const Color(0xFFE8F1F9),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Total Durasi Kerja',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.17,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            totalLabel,
+            style: const TextStyle(
+              color: Color(0xFF0067AD),
+              fontSize: 20,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.34,
+            ),
+          ),
+          const SizedBox(height: 2),
+          const Text(
+            'Sudah termasuk istirahat',
+            style: TextStyle(
+              color: Color(0xFF7A8089),
+              fontSize: 12,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Sederhana menjumlahkan dua string durasi "X Jam Y Menit"
+  String _addDurasi(String d1, String d2) {
+    int parseMinutes(String d) {
+      final jamMatch = RegExp(r'(\d+)\s*[Jj]am').firstMatch(d);
+      final menitMatch = RegExp(r'(\d+)\s*[Mm]enit').firstMatch(d);
+      final jam = int.tryParse(jamMatch?.group(1) ?? '0') ?? 0;
+      final menit = int.tryParse(menitMatch?.group(1) ?? '0') ?? 0;
+      return jam * 60 + menit;
+    }
+
+    final total = parseMinutes(d1) + parseMinutes(d2);
+    final jam = total ~/ 60;
+    final menit = total % 60;
+    if (menit == 0) return '$jam Jam';
+    return '$jam Jam $menit Menit';
+  }
+
+  String _statusLabel(String status) {
+    switch (status.toLowerCase()) {
+      case 'on time':
+        return 'Tepat Waktu';
+      case 'terlambat':
+      case 'late':
+        return 'Terlambat';
+      case 'absent':
+      case 'alpa':
+        return 'Tidak Hadir';
+      default:
+        return status;
+    }
   }
 
   Widget _buildNotFoundCard(String tanggal) {
@@ -488,6 +708,7 @@ class _ProfileCard extends StatelessWidget {
   final String photoUrl;
   final Color statusBgColor;
   final Color statusTextColor;
+  final bool isDoubleShift;
 
   const _ProfileCard({
     required this.nama,
@@ -497,13 +718,14 @@ class _ProfileCard extends StatelessWidget {
     required this.photoUrl,
     required this.statusBgColor,
     required this.statusTextColor,
+    required this.isDoubleShift,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 12),
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -585,159 +807,58 @@ class _ProfileCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: statusBgColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: ShapeDecoration(
+                        color: statusBgColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      child: Text(
+                        status,
+                        style: TextStyle(
+                          color: statusTextColor,
+                          fontSize: 11,
+                          fontFamily: 'Nunito Sans',
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.18,
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    status,
-                    style: TextStyle(
-                      color: statusTextColor,
-                      fontSize: 11,
-                      fontFamily: 'Nunito Sans',
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.18,
-                    ),
-                  ),
+                    if (isDoubleShift)
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFE8F1F9),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        child: const Text(
+                          'Double Shift',
+                          style: TextStyle(
+                            color: Color(0xFF016EB8),
+                            fontSize: 11,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.18,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoPresensiCard extends StatelessWidget {
-  final String lokasi;
-  final String jamMasuk;
-  final String jamPulang;
-
-  const _InfoPresensiCard({
-    required this.lokasi,
-    required this.jamMasuk,
-    required this.jamPulang,
-  });
-
-  Widget _buildInfoRow({
-    required IconData icon,
-    required Color iconBgColor,
-    required Color iconColor,
-    required String label,
-    required String value,
-  }) {
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: ShapeDecoration(
-            color: iconBgColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
-            ),
-          ),
-          child: Icon(icon, color: iconColor, size: 20),
-        ),
-        const SizedBox(width: 14),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                color: Color(0xFF5F6570),
-                fontSize: 13,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w400,
-                letterSpacing: -0.08,
-              ),
-            ),
-            Text(
-              value,
-              style: const TextStyle(
-                color: Color(0xFF293241),
-                fontSize: 15,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x087281DF),
-            blurRadius: 4.11,
-            offset: Offset(0, 0.52),
-          ),
-          BoxShadow(
-            color: Color(0x0C7281DF),
-            blurRadius: 6.99,
-            offset: Offset(0, 1.78),
-          ),
-          BoxShadow(
-            color: Color(0x0F7281DF),
-            blurRadius: 10.20,
-            offset: Offset(0, 4.11),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Informasi Presensi',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w700,
-              letterSpacing: -0.27,
-            ),
-          ),
-          const SizedBox(height: 14),
-          _buildInfoRow(
-            icon: Icons.location_on_rounded,
-            iconBgColor: const Color(0x1EE65768),
-            iconColor: const Color(0xFFE65768),
-            label: 'Lokasi',
-            value: lokasi,
-          ),
-          const Divider(height: 20, color: Color(0xFFEEEEEE)),
-          _buildInfoRow(
-            icon: Icons.login_rounded,
-            iconBgColor: const Color(0x1E18C079),
-            iconColor: const Color(0xFF18C079),
-            label: 'Jam Masuk',
-            value: '$jamMasuk WIB',
-          ),
-          const Divider(height: 20, color: Color(0xFFEEEEEE)),
-          _buildInfoRow(
-            icon: Icons.logout_rounded,
-            iconBgColor: const Color(0x1EFFAC2F),
-            iconColor: const Color(0xFFFFAC2F),
-            label: 'Jam Pulang',
-            value: '$jamPulang WIB',
           ),
         ],
       ),

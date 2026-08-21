@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import 'package:adisty_tendik_module/core/error/presentation/index.dart';
 import 'bloc/logbook_bloc.dart';
 import 'bloc/logbook_event.dart';
 import 'bloc/logbook_state.dart';
@@ -134,63 +134,33 @@ class LogbookPageView extends StatelessWidget {
                       topLeft: Radius.circular(34),
                       topRight: Radius.circular(34),
                     ),
+                    child: BlocListener<LogbookBloc, LogbookState>(
+                    listener: (context, state) {
+                      if (state is LogbookError) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => AppErrorScreen.withMessage(
+                              errorMessage: state.message,
+                              onRetry: () {
+                                Navigator.pop(context);
+                                context.read<LogbookBloc>().add(
+                                  const FetchLogbookEvent(),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    },
                     child: Builder(
                       builder: (context) {
                         if (state is LogbookLoading ||
-                            state is LogbookInitial) {
+                            state is LogbookInitial ||
+                            state is LogbookError) {
                           return const Center(
                             child: CircularProgressIndicator(
                               color: Color(0xFF2B86C3),
-                            ),
-                          );
-                        }
-
-                        if (state is LogbookError) {
-                          return Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.error_outline,
-                                    color: Colors.redAccent,
-                                    size: 48,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    state.message,
-                                    textAlign: TextAlign.center,
-                                    style: AppTextStyle.bodyMd.copyWith(
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  ElevatedButton.icon(
-                                    onPressed: () {
-                                      context.read<LogbookBloc>().add(
-                                        const FetchLogbookEvent(),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.refresh,
-                                      color: Colors.white,
-                                    ),
-                                    label: Text(
-                                      'Coba Lagi',
-                                      style: AppTextStyle.bodyMd.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF2B86C3),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                           );
                         }
@@ -255,6 +225,7 @@ class LogbookPageView extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
               ),
             ],
           ),

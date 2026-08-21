@@ -15,8 +15,10 @@
           "jabatan": "Programmer",
           "lokasi": "Kampus 4 UAD",
           "status": "On Time",
+          "transport": "20.000",
           "masuk": "07.58",
-          "pulang": "-.-",
+          "pulang": "16.00",
+          "durasi": "8 Jam 02 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": "Koreksi jam masuk karena pemadaman listrik lokal server gedung."
         },
@@ -27,8 +29,13 @@
           "jabatan": "Analis Layanan",
           "lokasi": "Kampus 2 UAD",
           "status": "On Time",
+          "transport": "40.000",
           "masuk": "07.45",
-          "pulang": "16.02",
+          "pulang": "14.00",
+          "durasi": "6 Jam 15 Menit",
+          "masuk2": "14.00",
+          "pulang2": "21.00",
+          "durasi2": "7 Jam 00 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": null
         },
@@ -39,8 +46,10 @@
           "jabatan": "Administrator Jaringan",
           "lokasi": "Kampus 4 UAD",
           "status": "Late",
+          "transport": "20.000",
           "masuk": "08.15",
-          "pulang": "-.-",
+          "pulang": "17.00",
+          "durasi": "8 Jam 45 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": "Keterlambatan karena kendala jaringan transportasi umum pagi hari."
         }
@@ -59,8 +68,10 @@
           "jabatan": "Programmer",
           "lokasi": "Kampus 4 UAD",
           "status": "On Time",
+          "transport": "20.000",
           "masuk": "06.50",
           "pulang": "17.00",
+          "durasi": "10 Jam 10 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": null
         },
@@ -71,8 +82,10 @@
           "jabatan": "Database Administrator",
           "lokasi": "Kampus 1 UAD",
           "status": "On Time",
+          "transport": "20.000",
           "masuk": "07.10",
           "pulang": "16.30",
+          "durasi": "9 Jam 20 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": null
         }
@@ -91,8 +104,10 @@
           "jabatan": "Analis Layanan",
           "lokasi": "Kampus 2 UAD",
           "status": "On Time",
+          "transport": "20.000",
           "masuk": "07.30",
           "pulang": "16.30",
+          "durasi": "9 Jam 00 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": null
         },
@@ -103,8 +118,10 @@
           "jabatan": "Administrator Jaringan",
           "lokasi": "Kampus 4 UAD",
           "status": "On Time",
+          "transport": "20.000",
           "masuk": "07.20",
           "pulang": "16.45",
+          "durasi": "9 Jam 25 Menit",
           "photo_url": "https://placehold.co/64x64",
           "alasan_koreksi": null
         }

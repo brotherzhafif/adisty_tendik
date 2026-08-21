@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:adisty_tendik_module/core/widgets/app_text_style.dart';
+import 'package:adisty_tendik_module/core/error/presentation/index.dart';
 import '../bloc/presensi_hari_ini_bloc.dart';
 import '../bloc/presensi_hari_ini_event.dart';
 import '../bloc/presensi_hari_ini_state.dart';
@@ -107,68 +107,38 @@ class LandingPresensiHariIniView extends StatelessWidget {
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
                 ),
-                child: BlocBuilder<PresensiHariIniBloc, PresensiHariIniState>(
-                  builder: (context, state) {
-                    if (state is PresensiHariIniLoading ||
-                        state is PresensiHariIniInitial) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFF2B86C3),
-                        ),
-                      );
-                    }
-
+                child: BlocListener<PresensiHariIniBloc, PresensiHariIniState>(
+                  listener: (context, state) {
                     if (state is PresensiHariIniError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.error_outline,
-                                color: Colors.redAccent,
-                                size: 48,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                state.message,
-                                textAlign: TextAlign.center,
-                                style: AppTextStyle.bodyMd.copyWith(
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  context.read<PresensiHariIniBloc>().add(
-                                    const FetchPresensiHariIniEvent(),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.refresh,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Coba Lagi',
-                                  style: AppTextStyle.bodyMd.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF2B86C3),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                            ],
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AppErrorScreen.withMessage(
+                            errorMessage: state.message,
+                            onRetry: () {
+                              Navigator.pop(context);
+                              context.read<PresensiHariIniBloc>().add(
+                                const FetchPresensiHariIniEvent(),
+                              );
+                            },
                           ),
                         ),
                       );
                     }
+                  },
+                  child: BlocBuilder<PresensiHariIniBloc, PresensiHariIniState>(
+                    builder: (context, state) {
+                      if (state is PresensiHariIniLoading ||
+                          state is PresensiHariIniInitial ||
+                          state is PresensiHariIniError) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF2B86C3),
+                          ),
+                        );
+                      }
 
-                    if (state is PresensiHariIniLoaded) {
+                      if (state is PresensiHariIniLoaded) {
                       return RefreshIndicator(
                         onRefresh: () async {
                           context.read<PresensiHariIniBloc>().add(
@@ -242,6 +212,7 @@ class LandingPresensiHariIniView extends StatelessWidget {
                     return const SizedBox.shrink();
                   },
                 ),
+              ),
               ),
             ),
           ),

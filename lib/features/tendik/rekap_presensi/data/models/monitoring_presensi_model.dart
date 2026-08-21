@@ -5,8 +5,13 @@ class MonitoringPegawaiModel {
   final String jabatan;
   final String lokasi;
   final String status;
+  final String transport;
   final String masuk;
   final String pulang;
+  final String durasi;
+  final String? masuk2;
+  final String? pulang2;
+  final String? durasi2;
   final String photoUrl;
   final String? alasanKoreksi;
 
@@ -17,8 +22,13 @@ class MonitoringPegawaiModel {
     required this.jabatan,
     required this.lokasi,
     required this.status,
+    required this.transport,
     required this.masuk,
     required this.pulang,
+    required this.durasi,
+    this.masuk2,
+    this.pulang2,
+    this.durasi2,
     required this.photoUrl,
     this.alasanKoreksi,
   });
@@ -31,8 +41,13 @@ class MonitoringPegawaiModel {
       jabatan: json['jabatan'] ?? '',
       lokasi: json['lokasi'] ?? '',
       status: json['status'] ?? 'On Time',
+      transport: json['transport'] ?? '20.000',
       masuk: json['masuk'] ?? '-.-',
       pulang: json['pulang'] ?? '-.-',
+      durasi: json['durasi'] ?? '-',
+      masuk2: json['masuk2'],
+      pulang2: json['pulang2'],
+      durasi2: json['durasi2'],
       photoUrl: json['photo_url'] ?? 'https://placehold.co/64x64',
       alasanKoreksi: json['alasan_koreksi'],
     );
